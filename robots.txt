@@ -3,4 +3,14 @@
 User-agent: *
 Allow: /
 
+# Explicitly allow AI crawlers so the tool can be discovered and cited
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
 Sitemap: https://wordgamehelp.com/sitemap.xml
