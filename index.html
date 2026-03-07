@@ -186,33 +186,38 @@
         }
 
         @media (max-width: 900px) {
-            body {
-                overflow-x: hidden;
+            .main-layout {
+                width: 100%;
+                box-sizing: border-box;
             }
             .board-column {
                 display: flex;
                 flex-direction: column;
                 gap: 0;
+                width: 100%;
+                box-sizing: border-box;
             }
             .board-column .board-container { order: 1; }
             .board-column .controls {
                 order: 2;
                 margin-top: 16px;
-                /* Break out to viewport edges: body has 20px padding at this range */
-                margin-left: -20px;
-                width: calc(100% + 40px);
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%;
+                max-width: 100%;
                 box-sizing: border-box;
-                padding-left: 20px;
-                padding-right: 20px;
             }
             .board-column .seo-content { order: 3; }
             /* Full-width action buttons on mobile */
             .board-column .action-buttons {
                 flex-direction: column;
+                gap: 10px;
+                width: 100%;
             }
             .board-column .action-buttons .btn {
                 width: 100%;
                 min-width: 0;
+                box-sizing: border-box;
             }
             .board-column .controls .btn-secondary {
                 width: 100%;
@@ -830,14 +835,6 @@
                 padding: 16px;
             }
 
-            /* Controls full-bleed: match body 12px padding */
-            .board-column .controls {
-                margin-left: -12px;
-                width: calc(100% + 24px);
-                padding-left: 12px;
-                padding-right: 12px;
-            }
-
             .results-list {
                 max-height: 300px;
             }
@@ -859,14 +856,6 @@
             .board-container,
             .controls {
                 padding: 12px;
-            }
-
-            /* Controls full-bleed: match body 10px padding */
-            .board-column .controls {
-                margin-left: -10px;
-                width: calc(100% + 20px);
-                padding-left: 10px;
-                padding-right: 10px;
             }
 
             /* Make the 15x15 board fit comfortably on small screens */
@@ -1062,7 +1051,7 @@
             <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-19
+            Build: 2026-03-07-20
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
