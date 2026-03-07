@@ -171,10 +171,6 @@
         }
 
         .main-layout {
-            display: block;
-        }
-
-        .board-column {
             min-width: 0;
             display: grid;
             grid-template-columns: 1fr minmax(280px, 360px);
@@ -182,79 +178,87 @@
             align-items: start;
         }
 
-        .board-column .board-container { grid-column: 1; grid-row: 1; }
-        .board-column .controls-bleed { grid-column: 2; grid-row: 1 / -1; }
-        .board-column .seo-content { grid-column: 1; grid-row: 2; }
+        .main-layout .board-container { grid-column: 1; grid-row: 1; }
+        .main-layout .controls-bleed { grid-column: 2; grid-row: 1 / -1; align-self: start; }
+        .main-layout .seo-content { grid-column: 1; grid-row: 2; }
 
         .seo-content {
             margin-bottom: 40px;
         }
 
         @media (max-width: 900px) {
-            body {
-                overflow-x: hidden;
-            }
-            .main-layout {
-                width: 100%;
+            /* No body/container horizontal padding so controls strip can be full width */
+            body { padding: 20px 0; }
+            .container { padding: 0; }
+            .container > header,
+            .container > .instructions-mobile,
+            .container > .tile-rack-top {
+                padding-left: 20px;
+                padding-right: 20px;
                 box-sizing: border-box;
             }
-            .board-column {
+            .main-layout {
                 display: flex;
                 flex-direction: column;
                 gap: 0;
                 width: 100%;
                 box-sizing: border-box;
             }
-            /* Top section: center the board so left/right space is equal */
-            .board-column .board-container {
+            .main-layout .board-container {
                 order: 1;
+                padding-left: 20px;
+                padding-right: 20px;
+                box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
             }
-            .board-column .board-container .board {
+            .main-layout .board-container .board {
                 margin-left: auto;
                 margin-right: auto;
             }
-            .board-column .board-container .direction-toggle,
-            .board-column .board-container .bonus-controls,
-            .board-column .board-container .keyboard-hint,
-            .board-column .board-container .legend {
+            .main-layout .board-container .direction-toggle,
+            .main-layout .board-container .bonus-controls,
+            .main-layout .board-container .keyboard-hint,
+            .main-layout .board-container .legend {
                 width: 100%;
                 box-sizing: border-box;
             }
-            /* Bottom section: full-bleed wrapper so buttons go edge-to-edge (stable after scrollbar-gutter) */
-            .board-column .controls-bleed {
+            .main-layout .controls-bleed {
                 order: 2;
                 margin-top: 16px;
-                position: relative;
-                left: 50%;
-                margin-left: -50vw;
-                width: 100vw;
-                max-width: 100vw;
+                width: 100%;
                 box-sizing: border-box;
             }
-            .board-column .controls-bleed .controls {
-                margin-left: 0;
+            .main-layout .controls-bleed .controls {
                 width: 100%;
                 box-sizing: border-box;
                 padding-left: 20px;
                 padding-right: 20px;
             }
-            .board-column .seo-content { order: 3; }
-            /* Full-width action buttons on mobile */
-            .board-column .action-buttons {
+            .main-layout .seo-content {
+                order: 3;
+                padding-left: 20px;
+                padding-right: 20px;
+                box-sizing: border-box;
+            }
+            .main-layout .action-buttons {
                 flex-direction: column;
                 gap: 10px;
                 width: 100%;
             }
-            .board-column .action-buttons .btn {
+            .main-layout .action-buttons .btn {
                 width: 100%;
                 min-width: 0;
                 box-sizing: border-box;
             }
-            .board-column .controls .btn-secondary {
+            .main-layout .controls .btn-secondary {
                 width: 100%;
+                box-sizing: border-box;
+            }
+            footer {
+                padding-left: 20px;
+                padding-right: 20px;
                 box-sizing: border-box;
             }
         }
@@ -288,7 +292,7 @@
                 border-top: 1px solid rgba(255,255,255,0.06);
                 gap: 20px;
             }
-            .board-column .seo-content {
+            .main-layout .seo-content {
                 margin-top: 32px !important;
                 margin-bottom: 0 !important;
                 background: var(--bg-secondary);
@@ -297,17 +301,17 @@
                 box-shadow: 0 4px 24px rgba(0,0,0,0.2);
                 border: 1px solid rgba(255,255,255,0.04);
             }
-            .board-column .seo-content h2 {
+            .main-layout .seo-content h2 {
                 margin-top: 20px !important;
                 margin-bottom: 10px !important;
                 font-size: 1.15rem !important;
                 padding-bottom: 6px;
                 border-bottom: 1px solid rgba(255,255,255,0.06);
             }
-            .board-column .seo-content h2:first-child {
+            .main-layout .seo-content h2:first-child {
                 margin-top: 0 !important;
             }
-            .board-column .seo-content p {
+            .main-layout .seo-content p {
                 margin-bottom: 16px !important;
             }
         }
@@ -853,7 +857,26 @@
         /* Mobile optimizations */
         @media (max-width: 768px) {
             body {
-                padding: 12px;
+                padding: 12px 0;
+            }
+            .container > header,
+            .container > .instructions-mobile,
+            .container > .tile-rack-top {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+            .main-layout .board-container,
+            .main-layout .seo-content {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+            .main-layout .controls-bleed .controls {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+            footer {
+                padding-left: 12px;
+                padding-right: 12px;
             }
 
             header h1 {
@@ -869,11 +892,6 @@
                 padding: 16px;
             }
 
-            .board-column .controls-bleed .controls {
-                padding-left: 12px;
-                padding-right: 12px;
-            }
-
             .results-list {
                 max-height: 300px;
             }
@@ -881,7 +899,26 @@
 
         @media (max-width: 480px) {
             body {
-                padding: 10px;
+                padding: 10px 0;
+            }
+            .container > header,
+            .container > .instructions-mobile,
+            .container > .tile-rack-top {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .main-layout .board-container,
+            .main-layout .seo-content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .main-layout .controls-bleed .controls {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            footer {
+                padding-left: 10px;
+                padding-right: 10px;
             }
 
             header h1 {
@@ -895,11 +932,6 @@
             .board-container,
             .controls {
                 padding: 12px;
-            }
-
-            .board-column .controls-bleed .controls {
-                padding-left: 10px;
-                padding-right: 10px;
             }
 
             /* Make the 15x15 board fit comfortably on small screens */
@@ -985,7 +1017,6 @@
         </section>
 
         <div class="main-layout">
-            <div class="board-column">
             <div class="board-container">
                 <div class="board" id="board" tabindex="0"></div>
                 <!-- Hidden input used to trigger the mobile keyboard and route typing into the selected cell -->
@@ -1088,7 +1119,6 @@
                 <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 12px;">Crossplay, Scrabble & Words with Friends</h2>
                 <p style="margin-bottom: 0;">Select your game in the dropdown so bonus squares and letter values match. The app supports the official layouts and scoring for NYT Crossplay, Scrabble, and Words with Friends. No account needed; everything runs in your browser and your data stays on your device.</p>
             </section>
-            </div>
         </div>
     </div>
 
@@ -1097,7 +1127,7 @@
             <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-23
+            Build: 2026-03-07-24
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
