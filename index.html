@@ -219,8 +219,7 @@
             }
             .main-layout .board-container .direction-toggle,
             .main-layout .board-container .bonus-controls,
-            .main-layout .board-container .keyboard-hint,
-            .main-layout .board-container .legend {
+            .main-layout .board-container .keyboard-hint {
                 width: 100%;
                 box-sizing: border-box;
             }
@@ -285,12 +284,6 @@
             .board-container .keyboard-hint {
                 margin-top: 12px;
                 font-size: 12px;
-            }
-            .board-container .legend {
-                margin-top: 18px;
-                padding-top: 14px;
-                border-top: 1px solid rgba(255,255,255,0.06);
-                gap: 20px;
             }
             .main-layout .seo-content {
                 margin-top: 32px !important;
@@ -724,28 +717,6 @@
             75% { content: '...'; }
         }
 
-        .legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 15px;
-            justify-content: center;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .legend-box {
-            width: 20px;
-            height: 20px;
-            border-radius: 3px;
-        }
-
         .instructions {
             background: var(--bg-tertiary);
             padding: 15px;
@@ -1062,24 +1033,6 @@
                 <div class="keyboard-hint">
                     Click a cell, then type. Arrow keys to move. Backspace to clear. Esc to deselect.
                 </div>
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-box" style="background: var(--dl)"></div>
-                        <span>Double Letter</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-box" style="background: var(--tl)"></div>
-                        <span>Triple Letter</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-box" style="background: var(--dw)"></div>
-                        <span>Double Word</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-box" style="background: var(--tw)"></div>
-                        <span>Triple Word</span>
-                    </div>
-                </div>
             </div>
 
             <div class="controls-bleed">
@@ -1127,7 +1080,7 @@
             <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-25
+            Build: 2026-03-07-26
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
