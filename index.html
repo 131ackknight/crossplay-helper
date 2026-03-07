@@ -642,6 +642,15 @@
             text-align: center;
         }
 
+        /* Hidden input to enable typing on mobile devices */
+        #boardInput {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            height: 0;
+            width: 0;
+        }
+
         /* Mobile optimizations */
         @media (max-width: 768px) {
             body {
@@ -724,12 +733,19 @@
         <header>
             <h1>Word Game Helper</h1>
             <p>Find the highest-scoring words for Crossplay, Scrabble, and Words with Friends</p>
-            <small style="color: var(--text-secondary); font-size: 11px;">v2.2</small>
         </header>
 
         <div class="main-layout">
             <div class="board-container">
                 <div class="board" id="board" tabindex="0"></div>
+                <!-- Hidden input used to trigger the mobile keyboard and route typing into the selected cell -->
+                <input id="boardInput"
+                       type="text"
+                       inputmode="latin"
+                       autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="characters"
+                       spellcheck="false" />
                 <div class="direction-toggle">
                     <span>Type direction:</span>
                     <button id="dirH" class="active" onclick="setDirection('H')">→ Across</button>
@@ -826,6 +842,9 @@
         <p style="margin-bottom: 10px;">
             <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
         </p>
+        <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
+            Build: 2026-03-07-02
+        </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
         </p>
@@ -842,6 +861,7 @@
         // Board configuration
         const BOARD_SIZE = 15;
         const CENTER = 7;
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         // Also expose to window for dictionary.js
         window.BOARD_SIZE = BOARD_SIZE;
         window.CENTER = CENTER;
@@ -1334,8 +1354,28 @@
                 }
             }
 
-            // Add keyboard listener to board
-            boardEl.addEventListener('keydown', handleBoardKeydown);
+            // Desktop: listen for keydown events directly on the board
+            if (!isTouchDevice) {
+                boardEl.addEventListener('keydown', handleBoardKeydown);
+            }
+
+            // Mobile: route typing through a hidden input so the virtual keyboard appears
+            if (isTouchDevice) {
+                const boardInput = document.getElementById('boardInput');
+                if (boardInput) {
+                    boardInput.addEventListener('keydown', handleBoardKeydown);
+                    boardInput.addEventListener('input', (e) => {
+                        if (!e.target.value) return;
+                        const ch = e.target.value.slice(-1);
+                        const fakeEvent = {
+                            key: ch,
+                            preventDefault: () => {}
+                        };
+                        handleBoardKeydown(fakeEvent);
+                        e.target.value = '';
+                    });
+                }
+            }
         }
 
         // Select a cell for input
@@ -1347,8 +1387,16 @@
             const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
             cell.classList.add('selected');
             
-            // Focus the board to capture keyboard input
-            document.getElementById('board').focus();
+            // Focus the appropriate element to capture keyboard input
+            if (isTouchDevice) {
+                const boardInput = document.getElementById('boardInput');
+                if (boardInput) {
+                    boardInput.focus();
+                    boardInput.value = '';
+                }
+            } else {
+                document.getElementById('board').focus();
+            }
         }
 
         // Deselect cell
