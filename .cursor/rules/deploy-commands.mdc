@@ -1,0 +1,15 @@
+---
+description: Always give deployment terminal commands with a concrete commit message
+alwaysApply: true
+---
+
+# Deployment
+
+When you make changes to this project, **always** provide the full deployment terminal commands the user can run, and use a **concrete commit message** that describes the change—never use placeholders like "Your commit message" or "Update".
+
+Example:
+```bash
+git add -A
+git commit -m "Fix board stretch: use fixed 32px grid so cells stay square"
+git push
+```
