@@ -172,6 +172,14 @@
             align-items: start;
         }
 
+        .board-column {
+            min-width: 0;
+        }
+
+        .seo-content {
+            margin-bottom: 40px;
+        }
+
         @media (max-width: 900px) {
             .main-layout {
                 grid-template-columns: 1fr;
@@ -207,28 +215,26 @@
                 border-top: 1px solid rgba(255,255,255,0.06);
                 gap: 20px;
             }
-            .seo-content {
-                margin-top: 48px !important;
-                margin-left: 20px !important;
-                margin-right: auto !important;
-                margin-bottom: 40px !important;
+            .board-column .seo-content {
+                margin-top: 32px !important;
+                margin-bottom: 0 !important;
                 background: var(--bg-secondary);
                 padding: 28px 32px !important;
                 border-radius: 12px;
                 box-shadow: 0 4px 24px rgba(0,0,0,0.2);
                 border: 1px solid rgba(255,255,255,0.04);
             }
-            .seo-content h2 {
+            .board-column .seo-content h2 {
                 margin-top: 20px !important;
                 margin-bottom: 10px !important;
                 font-size: 1.15rem !important;
                 padding-bottom: 6px;
                 border-bottom: 1px solid rgba(255,255,255,0.06);
             }
-            .seo-content h2:first-child {
+            .board-column .seo-content h2:first-child {
                 margin-top: 0 !important;
             }
-            .seo-content p {
+            .board-column .seo-content p {
                 margin-bottom: 16px !important;
             }
         }
@@ -867,6 +873,7 @@
         </section>
 
         <div class="main-layout">
+            <div class="board-column">
             <div class="board-container">
                 <div class="board" id="board" tabindex="0"></div>
                 <!-- Hidden input used to trigger the mobile keyboard and route typing into the selected cell -->
@@ -932,6 +939,17 @@
                 </div>
             </div>
 
+            <!-- SEO content: same column as board so it aligns on desktop -->
+            <section class="seo-content" style="max-width: 100%; margin: 48px 0 0 0; padding: 28px 20px; color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
+                <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 12px;">How Word Game Helper Works</h2>
+                <p style="margin-bottom: 12px;">Word Game Helper is a free word finder for <strong>NYT Crossplay</strong>, <strong>Scrabble</strong>, and <strong>Words with Friends</strong>. You enter the letters already on the board, add your seven tiles, and get the best word suggestions ranked by score—including double and triple letter and word squares and a 40-point bingo bonus for using all seven tiles.</p>
+                <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 12px;">Tips for the Best First Move</h2>
+                <p style="margin-bottom: 12px;">Your first word must cover the center star. Use the tool to try different racks and see the top plays. High-value letters (J, Q, Z, X) on double or triple letter squares score more; placing a word over two double-word squares can double the score twice.</p>
+                <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 12px;">Crossplay, Scrabble & Words with Friends</h2>
+                <p style="margin-bottom: 0;">Select your game in the dropdown so bonus squares and letter values match. The app supports the official layouts and scoring for NYT Crossplay, Scrabble, and Words with Friends. No account needed; everything runs in your browser and your data stays on your device.</p>
+            </section>
+            </div>
+
             <div class="controls">
                 <div class="instructions instructions-desktop">
                     <h4>How to Use</h4>
@@ -960,22 +978,12 @@
         </div>
     </div>
 
-    <!-- SEO content: clear headings and keywords for Google and AI -->
-    <section class="seo-content" style="max-width: 800px; margin: 0 auto 40px; padding: 0 20px; color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
-        <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 12px;">How Word Game Helper Works</h2>
-        <p style="margin-bottom: 12px;">Word Game Helper is a free word finder for <strong>NYT Crossplay</strong>, <strong>Scrabble</strong>, and <strong>Words with Friends</strong>. You enter the letters already on the board, add your seven tiles, and get the best word suggestions ranked by score—including double and triple letter and word squares and a 40-point bingo bonus for using all seven tiles.</p>
-        <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 12px;">Tips for the Best First Move</h2>
-        <p style="margin-bottom: 12px;">Your first word must cover the center star. Use the tool to try different racks and see the top plays. High-value letters (J, Q, Z, X) on double or triple letter squares score more; placing a word over two double-word squares can double the score twice.</p>
-        <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 12px;">Crossplay, Scrabble & Words with Friends</h2>
-        <p style="margin-bottom: 0;">Select your game in the dropdown so bonus squares and letter values match. The app supports the official layouts and scoring for NYT Crossplay, Scrabble, and Words with Friends. No account needed; everything runs in your browser and your data stays on your device.</p>
-    </section>
-
     <footer style="max-width: 1400px; margin: 40px auto 20px; padding: 20px; text-align: center; color: var(--text-secondary); font-size: 12px; border-top: 1px solid #333;">
         <p style="margin-bottom: 10px;">
             <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-14
+            Build: 2026-03-07-15
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
