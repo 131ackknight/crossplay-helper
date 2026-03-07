@@ -572,6 +572,10 @@
             display: block;
         }
 
+        .tile-rack-top {
+            margin: 15px 0 20px;
+        }
+
         .instructions h4 {
             margin-bottom: 10px;
             color: var(--accent);
@@ -764,6 +768,16 @@
             </ol>
         </section>
 
+        <!-- Global tile rack, shown above the board on all layouts -->
+        <section class="control-group tile-rack-top">
+            <label>Your Tiles (use ? for blank)</label>
+            <div class="tile-input" id="tileInput"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                <small>Enter the 7 letters on your rack</small>
+                <button class="btn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);" onclick="clearTiles()">Clear Tiles</button>
+            </div>
+        </section>
+
         <div class="main-layout">
             <div class="board-container">
                 <div class="board" id="board" tabindex="0"></div>
@@ -836,18 +850,9 @@
                     <ol>
                         <li>Click a board square and type letters directly</li>
                         <li>Use arrow keys to navigate, Backspace to clear</li>
-                        <li>Enter your 7 available tiles below</li>
+                        <li>Enter your 7 available tiles in the rack above</li>
                         <li>Click "Show Me Best Move" to see suggestions</li>
                     </ol>
-                </div>
-
-                <div class="control-group">
-                    <label>Your Tiles (use ? for blank)</label>
-                    <div class="tile-input" id="tileInput"></div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-                        <small>Enter the 7 letters on your rack</small>
-                        <button class="btn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);" onclick="clearTiles()">Clear Tiles</button>
-                    </div>
                 </div>
 
                 <div style="display: flex; gap: 10px; margin-bottom: 10px;">
@@ -872,7 +877,7 @@
             <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-03
+            Build: 2026-03-07-04
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
