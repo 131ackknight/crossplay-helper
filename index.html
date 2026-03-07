@@ -178,6 +178,57 @@
             }
         }
 
+        /* Desktop: polish board controls and SEO section */
+        @media (min-width: 901px) {
+            .board-container {
+                padding: 20px;
+            }
+            .board-container .direction-toggle,
+            .board-container .bonus-controls {
+                margin-top: 12px;
+                padding: 10px 14px;
+                border-radius: 8px;
+            }
+            .board-container .bonus-controls {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            .board-container .bonus-controls button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            .board-container .keyboard-hint {
+                margin-top: 12px;
+                font-size: 12px;
+            }
+            .board-container .legend {
+                margin-top: 18px;
+                padding-top: 14px;
+                border-top: 1px solid rgba(255,255,255,0.06);
+                gap: 20px;
+            }
+            .seo-content {
+                background: var(--bg-secondary);
+                padding: 28px 32px !important;
+                border-radius: 12px;
+                box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+                border: 1px solid rgba(255,255,255,0.04);
+            }
+            .seo-content h2 {
+                margin-top: 20px !important;
+                margin-bottom: 10px !important;
+                font-size: 1.15rem !important;
+                padding-bottom: 6px;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+            }
+            .seo-content h2:first-child {
+                margin-top: 0 !important;
+            }
+            .seo-content p {
+                margin-bottom: 16px !important;
+            }
+        }
+
         .board-container {
             background: var(--bg-secondary);
             padding: 15px;
@@ -920,7 +971,7 @@
             <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-12
+            Build: 2026-03-07-13
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
