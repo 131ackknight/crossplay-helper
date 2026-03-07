@@ -137,6 +137,11 @@
             padding: 0;
         }
 
+        /* Reserve scrollbar space so layout doesn't jump when board loads (avoids 100vw shrinking) */
+        html {
+            scrollbar-gutter: stable;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg-primary);
@@ -178,7 +183,7 @@
         }
 
         .board-column .board-container { grid-column: 1; grid-row: 1; }
-        .board-column .controls { grid-column: 2; grid-row: 1 / -1; }
+        .board-column .controls-bleed { grid-column: 2; grid-row: 1 / -1; }
         .board-column .seo-content { grid-column: 1; grid-row: 2; }
 
         .seo-content {
@@ -218,8 +223,8 @@
                 width: 100%;
                 box-sizing: border-box;
             }
-            /* Bottom section: full-bleed to true viewport edges using 100vw */
-            .board-column .controls {
+            /* Bottom section: full-bleed wrapper so buttons go edge-to-edge (stable after scrollbar-gutter) */
+            .board-column .controls-bleed {
                 order: 2;
                 margin-top: 16px;
                 position: relative;
@@ -227,6 +232,11 @@
                 margin-left: -50vw;
                 width: 100vw;
                 max-width: 100vw;
+                box-sizing: border-box;
+            }
+            .board-column .controls-bleed .controls {
+                margin-left: 0;
+                width: 100%;
                 box-sizing: border-box;
                 padding-left: 20px;
                 padding-right: 20px;
@@ -859,8 +869,7 @@
                 padding: 16px;
             }
 
-            /* Controls full-bleed: same 100vw method, match inner padding to body */
-            .board-column .controls {
+            .board-column .controls-bleed .controls {
                 padding-left: 12px;
                 padding-right: 12px;
             }
@@ -888,8 +897,7 @@
                 padding: 12px;
             }
 
-            /* Controls full-bleed: same 100vw method, match inner padding to body */
-            .board-column .controls {
+            .board-column .controls-bleed .controls {
                 padding-left: 10px;
                 padding-right: 10px;
             }
@@ -1043,6 +1051,7 @@
                 </div>
             </div>
 
+            <div class="controls-bleed">
             <div class="controls">
                 <div class="instructions instructions-desktop">
                     <h4>How to Use</h4>
@@ -1068,6 +1077,7 @@
 
                 <div class="results" id="results"></div>
             </div>
+            </div>
 
             <!-- SEO content: same column as board so it aligns on desktop -->
             <section class="seo-content" style="max-width: 100%; margin: 48px 0 0 0; padding: 28px 20px; color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
@@ -1087,7 +1097,7 @@
             <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-22
+            Build: 2026-03-07-23
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
