@@ -563,6 +563,15 @@
             margin-bottom: 20px;
         }
 
+        /* Desktop/mobile variants for the How to Use block */
+        .instructions-mobile {
+            display: none;
+        }
+
+        .instructions-desktop {
+            display: block;
+        }
+
         .instructions h4 {
             margin-bottom: 10px;
             color: var(--accent);
@@ -725,6 +734,15 @@
                 padding: 16px;
                 font-size: 11px;
             }
+
+            /* On small screens, show How to Use at the top and hide the side version */
+            .instructions-mobile {
+                display: block;
+            }
+
+            .instructions-desktop {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -734,6 +752,17 @@
             <h1>Word Game Helper</h1>
             <p>Find the highest-scoring words for Crossplay, Scrabble, and Words with Friends</p>
         </header>
+
+        <!-- Mobile-first How to Use block (shown only on small screens) -->
+        <section class="instructions instructions-mobile">
+            <h4>How to Use</h4>
+            <ol>
+                <li>Tap a board square and type letters directly</li>
+                <li>Use the arrows / backspace buttons on your keyboard to adjust</li>
+                <li>Enter your 7 available tiles in the rack</li>
+                <li>Tap "Show Me Best Move" to see suggestions</li>
+            </ol>
+        </section>
 
         <div class="main-layout">
             <div class="board-container">
@@ -802,7 +831,7 @@
             </div>
 
             <div class="controls">
-                <div class="instructions">
+                <div class="instructions instructions-desktop">
                     <h4>How to Use</h4>
                     <ol>
                         <li>Click a board square and type letters directly</li>
@@ -843,7 +872,7 @@
             <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-02
+            Build: 2026-03-07-03
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
