@@ -1,0 +1,39 @@
+# Word Game Helper
+
+> Free online tool to find the highest-scoring words for NYT Crossplay, Scrabble, and Words with Friends.
+
+## What is this?
+
+Word Game Helper is a web-based tool that helps players find the best possible words to play in word games. It supports:
+
+- **NYT Crossplay** - New York Times word game with unique bonus tile layout
+- **Scrabble** - Classic word game with standard Scrabble board
+- **Words with Friends** - Popular mobile word game
+
+## How it works
+
+1. Enter the letters already on the game board by clicking cells and typing
+2. Enter your 7 available tiles in the tile rack
+3. Use ? for blank/wildcard tiles
+4. Click "Show Me Best Move" to find highest-scoring words
+5. Click "Place" to add the word to your board
+
+## Features
+
+- Interactive 15x15 game board
+- Automatic score calculation with bonus squares (Double Letter, Triple Letter, Double Word, Triple Word)
+- Support for blank/wildcard tiles (up to 4)
+- Save multiple game boards for different games in progress
+- Works entirely in your browser - no account needed
+
+## Scoring
+
+The tool calculates scores based on:
+- Letter point values specific to each game
+- Bonus square multipliers
+- Cross-word scores (words formed perpendicular to your play)
+- 40-point bonus for using all 7 tiles (bingo)
+
+## Privacy
+
+This tool runs entirely in your browser. No data is sent to any server. Game state is saved in your browser's local storage.

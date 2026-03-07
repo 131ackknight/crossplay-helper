@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Word Game Helper - Find Best Words for Crossplay, Scrabble & Words with Friends</title>
+    <meta name="title" content="Word Game Helper - Find Best Words for Crossplay, Scrabble & Words with Friends">
+    <meta name="description" content="Free online tool to find the highest-scoring words for NYT Crossplay, Scrabble, and Words with Friends. Enter your tiles, see the board, and get the best word suggestions instantly.">
+    <meta name="keywords" content="crossplay helper, scrabble word finder, words with friends cheat, word game solver, best word finder, crossplay cheat, scrabble helper, WWF helper, word game tool">
+    <meta name="author" content="Word Game Helper">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Word Game Helper - Find Best Words for Crossplay, Scrabble & Words with Friends">
+    <meta property="og:description" content="Free online tool to find the highest-scoring words for NYT Crossplay, Scrabble, and Words with Friends. Get the best word suggestions instantly.">
+    <meta property="og:image" content="/og-image.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Word Game Helper - Find Best Words for Crossplay, Scrabble & Words with Friends">
+    <meta name="twitter:description" content="Free online tool to find the highest-scoring words for NYT Crossplay, Scrabble, and Words with Friends.">
+    
+    <!-- Structured Data for Search Engines -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Word Game Helper",
+        "description": "Find the highest-scoring words for NYT Crossplay, Scrabble, and Words with Friends",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Find best words for Crossplay",
+            "Find best words for Scrabble", 
+            "Find best words for Words with Friends",
+            "Interactive game board",
+            "Support for blank/wildcard tiles",
+            "Score calculation with bonus squares",
+            "Save multiple game boards"
+        ]
+    }
+    </script>
+    
+    <!-- FAQ Structured Data for AI/Search -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How do I use the Word Game Helper?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Click on the board to enter letters that are already played, enter your 7 available tiles in the tile rack, then click 'Show Me Best Move' to find the highest-scoring words."
+                }
+            },
+            {
+                "@type": "Question", 
+                "name": "Does this work with NYT Crossplay?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! The tool supports NYT Crossplay with the correct bonus tile layout and letter point values. Select 'NYT Crossplay' from the game dropdown."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I enter blank tiles?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Use the question mark (?) character to represent blank/wildcard tiles. You can enter up to 4 blank tiles."
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <style>
+        :root {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-tertiary: #0f3460;
+            --accent: #e94560;
+            --accent-hover: #ff6b6b;
+            --text-primary: #eee;
+            --text-secondary: #aaa;
+            --tile-bg: #f5deb3;
+            --tile-text: #333;
+            --dl: #a8d8ea;
+            --tl: #3d85c6;
+            --dw: #f4a7a7;
+            --tw: #c94c4c;
+            --center: #e94560;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-secondary);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .board-container {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 2px;
+            background: var(--bg-tertiary);
+            padding: 2px;
+            border-radius: 4px;
+        }
+
+        .cell {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: transform 0.1s, box-shadow 0.1s;
+            position: relative;
+            background: #c9b896;
+            color: #666;
+        }
+
+        .cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .cell.dl { background: var(--dl); }
+        .cell.tl { background: var(--tl); color: white; }
+        .cell.dw { background: var(--dw); }
+        .cell.tw { background: var(--tw); color: white; }
+        .cell.center { background: var(--center); color: white; }
+
+        .cell.has-tile {
+            background: var(--tile-bg);
+            color: var(--tile-text);
+            font-size: 16px;
+            box-shadow: inset 0 -2px 0 #c4a574;
+        }
+
+        .cell.has-tile::after {
+            content: attr(data-points);
+            position: absolute;
+            bottom: 2px;
+            right: 3px;
+            font-size: 7px;
+            color: #666;
+        }
+
+        .cell.highlighted {
+            box-shadow: 0 0 0 3px var(--accent), 0 0 12px var(--accent);
+            z-index: 2;
+        }
+
+        .cell.new-tile {
+            background: #ffeaa7;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 2px #fdcb6e; }
+            50% { box-shadow: 0 0 0 4px #fdcb6e, 0 0 12px #fdcb6e; }
+        }
+
+        .cell.selected {
+            box-shadow: 0 0 0 3px #00d4ff, 0 0 15px #00d4ff;
+            z-index: 3;
+        }
+
+        .direction-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .direction-toggle button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .direction-toggle button.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .direction-toggle button:not(.active) {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .bonus-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 8px;
+            padding: 8px 10px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .toggle-label input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .cell.bonus-disabled {
+            opacity: 0.5;
+        }
+
+        .keyboard-hint {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .controls {
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .control-group small {
+            display: block;
+            margin-top: 5px;
+            color: var(--text-secondary);
+        }
+
+        .tile-input {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tile-input input {
+            width: 45px;
+            height: 45px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: var(--tile-bg);
+            color: var(--tile-text);
+            border: none;
+            border-radius: 6px;
+            box-shadow: inset 0 -3px 0 #c4a574;
+        }
+
+        .tile-input input:focus {
+            outline: 3px solid var(--accent);
+        }
+
+        .tile-input input::placeholder {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background: #1a4a7a;
+        }
+
+        .results {
+            margin-top: 25px;
+        }
+
+        .results h3 {
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .results-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .result-item:hover {
+            background: #1a4a7a;
+            transform: translateX(5px);
+        }
+
+        .result-item.active {
+            background: var(--accent);
+        }
+
+        .result-word {
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .result-info {
+            text-align: right;
+        }
+
+        .result-score {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .result-item.active .result-score {
+            color: white;
+        }
+
+        .result-position {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .result-item.active .result-position {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .place-btn {
+            padding: 6px 12px;
+            background: #2d6a4f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background 0.2s;
+            margin-left: 10px;
+        }
+
+        .place-btn:hover {
+            background: #40916c;
+        }
+
+
+        .score-breakdown {
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            border: 1px solid var(--accent);
+        }
+
+        .score-breakdown h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .breakdown-table {
+            width: 100%;
+            font-size: 12px;
+            border-collapse: collapse;
+        }
+
+        .breakdown-table th, .breakdown-table td {
+            padding: 6px 8px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        .breakdown-table th {
+            color: var(--text-secondary);
+            font-weight: normal;
+        }
+
+        .breakdown-table .new-tile {
+            color: #2ecc71;
+        }
+
+        .breakdown-table .blank-tile {
+            color: #888;
+        }
+
+        .breakdown-total {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+        }
+
+        .loading::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0% { content: ''; }
+            25% { content: '.'; }
+            50% { content: '..'; }
+            75% { content: '...'; }
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .instructions {
+            background: var(--bg-tertiary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .instructions h4 {
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            color: var(--text-secondary);
+        }
+
+        .instructions li {
+            margin-bottom: 5px;
+        }
+
+        .status {
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .status.info {
+            background: rgba(61, 133, 198, 0.2);
+            border: 1px solid var(--tl);
+            color: var(--dl);
+        }
+
+        .status.success {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .status.error {
+            background: rgba(233, 69, 96, 0.2);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .no-results p {
+            margin-bottom: 10px;
+        }
+
+        .hint-container {
+            padding: 20px;
+        }
+
+        .hint-container h3 {
+            color: #2d6a4f;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .hint-item {
+            background: rgba(45, 106, 79, 0.15);
+            border-left: 3px solid #2d6a4f;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 0 6px 6px 0;
+            color: var(--text-primary);
+        }
+
+        .hint-item strong {
+            color: #52b788;
+        }
+
+        .hint-more {
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-style: italic;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Word Game Helper</h1>
+            <p>Find the highest-scoring words for Crossplay, Scrabble, and Words with Friends</p>
+            <small style="color: var(--text-secondary); font-size: 11px;">v2.2</small>
+        </header>
+
+        <div class="main-layout">
+            <div class="board-container">
+                <div class="board" id="board" tabindex="0"></div>
+                <div class="direction-toggle">
+                    <span>Type direction:</span>
+                    <button id="dirH" class="active" onclick="setDirection('H')">→ Across</button>
+                    <button id="dirV" onclick="setDirection('V')">↓ Down</button>
+                </div>
+                <div class="bonus-controls">
+                    <label class="toggle-label">
+                        <span>Game:</span>
+                        <select id="gameSelect" onchange="changeGame()" style="padding: 4px 8px; border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary); border: 1px solid #444;">
+                            <option value="crossplay">NYT Crossplay</option>
+                            <option value="scrabble">Scrabble</option>
+                            <option value="wwf">Words with Friends</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="bonus-controls" style="margin-top: 4px;">
+                    <label class="toggle-label">
+                        <span>Saved Boards:</span>
+                        <select id="boardSelect" onchange="loadSavedBoard()" style="padding: 4px 8px; border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary); border: 1px solid #444; min-width: 120px;">
+                            <option value="" disabled>Select a board...</option>
+                        </select>
+                    </label>
+                    <button onclick="saveCurrentBoard()" style="padding: 4px 8px; font-size: 11px; cursor: pointer; background: #2d6a4f; color: white; border: none; border-radius: 4px;">Save Board</button>
+                    <button onclick="deleteSavedBoard()" style="padding: 4px 8px; font-size: 11px; cursor: pointer; background: #6c757d; color: white; border: none; border-radius: 4px;">Delete</button>
+                    <button onclick="newBoard()" style="padding: 4px 8px; font-size: 11px; cursor: pointer; background: #0077b6; color: white; border: none; border-radius: 4px;">New Board</button>
+                </div>
+                <div class="bonus-controls" style="margin-top: 4px;">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="bonusEnabled" checked onchange="toggleBonusScoring()">
+                        <span>Bonus tiles enabled</span>
+                    </label>
+                </div>
+                <div class="keyboard-hint">
+                    Click a cell, then type. Arrow keys to move. Backspace to clear. Esc to deselect.
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-box" style="background: var(--dl)"></div>
+                        <span>Double Letter</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box" style="background: var(--tl)"></div>
+                        <span>Triple Letter</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box" style="background: var(--dw)"></div>
+                        <span>Double Word</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box" style="background: var(--tw)"></div>
+                        <span>Triple Word</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="instructions">
+                    <h4>How to Use</h4>
+                    <ol>
+                        <li>Click a board square and type letters directly</li>
+                        <li>Use arrow keys to navigate, Backspace to clear</li>
+                        <li>Enter your 7 available tiles below</li>
+                        <li>Click "Show Me Best Move" to see suggestions</li>
+                    </ol>
+                </div>
+
+                <div class="control-group">
+                    <label>Your Tiles (use ? for blank)</label>
+                    <div class="tile-input" id="tileInput"></div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                        <small>Enter the 7 letters on your rack</small>
+                        <button class="btn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);" onclick="clearTiles()">Clear Tiles</button>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                    <button class="btn btn-primary" id="findBtn" onclick="findWords()" style="flex: 1;">
+                        Show Me Best Move
+                    </button>
+                    <button class="btn" style="flex: 1; background: #2d6a4f; color: white;" onclick="getHint()">
+                        Get a Hint
+                    </button>
+                </div>
+                <button class="btn btn-secondary" onclick="clearBoard()">
+                    Clear Board
+                </button>
+
+                <div class="results" id="results"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="max-width: 1400px; margin: 40px auto 20px; padding: 20px; text-align: center; color: var(--text-secondary); font-size: 12px; border-top: 1px solid #333;">
+        <p style="margin-bottom: 10px;">
+            <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
+        </p>
+        <p style="margin-bottom: 10px;">
+            Works entirely in your browser. No account required. Your game data stays on your device.
+        </p>
+        <p style="color: #666;">
+            Not affiliated with The New York Times, Hasbro, or Zynga. 
+            Crossplay™ is a trademark of The New York Times. 
+            Scrabble® is a trademark of Hasbro. 
+            Words with Friends™ is a trademark of Zynga.
+        </p>
+    </footer>
+
+    <script src="dictionary.js"></script>
+    <script>
+        // Board configuration
+        const BOARD_SIZE = 15;
+        const CENTER = 7;
+        // Also expose to window for dictionary.js
+        window.BOARD_SIZE = BOARD_SIZE;
+        window.CENTER = CENTER;
+
+        // Letter point values (NYT Crossplay scoring)
+        const LETTER_POINTS = {
+            'A': 1, 'B': 4, 'C': 3, 'D': 2, 'E': 1, 'F': 4, 'G': 4, 'H': 3,
+            'I': 1, 'J': 10, 'K': 6, 'L': 2, 'M': 3, 'N': 1, 'O': 1, 'P': 3,
+            'Q': 10, 'R': 1, 'S': 1, 'T': 1, 'U': 2, 'V': 6, 'W': 5, 'X': 8,
+            'Y': 4, 'Z': 10, '?': 0
+        };
+
+        // Special squares configuration (Crossplay layout)
+        const SPECIAL_SQUARES = {};
+        
+        // Triple Word (TW) - red squares
+        [[0,3],[0,11],[3,0],[3,14],[11,0],[11,14],[14,3],[14,11]].forEach(([r,c]) => {
+            SPECIAL_SQUARES[`${r},${c}`] = 'tw';
+        });
+        
+        // Double Word (DW) - pink squares
+        [[1,1],[1,13],[3,7],[7,3],[7,11],[11,7],[13,1],[13,13]].forEach(([r,c]) => {
+            SPECIAL_SQUARES[`${r},${c}`] = 'dw';
+        });
+        
+        // Triple Letter (TL) - dark blue squares
+        [[0,0],[0,14],[1,6],[1,8],[4,5],[4,9],[5,4],[5,10],[6,1],[6,13],
+         [8,1],[8,13],[9,4],[9,10],[10,5],[10,9],[13,6],[13,8],[14,0],[14,14]].forEach(([r,c]) => {
+            SPECIAL_SQUARES[`${r},${c}`] = 'tl';
+        });
+        
+        // Double Letter (DL) - light blue squares
+        [[0,7],[2,4],[2,10],[3,3],[3,11],[4,2],[4,12],[5,7],[7,0],[7,5],
+         [7,9],[7,14],[9,7],[10,2],[10,12],[11,3],[11,11],[12,4],[12,10],[14,7]].forEach(([r,c]) => {
+            SPECIAL_SQUARES[`${r},${c}`] = 'dl';
+        });
+
+        // Center
+        SPECIAL_SQUARES[`${CENTER},${CENTER}`] = 'center';
+
+        // Store default configuration for reset
+        const DEFAULT_SPECIAL_SQUARES = { ...SPECIAL_SQUARES };
+
+        // Game presets
+        const GAME_PRESETS = {
+            crossplay: {
+                name: 'NYT Crossplay',
+                tw: [[0,3],[0,11],[3,0],[3,14],[11,0],[11,14],[14,3],[14,11]],
+                dw: [[1,1],[1,13],[3,7],[7,3],[7,11],[11,7],[13,1],[13,13]],
+                tl: [[0,0],[0,14],[1,6],[1,8],[4,5],[4,9],[5,4],[5,10],[6,1],[6,13],
+                     [8,1],[8,13],[9,4],[9,10],[10,5],[10,9],[13,6],[13,8],[14,0],[14,14]],
+                dl: [[0,7],[2,4],[2,10],[3,3],[3,11],[4,2],[4,12],[5,7],[7,0],[7,5],
+                     [7,9],[7,14],[9,7],[10,2],[10,12],[11,3],[11,11],[12,4],[12,10],[14,7]]
+            },
+            scrabble: {
+                name: 'Scrabble',
+                tw: [[0,0],[0,7],[0,14],[7,0],[7,14],[14,0],[14,7],[14,14]],
+                dw: [[1,1],[2,2],[3,3],[4,4],[1,13],[2,12],[3,11],[4,10],
+                     [13,1],[12,2],[11,3],[10,4],[13,13],[12,12],[11,11],[10,10],[7,7]],
+                tl: [[1,5],[1,9],[5,1],[5,5],[5,9],[5,13],[9,1],[9,5],[9,9],[9,13],[13,5],[13,9]],
+                dl: [[0,3],[0,11],[2,6],[2,8],[3,0],[3,7],[3,14],[6,2],[6,6],[6,8],[6,12],
+                     [7,3],[7,11],[8,2],[8,6],[8,8],[8,12],[11,0],[11,7],[11,14],[12,6],[12,8],
+                     [14,3],[14,11]]
+            },
+            wwf: {
+                name: 'Words with Friends',
+                tw: [[0,3],[0,11],[3,0],[3,14],[5,0],[5,14],[9,0],[9,14],[11,0],[11,14],[14,3],[14,11]],
+                dw: [[1,6],[1,8],[5,5],[5,9],[7,3],[7,11],[9,5],[9,9],[13,6],[13,8]],
+                tl: [[0,6],[0,8],[3,7],[5,7],[6,2],[6,12],[8,2],[8,12],[9,7],[11,7],[14,6],[14,8]],
+                dl: [[1,2],[1,5],[1,9],[1,12],[2,1],[2,4],[2,10],[2,13],[3,3],[3,11],
+                     [4,2],[4,6],[4,8],[4,12],[5,1],[5,13],[6,4],[6,10],[7,6],[7,8],
+                     [8,4],[8,10],[9,1],[9,13],[10,2],[10,6],[10,8],[10,12],[11,3],[11,11],
+                     [12,1],[12,4],[12,10],[12,13],[13,2],[13,5],[13,9],[13,12]]
+            }
+        };
+
+        // Current game type
+        let currentGame = 'crossplay';
+        
+        // Currently selected saved board name (empty = working on unsaved board)
+        let currentSavedBoardName = localStorage.getItem('crossplay_current_board_name') || '';
+        
+        // Helper to set and persist the current board name
+        function setCurrentBoardName(name) {
+            currentSavedBoardName = name;
+            localStorage.setItem('crossplay_current_board_name', name);
+        }
+
+        // Layout version - increment this when default layout changes
+        const LAYOUT_VERSION = 4;
+
+        // Load saved bonus configuration from localStorage
+        function loadBonusConfig() {
+            try {
+                // Load saved game type first
+                const savedGame = localStorage.getItem('crossplayHelper_game');
+                if (savedGame && GAME_PRESETS[savedGame]) {
+                    currentGame = savedGame;
+                }
+
+                // Check if layout version changed - if so, reset to current game's defaults
+                const savedVersion = localStorage.getItem('crossplay_layout_version');
+                if (savedVersion !== String(LAYOUT_VERSION)) {
+                    // New layout version - clear old saved config and apply current game's defaults
+                    localStorage.removeItem('crossplay_bonuses');
+                    localStorage.setItem('crossplay_layout_version', String(LAYOUT_VERSION));
+                    
+                    // Apply current game preset
+                    const preset = GAME_PRESETS[currentGame];
+                    for (const key in SPECIAL_SQUARES) {
+                        delete SPECIAL_SQUARES[key];
+                    }
+                    preset.tw.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'tw'; });
+                    preset.dw.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'dw'; });
+                    preset.tl.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'tl'; });
+                    preset.dl.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'dl'; });
+                    SPECIAL_SQUARES['7,7'] = 'center';
+                    return;
+                }
+
+                const saved = localStorage.getItem('crossplay_bonuses');
+                if (saved) {
+                    const config = JSON.parse(saved);
+                    // Clear current and apply saved
+                    for (const key in SPECIAL_SQUARES) {
+                        delete SPECIAL_SQUARES[key];
+                    }
+                    Object.assign(SPECIAL_SQUARES, config);
+                }
+                
+                // Load bonus enabled state
+                const enabledState = localStorage.getItem('crossplay_bonuses_enabled');
+                if (enabledState !== null) {
+                    window.bonusScoringEnabled = enabledState === 'true';
+                }
+            } catch (e) {
+                console.log('Could not load bonus config:', e);
+            }
+        }
+
+        // Save bonus configuration to localStorage
+        function saveBonusConfig() {
+            try {
+                localStorage.setItem('crossplay_bonuses', JSON.stringify(SPECIAL_SQUARES));
+                localStorage.setItem('crossplay_bonuses_enabled', String(window.bonusScoringEnabled));
+            } catch (e) {
+                console.log('Could not save bonus config:', e);
+            }
+        }
+
+        // Save board state to localStorage
+        function saveBoardState() {
+            try {
+                localStorage.setItem('crossplay_board', JSON.stringify(window.boardState));
+                
+                // Also update the currently selected saved board if one is active
+                if (currentSavedBoardName) {
+                    const boards = getSavedBoards();
+                    if (boards[currentSavedBoardName]) {
+                        boards[currentSavedBoardName].boardState = JSON.parse(JSON.stringify(window.boardState));
+                        boards[currentSavedBoardName].savedAt = new Date().toISOString();
+                        setSavedBoards(boards);
+                    }
+                }
+            } catch (e) {
+                console.log('Could not save board state:', e);
+            }
+        }
+
+        // Load board state from localStorage
+        function loadBoardState() {
+            try {
+                const saved = localStorage.getItem('crossplay_board');
+                if (saved) {
+                    const savedBoard = JSON.parse(saved);
+                    // Validate it's the right size
+                    if (savedBoard.length === BOARD_SIZE && savedBoard[0].length === BOARD_SIZE) {
+                        window.boardState = savedBoard;
+                        return true;
+                    }
+                }
+            } catch (e) {
+                console.log('Could not load board state:', e);
+            }
+            return false;
+        }
+
+        // Get all saved boards from localStorage
+        function getSavedBoards() {
+            try {
+                const saved = localStorage.getItem('crossplay_saved_boards');
+                return saved ? JSON.parse(saved) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        // Save all boards to localStorage
+        function setSavedBoards(boards) {
+            try {
+                localStorage.setItem('crossplay_saved_boards', JSON.stringify(boards));
+            } catch (e) {
+                console.log('Could not save boards:', e);
+            }
+        }
+
+        // Save current board with a name
+        function saveCurrentBoard() {
+            const name = prompt('Enter a name for this board (e.g., "Game vs Mom"):');
+            if (!name || !name.trim()) return;
+            
+            const boardName = name.trim();
+            const boards = getSavedBoards();
+            
+            // Save board data including game type, bonuses, and tiles
+            boards[boardName] = {
+                boardState: JSON.parse(JSON.stringify(window.boardState)),
+                gameType: currentGame,
+                bonuses: JSON.parse(JSON.stringify(SPECIAL_SQUARES)),
+                bonusEnabled: window.bonusScoringEnabled,
+                playerTiles: getPlayerTilesArray(),
+                savedAt: new Date().toISOString()
+            };
+            
+            setSavedBoards(boards);
+            
+            // Track this as the active saved board
+            setCurrentBoardName(boardName);
+            
+            // Refresh dropdown (will auto-select the active board)
+            updateBoardSelect();
+            
+            alert(`Board "${boardName}" saved! Changes will auto-save.`);
+        }
+
+        // Check if current board has any tiles
+        function boardHasTiles() {
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    if (window.boardState[row][col]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        // Load a saved board
+        function loadSavedBoard() {
+            const select = document.getElementById('boardSelect');
+            const boardName = select.value;
+            
+            if (!boardName) {
+                // Placeholder selected - do nothing
+                return;
+            }
+            
+            // Check if current board is unsaved and has tiles
+            if (!currentSavedBoardName && boardHasTiles()) {
+                const targetBoard = boardName; // Remember where we want to go
+                const response = confirm(
+                    'You have an unsaved board with tiles on it.\n\n' +
+                    'Click "OK" to save it first, or "Cancel" to discard and switch.'
+                );
+                
+                if (response) {
+                    // User wants to save first
+                    const name = prompt('Enter a name for this board (e.g., "Game vs Mom"):');
+                    if (name && name.trim()) {
+                        // Save the current board
+                        const boards = getSavedBoards();
+                        boards[name.trim()] = {
+                            boardState: JSON.parse(JSON.stringify(window.boardState)),
+                            gameType: currentGame,
+                            bonuses: JSON.parse(JSON.stringify(SPECIAL_SQUARES)),
+                            bonusEnabled: window.bonusScoringEnabled,
+                            playerTiles: getPlayerTilesArray(),
+                            savedAt: new Date().toISOString()
+                        };
+                        setSavedBoards(boards);
+                    } else {
+                        // User cancelled the name prompt - abort the whole switch
+                        updateBoardSelect();
+                        return;
+                    }
+                }
+                // Continue with switch to target board (either after saving or discarding)
+            }
+            
+            const boards = getSavedBoards();
+            const savedBoard = boards[boardName];
+            
+            if (!savedBoard) {
+                alert('Board not found');
+                select.value = '';
+                setCurrentBoardName('');
+                return;
+            }
+            
+            // Track this as the active saved board
+            setCurrentBoardName(boardName);
+            
+            // Load board state
+            window.boardState = savedBoard.boardState;
+            
+            // Load game type
+            if (savedBoard.gameType && GAME_PRESETS[savedBoard.gameType]) {
+                currentGame = savedBoard.gameType;
+                document.getElementById('gameSelect').value = currentGame;
+            }
+            
+            // Load bonus configuration
+            if (savedBoard.bonuses) {
+                for (const key in SPECIAL_SQUARES) {
+                    delete SPECIAL_SQUARES[key];
+                }
+                Object.assign(SPECIAL_SQUARES, savedBoard.bonuses);
+            }
+            
+            // Load bonus enabled state
+            if (savedBoard.bonusEnabled !== undefined) {
+                window.bonusScoringEnabled = savedBoard.bonusEnabled;
+                document.getElementById('bonusEnabled').checked = window.bonusScoringEnabled;
+            }
+            
+            // Load player tiles
+            if (savedBoard.playerTiles) {
+                setPlayerTiles(savedBoard.playerTiles);
+            } else {
+                // Clear tiles if none saved
+                setPlayerTiles([]);
+            }
+            
+            // Refresh display
+            refreshBonusDisplay();
+            applySavedBoard();
+            
+            // Save as current working board (won't re-save to named board since we just loaded it)
+            localStorage.setItem('crossplay_board', JSON.stringify(window.boardState));
+            localStorage.setItem('crossplay_player_tiles', JSON.stringify(savedBoard.playerTiles || []));
+            saveBonusConfig();
+            localStorage.setItem('crossplayHelper_game', currentGame);
+        }
+
+        // Delete a saved board
+        function deleteSavedBoard() {
+            const select = document.getElementById('boardSelect');
+            const boardName = select.value;
+            
+            if (!boardName) {
+                alert('Select a saved board to delete');
+                return;
+            }
+            
+            if (!confirm(`Delete board "${boardName}"?`)) {
+                return;
+            }
+            
+            const boards = getSavedBoards();
+            delete boards[boardName];
+            setSavedBoards(boards);
+            
+            // If we deleted the active board, clear it
+            if (currentSavedBoardName === boardName) {
+                setCurrentBoardName('');
+                
+                // Clear the board
+                window.boardState = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null));
+                applySavedBoard();
+                
+                // Clear the tiles
+                setPlayerTiles([]);
+                
+                // Clear results
+                document.getElementById('results').innerHTML = '';
+                
+                // Save the cleared state
+                localStorage.setItem('crossplay_board', JSON.stringify(window.boardState));
+                localStorage.setItem('crossplay_player_tiles', JSON.stringify([]));
+            }
+            
+            // Refresh dropdown
+            updateBoardSelect();
+        }
+
+        // Start a new empty board
+        function newBoard() {
+            if (!confirm('Start a new empty board? Make sure to save your current board first if needed.')) {
+                return;
+            }
+            
+            // Stop tracking any saved board
+            setCurrentBoardName('');
+            
+            // Clear board state
+            window.boardState = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null));
+            
+            // Reset display
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    updateCellDisplay(row, col);
+                }
+            }
+            
+            // Refresh board select to show unsaved state
+            updateBoardSelect();
+            
+            // Clear results
+            document.getElementById('results').innerHTML = '';
+            
+            // Save the empty board (just to localStorage, not a named board)
+            localStorage.setItem('crossplay_board', JSON.stringify(window.boardState));
+        }
+
+        // Update the board select dropdown
+        function updateBoardSelect() {
+            const select = document.getElementById('boardSelect');
+            
+            // Clear all options
+            select.innerHTML = '';
+            
+            // Add saved boards
+            const boards = getSavedBoards();
+            const sortedNames = Object.keys(boards).sort((a, b) => {
+                // Sort by most recently saved
+                const dateA = boards[a].savedAt || '';
+                const dateB = boards[b].savedAt || '';
+                return dateB.localeCompare(dateA);
+            });
+            
+            if (sortedNames.length === 0) {
+                // No saved boards - show placeholder
+                const placeholder = document.createElement('option');
+                placeholder.value = '';
+                placeholder.textContent = 'No saved boards';
+                placeholder.disabled = true;
+                select.appendChild(placeholder);
+            } else {
+                // Add placeholder for unsaved state
+                if (!currentSavedBoardName) {
+                    const placeholder = document.createElement('option');
+                    placeholder.value = '';
+                    placeholder.textContent = '-- Unsaved Board --';
+                    placeholder.selected = true;
+                    select.appendChild(placeholder);
+                }
+                
+                for (const name of sortedNames) {
+                    const option = document.createElement('option');
+                    option.value = name;
+                    const gameLabel = boards[name].gameType ? ` (${GAME_PRESETS[boards[name].gameType]?.name || boards[name].gameType})` : '';
+                    option.textContent = name + gameLabel;
+                    if (name === currentSavedBoardName) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                }
+            }
+        }
+
+        // Load saved config on startup
+        loadBonusConfig();
+
+        // Board state (on window so dictionary.js can access it)
+        window.boardState = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null));
+        let selectedCell = null;
+        let highlightedCells = [];
+        let typeDirection = 'H'; // H = horizontal (across), V = vertical (down)
+
+        // Initialize the board
+        function initBoard() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+
+                    const special = SPECIAL_SQUARES[`${row},${col}`];
+                    if (special) {
+                        cell.classList.add(special);
+                        cell.textContent = special === 'center' ? '★' : special.toUpperCase();
+                    }
+
+                    cell.addEventListener('click', () => handleCellClick(row, col));
+                    boardEl.appendChild(cell);
+                }
+            }
+
+            // Add keyboard listener to board
+            boardEl.addEventListener('keydown', handleBoardKeydown);
+        }
+
+        // Select a cell for input
+        function selectCell(row, col) {
+            // Remove previous selection
+            document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
+            
+            selectedCell = { row, col };
+            const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+            cell.classList.add('selected');
+            
+            // Focus the board to capture keyboard input
+            document.getElementById('board').focus();
+        }
+
+        // Deselect cell
+        function deselectCell() {
+            document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
+            selectedCell = null;
+        }
+
+        // Set typing direction
+        function setDirection(dir) {
+            typeDirection = dir;
+            document.getElementById('dirH').classList.toggle('active', dir === 'H');
+            document.getElementById('dirV').classList.toggle('active', dir === 'V');
+        }
+
+        // Bonus scoring state (global so dictionary.js can access it)
+        window.bonusScoringEnabled = true;
+
+        // Toggle bonus scoring on/off
+        function toggleBonusScoring() {
+            window.bonusScoringEnabled = document.getElementById('bonusEnabled').checked;
+            // Update visual indicator on cells
+            document.querySelectorAll('.cell').forEach(cell => {
+                const row = parseInt(cell.dataset.row);
+                const col = parseInt(cell.dataset.col);
+                const special = SPECIAL_SQUARES[`${row},${col}`];
+                if (special) {
+                    cell.classList.toggle('bonus-disabled', !window.bonusScoringEnabled);
+                }
+            });
+            saveBonusConfig();
+        }
+
+        // Handle cell click - select for typing
+        function handleCellClick(row, col) {
+            selectCell(row, col);
+        }
+
+        // Apply a game preset
+        function applyGamePreset(gameType) {
+            const preset = GAME_PRESETS[gameType];
+            if (!preset) return;
+
+            // Clear current
+            for (const key in SPECIAL_SQUARES) {
+                delete SPECIAL_SQUARES[key];
+            }
+
+            // Apply preset
+            preset.tw.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'tw'; });
+            preset.dw.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'dw'; });
+            preset.tl.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'tl'; });
+            preset.dl.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'dl'; });
+
+            // Add center star
+            SPECIAL_SQUARES['7,7'] = 'center';
+
+            // Update display
+            refreshBonusDisplay();
+            saveBonusConfig();
+        }
+
+        // Change game type
+        function changeGame() {
+            const select = document.getElementById('gameSelect');
+            currentGame = select.value;
+            applyGamePreset(currentGame);
+            
+            // Save selected game to localStorage
+            localStorage.setItem('crossplayHelper_game', currentGame);
+        }
+
+        // Refresh bonus display on all cells
+        function refreshBonusDisplay() {
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+                    cell.classList.remove('dl', 'tl', 'dw', 'tw', 'center');
+                    
+                    if (!window.boardState[row][col]) {
+                        const special = SPECIAL_SQUARES[`${row},${col}`];
+                        if (special) {
+                            cell.classList.add(special);
+                            cell.textContent = special === 'center' ? '★' : special.toUpperCase();
+                        } else {
+                            cell.textContent = '';
+                        }
+                    }
+                }
+            }
+        }
+
+        // Handle keyboard input on board
+        function handleBoardKeydown(e) {
+            if (!selectedCell) return;
+
+            const { row, col } = selectedCell;
+
+            // Letter input
+            if (/^[a-zA-Z]$/.test(e.key)) {
+                e.preventDefault();
+                const letter = e.key.toUpperCase();
+                window.boardState[row][col] = letter;
+                updateCellDisplay(row, col);
+                saveBoardState();
+                
+                // Auto-advance to next cell
+                if (typeDirection === 'H' && col < BOARD_SIZE - 1) {
+                    selectCell(row, col + 1);
+                } else if (typeDirection === 'V' && row < BOARD_SIZE - 1) {
+                    selectCell(row + 1, col);
+                }
+                return;
+            }
+
+            // Arrow key navigation
+            if (e.key === 'ArrowUp' && row > 0) {
+                e.preventDefault();
+                selectCell(row - 1, col);
+            } else if (e.key === 'ArrowDown' && row < BOARD_SIZE - 1) {
+                e.preventDefault();
+                selectCell(row + 1, col);
+            } else if (e.key === 'ArrowLeft' && col > 0) {
+                e.preventDefault();
+                selectCell(row, col - 1);
+            } else if (e.key === 'ArrowRight' && col < BOARD_SIZE - 1) {
+                e.preventDefault();
+                selectCell(row, col + 1);
+            }
+
+            // Backspace - clear current cell and move back
+            if (e.key === 'Backspace') {
+                e.preventDefault();
+                if (window.boardState[row][col]) {
+                    window.boardState[row][col] = null;
+                    updateCellDisplay(row, col);
+                    saveBoardState();
+                } else {
+                    // Move back
+                    if (typeDirection === 'H' && col > 0) {
+                        selectCell(row, col - 1);
+                        window.boardState[row][col - 1] = null;
+                        updateCellDisplay(row, col - 1);
+                        saveBoardState();
+                    } else if (typeDirection === 'V' && row > 0) {
+                        selectCell(row - 1, col);
+                        window.boardState[row - 1][col] = null;
+                        updateCellDisplay(row - 1, col);
+                        saveBoardState();
+                    }
+                }
+            }
+
+            // Delete - clear current cell
+            if (e.key === 'Delete') {
+                e.preventDefault();
+                window.boardState[row][col] = null;
+                updateCellDisplay(row, col);
+                saveBoardState();
+            }
+
+            // Escape - deselect
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                deselectCell();
+            }
+
+            // Tab - toggle direction
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                setDirection(typeDirection === 'H' ? 'V' : 'H');
+            }
+        }
+
+        // Count blanks in tile inputs
+        function countBlanks() {
+            const inputs = document.querySelectorAll('#tileInput input');
+            return Array.from(inputs).filter(input => input.value === '?').length;
+        }
+
+        // Initialize tile inputs
+        function initTileInputs() {
+            const container = document.getElementById('tileInput');
+            container.innerHTML = '';
+
+            for (let i = 0; i < 7; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.maxLength = 1;
+                input.placeholder = '';
+                input.addEventListener('input', (e) => {
+                    let value = e.target.value.toUpperCase();
+                    
+                    // Check if trying to add a blank (?)
+                    if (value === '?') {
+                        const currentBlanks = countBlanks();
+                        // Don't count this input if it was already a blank
+                        const wasBlank = e.target.dataset.prevValue === '?';
+                        if (!wasBlank && currentBlanks >= 4) {
+                            e.target.value = '';
+                            alert('Maximum 4 blank tiles (?) allowed');
+                            return;
+                        }
+                    }
+                    
+                    e.target.value = value;
+                    e.target.dataset.prevValue = value;
+                    
+                    if (e.target.value && i < 6) {
+                        container.children[i + 1].focus();
+                    }
+                    
+                    savePlayerTiles();
+                });
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !e.target.value && i > 0) {
+                        container.children[i - 1].focus();
+                    }
+                });
+                input.addEventListener('blur', savePlayerTiles);
+                container.appendChild(input);
+            }
+        }
+
+        // Get player tiles as string
+        function getPlayerTiles() {
+            const inputs = document.querySelectorAll('#tileInput input');
+            return Array.from(inputs)
+                .map(input => input.value.toUpperCase())
+                .filter(v => v)
+                .join('');
+        }
+
+        // Get player tiles as array (preserves empty slots)
+        function getPlayerTilesArray() {
+            const inputs = document.querySelectorAll('#tileInput input');
+            return Array.from(inputs).map(input => input.value.toUpperCase());
+        }
+
+        // Set player tiles from array
+        function setPlayerTiles(tilesArray) {
+            const inputs = document.querySelectorAll('#tileInput input');
+            inputs.forEach((input, i) => {
+                input.value = tilesArray[i] || '';
+            });
+        }
+
+        // Save player tiles to localStorage
+        function savePlayerTiles() {
+            const tiles = getPlayerTilesArray();
+            localStorage.setItem('crossplay_player_tiles', JSON.stringify(tiles));
+            
+            // Also update the current saved board if one is active
+            if (currentSavedBoardName) {
+                const boards = getSavedBoards();
+                if (boards[currentSavedBoardName]) {
+                    boards[currentSavedBoardName].playerTiles = tiles;
+                    setSavedBoards(boards);
+                }
+            }
+        }
+
+        // Load player tiles from localStorage
+        function loadPlayerTiles() {
+            try {
+                const saved = localStorage.getItem('crossplay_player_tiles');
+                if (saved) {
+                    const tiles = JSON.parse(saved);
+                    setPlayerTiles(tiles);
+                }
+            } catch (e) {
+                console.log('Could not load player tiles:', e);
+            }
+        }
+
+        // Clear player tiles
+        function clearTiles() {
+            const inputs = document.querySelectorAll('#tileInput input');
+            inputs.forEach(input => input.value = '');
+            inputs[0].focus();
+            document.getElementById('results').innerHTML = '';
+            savePlayerTiles();
+        }
+
+        // Update cell display
+        function updateCellDisplay(row, col) {
+            const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+            const letter = window.boardState[row][col];
+
+            // Always clear bonus classes first
+            cell.classList.remove('dl', 'tl', 'dw', 'tw', 'center');
+
+            if (letter) {
+                cell.classList.add('has-tile');
+                cell.textContent = letter;
+                cell.dataset.points = LETTER_POINTS[letter] || 0;
+            } else {
+                cell.classList.remove('has-tile');
+                const special = SPECIAL_SQUARES[`${row},${col}`];
+                if (special) {
+                    cell.classList.add(special);
+                    cell.textContent = special === 'center' ? '★' : special.toUpperCase();
+                } else {
+                    cell.textContent = '';
+                }
+                delete cell.dataset.points;
+            }
+        }
+
+        // Clear board
+        function clearBoard() {
+            window.boardState = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null));
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    updateCellDisplay(row, col);
+                }
+            }
+            clearHighlights();
+            document.getElementById('results').innerHTML = '';
+            saveBoardState();
+        }
+
+        // Clear highlighted cells
+        function clearHighlights() {
+            document.querySelectorAll('.cell.highlighted, .cell.new-tile').forEach(cell => {
+                cell.classList.remove('highlighted', 'new-tile');
+            });
+        }
+
+        // Format word with blanks shown in lowercase
+        function formatWordWithBlanks(move) {
+            if (!move.blankPositions || move.blankPositions.length === 0) {
+                return move.word;
+            }
+            
+            let result = '';
+            for (let i = 0; i < move.word.length; i++) {
+                if (move.blankPositions.includes(i)) {
+                    result += `<span style="text-transform: lowercase; color: #888;">${move.word[i].toLowerCase()}</span>`;
+                } else {
+                    result += move.word[i];
+                }
+            }
+            return result;
+        }
+
+        // Highlight a word placement
+        function highlightWord(move) {
+            clearHighlights();
+            const { row, col, direction, word, newTiles } = move;
+
+            for (let i = 0; i < word.length; i++) {
+                const r = direction === 'H' ? row : row + i;
+                const c = direction === 'H' ? col + i : col;
+                const cell = document.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+
+                if (cell) {
+                    cell.classList.add('highlighted');
+                    if (newTiles.includes(i)) {
+                        cell.classList.add('new-tile');
+                    }
+                }
+            }
+        }
+
+        // Find words - main function
+        function findWords() {
+            const tiles = getPlayerTiles();
+            
+            if (tiles.length === 0) {
+                showResults({ error: 'Please enter your available tiles first.' });
+                return;
+            }
+
+            const resultsDiv = document.getElementById('results');
+            const blankCount = (tiles.match(/\?/g) || []).length;
+            const loadingMsg = blankCount >= 2 
+                ? 'Finding best words (this may take a moment with multiple blanks)...'
+                : 'Finding best words...';
+            resultsDiv.innerHTML = `<div class="loading">${loadingMsg}</div>`;
+
+            // Reset hint state when finding words
+            window.hintLevel = 0;
+
+            // Use setTimeout to allow UI to update
+            setTimeout(() => {
+                try {
+                    const moves = findAllMoves(tiles);
+                    showResults({ moves });
+                } catch (e) {
+                    showResults({ error: 'Search took too long. Try using fewer blank tiles.' });
+                }
+            }, 50);
+        }
+
+        // Hint state tracking
+        window.hintLevel = 0;
+        window.cachedHintMoves = null;
+
+        // Get hint - progressive hints
+        function getHint() {
+            const tiles = getPlayerTiles();
+            
+            if (tiles.length === 0) {
+                showResults({ error: 'Please enter your available tiles first.' });
+                return;
+            }
+
+            const resultsDiv = document.getElementById('results');
+            
+            // If we don't have cached moves or tiles changed, recalculate
+            if (!window.cachedHintMoves || window.cachedHintTiles !== tiles) {
+                resultsDiv.innerHTML = '<div class="loading">Analyzing board</div>';
+                
+                setTimeout(() => {
+                    const moves = findAllMoves(tiles);
+                    window.cachedHintMoves = moves;
+                    window.cachedHintTiles = tiles;
+                    window.hintLevel = 1;
+                    showHint(moves, 1);
+                }, 50);
+            } else {
+                // Progress to next hint level
+                window.hintLevel = Math.min(window.hintLevel + 1, 5);
+                showHint(window.cachedHintMoves, window.hintLevel);
+            }
+        }
+
+        // Show hint based on level
+        function showHint(moves, level) {
+            const resultsDiv = document.getElementById('results');
+            
+            if (!moves || moves.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div class="no-results">
+                        <p>No valid words found.</p>
+                        <p>Make sure you've entered your tiles correctly.</p>
+                    </div>`;
+                return;
+            }
+
+            const best = moves[0];
+            const playerTiles = getPlayerTiles();
+            
+            // Find which player tiles are used
+            const usedTiles = [];
+            for (const idx of best.newTiles) {
+                usedTiles.push(best.word[idx]);
+            }
+            
+            // Build progressive hints
+            let hints = [];
+            
+            // Level 1: Score range
+            hints.push(`<div class="hint-item">The best word scores <strong>${best.score} points</strong></div>`);
+            
+            // Level 2: Word length
+            if (level >= 2) {
+                hints.push(`<div class="hint-item">The word is <strong>${best.word.length} letters</strong> long</div>`);
+            }
+            
+            // Level 3: Direction and general area
+            if (level >= 3) {
+                const direction = best.direction === 'H' ? 'horizontally (Across)' : 'vertically (Down)';
+                const rowArea = best.row < 5 ? 'top' : best.row > 9 ? 'bottom' : 'middle';
+                const colArea = best.col < 5 ? 'left' : best.col > 9 ? 'right' : 'center';
+                hints.push(`<div class="hint-item">Play it <strong>${direction}</strong> in the <strong>${rowArea}-${colArea}</strong> area</div>`);
+            }
+            
+            // Level 4: Number of tiles used and high-value tiles
+            if (level >= 4) {
+                hints.push(`<div class="hint-item">You'll use <strong>${best.newTiles.length} tiles</strong> from your rack</div>`);
+                const highValue = usedTiles.filter(t => LETTER_POINTS[t] >= 4);
+                if (highValue.length > 0) {
+                    hints.push(`<div class="hint-item">High-value tiles used: <strong>${highValue.join(', ')}</strong></div>`);
+                }
+            }
+            
+            // Level 5: First letter hint
+            if (level >= 5) {
+                hints.push(`<div class="hint-item">The word starts with <strong>"${best.word[0]}"</strong></div>`);
+            }
+            
+            const moreHints = level < 5 ? `<p class="hint-more">Click "Get a Hint" again for more clues (${level}/5)</p>` : '<p class="hint-more">That\'s all the hints! Use "Show Me Best Move" to see the answer.</p>';
+            
+            resultsDiv.innerHTML = `
+                <div class="hint-container">
+                    <h3>Hints</h3>
+                    ${hints.join('')}
+                    ${moreHints}
+                </div>`;
+        }
+
+        // Show results
+        function showResults(data) {
+            const resultsDiv = document.getElementById('results');
+
+            if (data.error) {
+                resultsDiv.innerHTML = `<div class="status error">${data.error}</div>`;
+                return;
+            }
+
+            if (!data.moves || data.moves.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div class="no-results">
+                        <p>No valid words found.</p>
+                        <p>Make sure you've entered your tiles correctly.</p>
+                    </div>`;
+                return;
+            }
+
+            const top20 = data.moves.slice(0, 20);
+            
+            resultsDiv.innerHTML = `
+                <h3>Best Words (${data.moves.length} found)</h3>
+                <div class="results-list">
+                    ${top20.map((move, i) => `
+                        <div class="result-item" 
+                             onmouseenter="highlightWord(window.foundMoves[${i}])"
+                             onmouseleave="clearHighlights()"
+                             onclick="selectMove(${i})">
+                            <span class="result-word">${formatWordWithBlanks(move)}</span>
+                            <div class="result-info">
+                                <div class="result-score">${move.score} pts</div>
+                                <div class="result-position">${move.direction === 'H' ? 'Across' : 'Down'} at ${move.row + 1},${move.col + 1}</div>
+                            </div>
+                            <button class="place-btn" onclick="event.stopPropagation(); placeMove(${i})">Place</button>
+                        </div>
+                    `).join('')}
+                </div>`;
+
+            window.foundMoves = top20;
+        }
+
+        // Select a move
+        function selectMove(index) {
+            document.querySelectorAll('.result-item').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+            highlightWord(window.foundMoves[index]);
+            showScoreBreakdown(window.foundMoves[index]);
+        }
+
+        // Place a move on the board
+        function placeMove(index) {
+            const move = window.foundMoves[index];
+            if (!move) return;
+            
+            const { word, row, col, direction, newTiles, blankPositions = [] } = move;
+            const isHorizontal = direction === 'H';
+            
+            // Place each letter of the word on the board
+            for (let i = 0; i < word.length; i++) {
+                const r = isHorizontal ? row : row + i;
+                const c = isHorizontal ? col + i : col;
+                
+                // Only place if it's a new tile (not already on board)
+                if (newTiles.includes(i)) {
+                    window.boardState[r][c] = word[i];
+                    updateCellDisplay(r, c);
+                }
+            }
+            
+            // Remove used tiles from the rack
+            const inputs = document.querySelectorAll('#tileInput input');
+            const usedTiles = [];
+            
+            // Collect tiles that were used (new tiles only)
+            for (let i = 0; i < word.length; i++) {
+                if (newTiles.includes(i)) {
+                    // Check if this position used a blank (blankPositions can be Set or array)
+                    const isBlank = blankPositions instanceof Set 
+                        ? blankPositions.has(i) 
+                        : (Array.isArray(blankPositions) && blankPositions.includes(i));
+                    if (isBlank) {
+                        usedTiles.push('?');
+                    } else {
+                        usedTiles.push(word[i]);
+                    }
+                }
+            }
+            
+            // Remove used tiles from rack inputs
+            for (const tile of usedTiles) {
+                for (const input of inputs) {
+                    if (input.value.toUpperCase() === tile) {
+                        input.value = '';
+                        break;
+                    }
+                }
+            }
+            
+            // Consolidate remaining tiles to the left
+            const remainingTiles = Array.from(inputs)
+                .map(input => input.value)
+                .filter(v => v); // Get non-empty values
+            
+            // Clear all inputs and refill from the left
+            inputs.forEach((input, i) => {
+                input.value = remainingTiles[i] || '';
+            });
+            
+            // Save the board state and player tiles
+            saveBoardState();
+            savePlayerTiles();
+            
+            // Clear results and highlights
+            clearHighlights();
+            document.getElementById('results').innerHTML = 
+                '<div style="padding: 15px; text-align: center; color: var(--accent);">' +
+                `Placed "${word}" for ${move.score} points!</div>`;
+        }
+
+        // Show detailed score breakdown
+        function showScoreBreakdown(move) {
+            const { word, row, col, direction, score, newTiles, blankPositions = [] } = move;
+            const isHorizontal = direction === 'H';
+            
+            let breakdown = [];
+            let wordMultiplier = 1;
+            let baseWordScore = 0;
+            let crossWordTotal = 0;
+            
+            // Calculate main word breakdown
+            for (let i = 0; i < word.length; i++) {
+                const r = isHorizontal ? row : row + i;
+                const c = isHorizontal ? col + i : col;
+                const letter = word[i];
+                const isNew = newTiles.includes(i);
+                const isBlank = blankPositions.includes(i);
+                const special = SPECIAL_SQUARES[`${r},${c}`];
+                
+                let basePoints = isBlank ? 0 : (LETTER_POINTS[letter] || 0);
+                let letterMult = 1;
+                let wordMult = 1;
+                
+                if (isNew && window.bonusScoringEnabled) {
+                    if (special === 'dl') letterMult = 2;
+                    else if (special === 'tl') letterMult = 3;
+                    else if (special === 'dw' || special === 'center') wordMult = 2;
+                    else if (special === 'tw') wordMult = 3;
+                }
+                
+                const finalPoints = basePoints * letterMult;
+                baseWordScore += finalPoints;
+                wordMultiplier *= wordMult;
+                
+                breakdown.push({
+                    letter,
+                    position: `(${r+1},${c+1})`,
+                    isNew,
+                    isBlank,
+                    special: isNew ? special : null,
+                    basePoints,
+                    letterMult,
+                    wordMult,
+                    finalPoints
+                });
+            }
+            
+            const mainWordScore = baseWordScore * wordMultiplier;
+            
+            // Calculate cross-words
+            let crossWords = [];
+            for (const i of newTiles) {
+                const r = isHorizontal ? row : row + i;
+                const c = isHorizontal ? col + i : col;
+                const crossInfo = getCrossWordInfo(r, c, word[i], direction, blankPositions.includes(i));
+                if (crossInfo) {
+                    crossWords.push(crossInfo);
+                    crossWordTotal += crossInfo.score;
+                }
+            }
+            
+            // Bingo bonus
+            const bingoBonus = newTiles.length === 7 ? 40 : 0;
+            
+            // Build breakdown HTML
+            let html = `
+                <div class="score-breakdown">
+                    <h4>Score Breakdown: ${word}</h4>
+                    <table class="breakdown-table">
+                        <tr>
+                            <th>Letter</th>
+                            <th>Pos</th>
+                            <th>Base</th>
+                            <th>Bonus</th>
+                            <th>Points</th>
+                        </tr>
+                        ${breakdown.map(b => `
+                            <tr class="${b.isNew ? 'new-tile' : ''} ${b.isBlank ? 'blank-tile' : ''}">
+                                <td>${b.letter}${b.isBlank ? ' (blank)' : ''}${b.isNew ? ' *' : ''}</td>
+                                <td>${b.position}</td>
+                                <td>${b.basePoints}</td>
+                                <td>${b.special ? b.special.toUpperCase() : '-'}</td>
+                                <td>${b.finalPoints}${b.wordMult > 1 ? ` (×${b.wordMult} word)` : ''}</td>
+                            </tr>
+                        `).join('')}
+                    </table>
+                    <div class="breakdown-total">
+                        <span>Main word: ${baseWordScore}${wordMultiplier > 1 ? ` × ${wordMultiplier}` : ''} = ${mainWordScore}</span>
+                    </div>
+                    ${crossWords.length > 0 ? `
+                        <div style="margin-top: 10px; font-size: 12px;">
+                            <strong>Cross-words:</strong>
+                            ${crossWords.map(cw => `<div>${cw.word}: ${cw.score} pts</div>`).join('')}
+                            <div><strong>Cross-word total: ${crossWordTotal}</strong></div>
+                        </div>
+                    ` : ''}
+                    ${bingoBonus > 0 ? `<div style="margin-top: 5px; color: #f1c40f;">Bingo bonus (7 tiles): +${bingoBonus}</div>` : ''}
+                    <div class="breakdown-total" style="font-size: 16px; color: var(--accent);">
+                        <span>TOTAL</span>
+                        <span>${mainWordScore} + ${crossWordTotal}${bingoBonus > 0 ? ` + ${bingoBonus}` : ''} = ${score}</span>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 11px; color: var(--text-secondary);">
+                        * = new tile placed from your rack
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing breakdown and add new one
+            const existing = document.querySelector('.score-breakdown');
+            if (existing) existing.remove();
+            
+            document.querySelector('.results').insertAdjacentHTML('beforeend', html);
+        }
+
+        // Get cross-word info for a position
+        function getCrossWordInfo(row, col, letter, mainDirection, isBlank) {
+            const isHorizontal = mainDirection === 'H';
+            let crossWord = letter;
+            let hasAdjacent = false;
+            let startR = row, startC = col;
+            
+            // Look backwards
+            let pos = isHorizontal ? row - 1 : col - 1;
+            while (pos >= 0) {
+                const r = isHorizontal ? pos : row;
+                const c = isHorizontal ? col : pos;
+                if (window.boardState[r][c]) {
+                    crossWord = window.boardState[r][c] + crossWord;
+                    startR = isHorizontal ? pos : row;
+                    startC = isHorizontal ? col : pos;
+                    hasAdjacent = true;
+                    pos--;
+                } else break;
+            }
+            
+            // Look forwards
+            pos = isHorizontal ? row + 1 : col + 1;
+            while (pos < BOARD_SIZE) {
+                const r = isHorizontal ? pos : row;
+                const c = isHorizontal ? col : pos;
+                if (window.boardState[r][c]) {
+                    crossWord = crossWord + window.boardState[r][c];
+                    hasAdjacent = true;
+                    pos++;
+                } else break;
+            }
+            
+            if (!hasAdjacent) return null;
+            
+            // Calculate score
+            let score = 0;
+            let multiplier = 1;
+            
+            for (let i = 0; i < crossWord.length; i++) {
+                const r = isHorizontal ? startR + i : startR;
+                const c = isHorizontal ? startC : startC + i;
+                const char = crossWord[i];
+                const isNewTile = (isHorizontal && r === row) || (!isHorizontal && c === col);
+                
+                let letterScore = (isNewTile && isBlank) ? 0 : (LETTER_POINTS[char] || 0);
+                
+                if (isNewTile && window.bonusScoringEnabled) {
+                    const special = SPECIAL_SQUARES[`${r},${c}`];
+                    if (special === 'dl') letterScore *= 2;
+                    else if (special === 'tl') letterScore *= 3;
+                    else if (special === 'dw' || special === 'center') multiplier *= 2;
+                    else if (special === 'tw') multiplier *= 3;
+                }
+                
+                score += letterScore;
+            }
+            
+            return { word: crossWord, score: score * multiplier };
+        }
+
+        // Initialize UI to match saved state
+        function initSavedState() {
+            // Load saved game type
+            const savedGame = localStorage.getItem('crossplayHelper_game');
+            if (savedGame && GAME_PRESETS[savedGame]) {
+                currentGame = savedGame;
+                document.getElementById('gameSelect').value = currentGame;
+            }
+            
+            // Sync bonus enabled checkbox
+            const checkbox = document.getElementById('bonusEnabled');
+            checkbox.checked = window.bonusScoringEnabled;
+            
+            // Update visual state if bonuses are disabled
+            if (!window.bonusScoringEnabled) {
+                document.querySelectorAll('.cell').forEach(cell => {
+                    const row = parseInt(cell.dataset.row);
+                    const col = parseInt(cell.dataset.col);
+                    const special = SPECIAL_SQUARES[`${row},${col}`];
+                    if (special) {
+                        cell.classList.add('bonus-disabled');
+                    }
+                });
+            }
+        }
+
+        // Apply saved board state to display
+        function applySavedBoard() {
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    // Update ALL cells, not just ones with tiles
+                    updateCellDisplay(row, col);
+                }
+            }
+        }
+
+        // Initialize on load
+        initBoard();
+        initTileInputs();
+        loadBoardState(); // Load saved board state
+        loadPlayerTiles(); // Load saved player tiles
+        applySavedBoard(); // Display saved tiles
+        initSavedState();
+        
+        // Validate that persisted board name still exists
+        if (currentSavedBoardName) {
+            const boards = getSavedBoards();
+            if (!boards[currentSavedBoardName]) {
+                // Board was deleted - clear the reference
+                setCurrentBoardName('');
+            }
+        }
+        
+        updateBoardSelect(); // Populate saved boards dropdown
+    </script>
+</body>
+</html>

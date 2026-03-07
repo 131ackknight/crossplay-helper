@@ -1,0 +1,7 @@
+# Word Game Helper robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap location (update with actual domain)
+# Sitemap: https://yourdomain.com/sitemap.xml
