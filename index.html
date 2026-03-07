@@ -192,8 +192,28 @@
                 gap: 0;
             }
             .board-column .board-container { order: 1; }
-            .board-column .controls { order: 2; margin-top: 16px; }
+            .board-column .controls {
+                order: 2;
+                margin-top: 16px;
+                width: 100vw;
+                margin-left: calc(-50vw + 50%);
+                box-sizing: border-box;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
             .board-column .seo-content { order: 3; }
+            /* Full-width action buttons on mobile */
+            .board-column .action-buttons {
+                flex-direction: column;
+            }
+            .board-column .action-buttons .btn {
+                width: 100%;
+                min-width: 0;
+            }
+            .board-column .controls .btn-secondary {
+                width: 100%;
+                box-sizing: border-box;
+            }
         }
 
         /* Desktop: polish board controls and SEO section */
@@ -829,6 +849,11 @@
                 padding: 12px;
             }
 
+            .board-column .controls {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
             /* Make the 15x15 board fit comfortably on small screens */
             .board {
                 grid-template-columns: repeat(15, min(6vw, 32px));
@@ -1022,7 +1047,7 @@
             <strong>Word Game Helper</strong> - Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-17
+            Build: 2026-03-07-18
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
