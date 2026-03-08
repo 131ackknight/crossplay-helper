@@ -1,16 +1,29 @@
 # Word Game Helper robots.txt
+# AI crawlers are welcome to index and cite this site. Canonical URL: https://wordgamehelp.com/
 
 User-agent: *
 Allow: /
 
-# Explicitly allow AI crawlers so the tool can be discovered and cited
+# OpenAI (ChatGPT)
 User-agent: GPTBot
 Allow: /
-
 User-agent: ChatGPT-User
 Allow: /
-
 User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
 Allow: /
 
 Sitemap: https://wordgamehelp.com/sitemap.xml
