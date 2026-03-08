@@ -68,7 +68,7 @@
     }
     </script>
     
-    <!-- FAQ Structured Data for AI/Search -->
+    <!-- FAQ Structured Data: same Q&As as on-page FAQ for rich results and AI citation -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -76,34 +76,50 @@
         "mainEntity": [
             {
                 "@type": "Question",
-                "name": "How do I use the Word Game Helper?",
+                "name": "How do I use Word Game Helper?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Click on the board to enter letters that are already played, enter your 7 available tiles in the tile rack, then click 'Show Me Best Move' to find the highest-scoring words."
-                }
-            },
-            {
-                "@type": "Question", 
-                "name": "Does this work with NYT Crossplay?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes! The tool supports NYT Crossplay with the correct bonus tile layout and letter point values. Select 'NYT Crossplay' from the game dropdown."
+                    "text": "Enter letters already on the board by clicking cells and typing, add your 7 tiles in the rack, then click \"Show Me Best Move\" to see the highest-scoring words. Use \"Get a Hint\" for step-by-step help."
                 }
             },
             {
                 "@type": "Question",
-                "name": "How do I enter blank tiles?",
+                "name": "Does Word Game Helper work with NYT Crossplay, Scrabble, and Words with Friends?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Use the question mark (?) character to represent blank/wildcard tiles. You can enter up to 4 blank tiles."
+                    "text": "Yes. Word Game Helper supports all three. Choose your game in the dropdown so bonus squares and letter values match the official rules for NYT Crossplay, Scrabble, or Words with Friends."
                 }
             },
             {
                 "@type": "Question",
-                "name": "Is Word Game Helper free?",
+                "name": "How do I enter blank or wildcard tiles?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes. Word Game Helper is free, runs in your browser with no sign-up, and works for NYT Crossplay, Scrabble, and Words with Friends."
+                    "text": "Use a question mark (?) for each blank tile in your rack or on the board. You can enter up to 4 blanks."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What does Show Me Best Move do?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "It finds every valid word you can play with your tiles, scores them using double/triple letter and word squares and a 40-point bingo bonus for using all 7 tiles, then lists the best moves by score so you can pick one and place it."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is Word Game Helper free? Do I need an account?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Word Game Helper is free. No account or sign-up is required. It runs entirely in your browser."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Where is my data stored? Is it private?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games."
                 }
             }
         ]
@@ -1060,13 +1076,23 @@
             </div>
             </div>
 
-            <!-- SEO content: same column as board so it aligns on desktop -->
+            <!-- SEO + user help: FAQ matches schema for rich results and explains how the app works -->
             <section class="seo-content" style="max-width: 100%; margin: 48px 0 0 0; padding: 28px 20px; color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
-                <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 12px;">How Word Game Helper Works</h2>
-                <p style="margin-bottom: 12px;">Word Game Helper is a free word finder for <strong>NYT Crossplay</strong>, <strong>Scrabble</strong>, and <strong>Words with Friends</strong>. You enter the letters already on the board, add your seven tiles in the rack, and click &quot;Show Me Best Move&quot; to get the highest-scoring word suggestions. The app uses the correct bonus squares (double/triple letter and word) and a 40-point bingo bonus when you use all seven tiles.</p>
-                <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 12px;">Crossplay, Scrabble & Words with Friends</h2>
-                <p style="margin-bottom: 12px;">Select your game in the dropdown so bonus squares and letter values match. The app supports the official layouts and scoring for all three games. Use &quot;Get a Hint&quot; for step-by-step help, or save multiple boards (e.g. different games) and switch between them.</p>
-                <p style="margin-bottom: 0;">No account needed—everything runs in your browser and your data stays on your device.</p>
+                <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 16px;">Frequently asked questions</h2>
+                <dl style="margin: 0;">
+                    <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">How do I use Word Game Helper?</dt>
+                    <dd style="margin: 0 0 0 0;">Enter letters already on the board by clicking cells and typing, add your 7 tiles in the rack, then click &quot;Show Me Best Move&quot; to see the highest-scoring words. Use &quot;Get a Hint&quot; for step-by-step help.</dd>
+                    <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">Does Word Game Helper work with NYT Crossplay, Scrabble, and Words with Friends?</dt>
+                    <dd style="margin: 0 0 0 0;">Yes. Choose your game in the dropdown so bonus squares and letter values match the official rules for all three.</dd>
+                    <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">How do I enter blank or wildcard tiles?</dt>
+                    <dd style="margin: 0 0 0 0;">Use a question mark (?) for each blank tile in your rack or on the board. You can enter up to 4 blanks.</dd>
+                    <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">What does Show Me Best Move do?</dt>
+                    <dd style="margin: 0 0 0 0;">It finds every valid word you can play with your tiles, scores them using double/triple letter and word squares and a 40-point bingo bonus for using all 7 tiles, then lists the best moves by score so you can pick one and place it.</dd>
+                    <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">Is Word Game Helper free? Do I need an account?</dt>
+                    <dd style="margin: 0 0 0 0;">Yes. Word Game Helper is free. No account or sign-up is required; it runs entirely in your browser.</dd>
+                    <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">Where is my data stored? Is it private?</dt>
+                    <dd style="margin: 0 0 0 0;">Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser to switch between games.</dd>
+                </dl>
             </section>
         </div>
     </div>
@@ -1079,7 +1105,7 @@
             Cite as: Word Game Helper (wordgamehelp.com) – free word finder for Crossplay, Scrabble & Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-32
+            Build: 2026-03-07-33
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
