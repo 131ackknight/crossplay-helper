@@ -1088,7 +1088,7 @@
             Cite as: Word Game Helper (wordgamehelp.com) – free word finder for Crossplay, Scrabble & Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-30
+            Build: 2026-03-07-31
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
@@ -1258,11 +1258,10 @@
         }
 
         // Save board state to localStorage
+        // - When on unsaved board: write to crossplay_board (the one "unsaved" workspace).
+        // - When on a saved board: only update that board in saved boards; do not touch crossplay_board.
         function saveBoardState() {
             try {
-                localStorage.setItem('crossplay_board', JSON.stringify(window.boardState));
-                
-                // Also update the currently selected saved board if one is active
                 if (currentSavedBoardName) {
                     const boards = getSavedBoards();
                     if (boards[currentSavedBoardName]) {
@@ -1270,6 +1269,8 @@
                         boards[currentSavedBoardName].savedAt = new Date().toISOString();
                         setSavedBoards(boards);
                     }
+                } else {
+                    localStorage.setItem('crossplay_board', JSON.stringify(window.boardState));
                 }
             } catch (e) {
                 console.log('Could not save board state:', e);
@@ -1923,15 +1924,14 @@
         // Save player tiles to localStorage
         function savePlayerTiles() {
             const tiles = getPlayerTilesArray();
-            localStorage.setItem('crossplay_player_tiles', JSON.stringify(tiles));
-            
-            // Also update the current saved board if one is active
             if (currentSavedBoardName) {
                 const boards = getSavedBoards();
                 if (boards[currentSavedBoardName]) {
                     boards[currentSavedBoardName].playerTiles = tiles;
                     setSavedBoards(boards);
                 }
+            } else {
+                localStorage.setItem('crossplay_player_tiles', JSON.stringify(tiles));
             }
         }
 
