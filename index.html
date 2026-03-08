@@ -1088,7 +1088,7 @@
             Cite as: Word Game Helper (wordgamehelp.com) – free word finder for Crossplay, Scrabble & Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-29
+            Build: 2026-03-07-30
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
@@ -1354,13 +1354,45 @@
             return false;
         }
 
-        // Load a saved board
+        // Load a saved board (or switch to unsaved workspace)
         function loadSavedBoard() {
             const select = document.getElementById('boardSelect');
             const boardName = select.value;
             
+            // Switching to "Unsaved Board" — restore the unsaved workspace from localStorage
             if (!boardName) {
-                // Placeholder selected - do nothing
+                if (currentSavedBoardName) {
+                    const boards = getSavedBoards();
+                    if (boards[currentSavedBoardName]) {
+                        boards[currentSavedBoardName].boardState = JSON.parse(JSON.stringify(window.boardState));
+                        boards[currentSavedBoardName].playerTiles = getPlayerTilesArray();
+                        boards[currentSavedBoardName].savedAt = new Date().toISOString();
+                        setSavedBoards(boards);
+                    }
+                }
+                setCurrentBoardName('');
+                const saved = localStorage.getItem('crossplay_board');
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        if (parsed.length === BOARD_SIZE && parsed[0].length === BOARD_SIZE) {
+                            window.boardState = parsed;
+                        }
+                    } catch (e) {}
+                }
+                const tilesSaved = localStorage.getItem('crossplay_player_tiles');
+                if (tilesSaved) {
+                    try {
+                        setPlayerTiles(JSON.parse(tilesSaved));
+                    } catch (e) {
+                        setPlayerTiles([]);
+                    }
+                } else {
+                    setPlayerTiles([]);
+                }
+                refreshBonusDisplay();
+                applySavedBoard();
+                updateBoardSelect();
                 return;
             }
             
@@ -1444,9 +1476,8 @@
             refreshBonusDisplay();
             applySavedBoard();
             
-            // Save as current working board (won't re-save to named board since we just loaded it)
-            localStorage.setItem('crossplay_board', JSON.stringify(window.boardState));
-            localStorage.setItem('crossplay_player_tiles', JSON.stringify(savedBoard.playerTiles || []));
+            // Do not overwrite the unsaved workspace (crossplay_board) when loading a named board,
+            // so switching back to "Unsaved Board" restores the previous unsaved state.
             saveBonusConfig();
             localStorage.setItem('crossplayHelper_game', currentGame);
         }
@@ -1545,14 +1576,14 @@
                 placeholder.disabled = true;
                 select.appendChild(placeholder);
             } else {
-                // Add placeholder for unsaved state
+                // Always offer "Unsaved Board" so user can switch back to it from any saved board
+                const unsavedOption = document.createElement('option');
+                unsavedOption.value = '';
+                unsavedOption.textContent = '-- Unsaved Board --';
                 if (!currentSavedBoardName) {
-                    const placeholder = document.createElement('option');
-                    placeholder.value = '';
-                    placeholder.textContent = '-- Unsaved Board --';
-                    placeholder.selected = true;
-                    select.appendChild(placeholder);
+                    unsavedOption.selected = true;
                 }
+                select.appendChild(unsavedOption);
                 
                 for (const name of sortedNames) {
                     const option = document.createElement('option');
