@@ -1088,7 +1088,7 @@
             Cite as: Word Game Helper (wordgamehelp.com) – free word finder for Crossplay, Scrabble & Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-28
+            Build: 2026-03-07-29
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
@@ -1961,7 +1961,14 @@
             }
             clearHighlights();
             document.getElementById('results').innerHTML = '';
-            saveBoardState();
+            // If we're viewing a saved board, don't overwrite it with empty — switch to unsaved so the saved board stays intact
+            if (currentSavedBoardName) {
+                setCurrentBoardName('');
+                localStorage.setItem('crossplay_board', JSON.stringify(window.boardState));
+                updateBoardSelect();
+            } else {
+                saveBoardState();
+            }
         }
 
         // Clear highlighted cells
