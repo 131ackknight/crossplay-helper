@@ -1088,7 +1088,7 @@
             Cite as: Word Game Helper (wordgamehelp.com) – free word finder for Crossplay, Scrabble & Words with Friends.
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-27
+            Build: 2026-03-07-28
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
@@ -2279,9 +2279,10 @@
                 let wordMult = 1;
                 
                 if (isNew && window.bonusScoringEnabled) {
-                    if (special === 'dl') letterMult = 2;
+                    if (r === 7 && c === 7) wordMult = 2;
+                    else if (special === 'dl') letterMult = 2;
                     else if (special === 'tl') letterMult = 3;
-                    else if (special === 'dw' || special === 'center') wordMult = 2;
+                    else if (special === 'dw') wordMult = 2;
                     else if (special === 'tw') wordMult = 3;
                 }
                 
@@ -2418,9 +2419,10 @@
                 
                 if (isNewTile && window.bonusScoringEnabled) {
                     const special = SPECIAL_SQUARES[`${r},${c}`];
-                    if (special === 'dl') letterScore *= 2;
+                    if (r === 7 && c === 7) multiplier *= 2;
+                    else if (special === 'dl') letterScore *= 2;
                     else if (special === 'tl') letterScore *= 3;
-                    else if (special === 'dw' || special === 'center') multiplier *= 2;
+                    else if (special === 'dw') multiplier *= 2;
                     else if (special === 'tw') multiplier *= 3;
                 }
                 
