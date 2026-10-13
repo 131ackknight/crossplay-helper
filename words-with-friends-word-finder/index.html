@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Words with Friends Word Finder — Word Game Helper</title>
+    <meta name="description" content="Free Words with Friends word finder. Enter your board and tiles to find the highest-scoring move with WWF letter values, a 35-point bingo, and 2 blanks.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wordgamehelp.com/words-with-friends-word-finder">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wordgamehelp.com/words-with-friends-word-finder">
+    <meta property="og:title" content="Words with Friends Word Finder — Word Game Helper">
+    <meta property="og:description" content="Free Words with Friends word finder. Enter your board and tiles to find the highest-scoring move with WWF letter values, a 35-point bingo, and 2 blanks.">
+    <meta property="og:image" content="https://wordgamehelp.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Word Game Helper">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Words with Friends Word Finder — Word Game Helper">
+    <meta name="twitter:description" content="Free Words with Friends word finder. Enter your board and tiles to find the highest-scoring move with WWF letter values, a 35-point bingo, and 2 blanks.">
+    <meta name="twitter:image" content="https://wordgamehelp.com/og-image.png">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="application/ld+json">
+{
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Words with Friends Word Finder",
+        "url": "https://wordgamehelp.com/words-with-friends-word-finder",
+        "description": "Free Words with Friends word finder. Enter your board and tiles to find the highest-scoring move with WWF letter values, a 35-point bingo, and 2 blanks.",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+        }
+}
+    </script>
+    <script type="application/ld+json">
+{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+                {
+                        "@type": "Question",
+                        "name": "What is the Words with Friends bingo bonus?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Using all 7 tiles in one turn adds 35 points in Words with Friends. Scrabble's bingo is 50 points. Crossplay's sweep is 40."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "How many blank tiles are in Words with Friends?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Words with Friends has 2 blank tiles. Enter each one as ? on your rack. Crossplay has 3."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "Does Words with Friends have a center star?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "No. The center square has no score bonus, and the board does not show a star. The first word still has to cover the center. Scrabble's center star is a double word. Crossplay shows a star that does not multiply the score."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "Does this word finder use Words with Friends letter values?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Yes. This page opens the solver on Words with Friends letter values, not Scrabble's or Crossplay's. Letters that differ from Scrabble: B is 4 in Words with Friends and 3 in Scrabble; C is 4 in Words with Friends and 3 in Scrabble; G is 3 in Words with Friends and 2 in Scrabble; H is 3 in Words with Friends and 4 in Scrabble; J is 10 in Words with Friends and 8 in Scrabble; L is 2 in Words with Friends and 1 in Scrabble; M is 4 in Words with Friends and 3 in Scrabble; N is 2 in Words with Friends and 1 in Scrabble; P is 4 in Words with Friends and 3 in Scrabble; U is 2 in Words with Friends and 1 in Scrabble; V is 5 in Words with Friends and 4 in Scrabble; Y is 3 in Words with Friends and 4 in Scrabble."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "What word list does this Words with Friends solver use?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "This helper uses one shared list for Words with Friends, Scrabble, and Crossplay: the older TWL, 178,691 words. Words with Friends has its own official list, which this helper does not load separately."
+                        }
+                }
+        ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+                {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Word Game Helper",
+                        "item": "https://wordgamehelp.com/"
+                },
+                {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Words with Friends Word Finder",
+                        "item": "https://wordgamehelp.com/words-with-friends-word-finder"
+                }
+        ]
+}
+    </script>
+</head>
+<body data-game="wwf">
+    <div class="container">
+        <header>
+            <h1>Words with Friends Word Finder</h1>
+            <p>Find the highest-scoring Words with Friends move. This board opens with Words with Friends letter values, a 35-point bingo, 2 blanks, and no center star.</p>
+        </header>
+        <!-- Global tile rack, shown above the board on all layouts -->
+        <section class="control-group tile-rack-top">
+            <label>Your Tiles (use ? for a blank)</label>
+            <div class="tile-input" id="tileInput"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                <small id="blankHint">Enter the 7 letters on your rack. Blanks: up to 3 in Crossplay, 2 in Scrabble and Words with Friends.</small>
+                <button class="btn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);" onclick="clearTiles()">Clear Tiles</button>
+            </div>
+        </section>
+
+        <div class="main-layout">
+            <div class="board-container">
+                <div class="board" id="board" tabindex="0"></div>
+                <!-- Hidden input used to trigger the mobile keyboard and route typing into the selected cell -->
+                <input id="boardInput"
+                       type="text"
+                       inputmode="latin"
+                       autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="characters"
+                       spellcheck="false" />
+                <div class="direction-toggle">
+                    <span>Type direction:</span>
+                    <button id="dirH" class="active" onclick="setDirection('H')">→ Across</button>
+                    <button id="dirV" onclick="setDirection('V')">↓ Down</button>
+                </div>
+                <div class="bonus-controls">
+                    <label class="toggle-label">
+                        <span>Game:</span>
+                        <select id="gameSelect" onchange="changeGame()" style="padding: 4px 8px; border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary); border: 1px solid #444;">
+                            <option value="crossplay">NYT Crossplay</option>
+                            <option value="scrabble">Scrabble</option>
+                            <option value="wwf" selected>Words with Friends</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="bonus-controls" style="margin-top: 4px;">
+                    <label class="toggle-label">
+                        <span>Saved Boards:</span>
+                        <select id="boardSelect" onchange="loadSavedBoard()" style="padding: 4px 8px; border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary); border: 1px solid #444; min-width: 120px;">
+                            <option value="" disabled>Select a board...</option>
+                        </select>
+                    </label>
+                    <button onclick="saveCurrentBoard()" style="padding: 4px 8px; font-size: 11px; cursor: pointer; background: #2d6a4f; color: white; border: none; border-radius: 4px;">Save Board</button>
+                    <button onclick="deleteSavedBoard()" style="padding: 4px 8px; font-size: 11px; cursor: pointer; background: #6c757d; color: white; border: none; border-radius: 4px;">Delete</button>
+                    <button onclick="newBoard()" style="padding: 4px 8px; font-size: 11px; cursor: pointer; background: #0077b6; color: white; border: none; border-radius: 4px;">New Board</button>
+                </div>
+                <div class="bonus-controls" style="margin-top: 4px;">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="bonusEnabled" checked onchange="toggleBonusScoring()">
+                        <span>Bonus tiles enabled</span>
+                    </label>
+                </div>
+                <div class="keyboard-hint">
+                    Click a cell, then type. Arrow keys to move. Backspace to clear. Esc to deselect.
+                </div>
+            </div>
+
+            <div class="side-column">
+            <section class="instructions">
+                <h4>How to Use</h4>
+                <ol>
+                    <li><strong>Set up the board:</strong> Click or tap a square and type letters already on the board (use <strong>?</strong> for a blank). Arrow keys move between squares. Backspace clears.</li>
+                    <li><strong>Enter your rack:</strong> Type your 7 letters in the tile rack.</li>
+                    <li><strong>Get the best words:</strong> Choose the game, then click or tap "Show Me Best Move". Scores use that game's letter values, bonus squares, and all-tiles bonus (Crossplay 40, Scrabble 50, Words with Friends 35).</li>
+                    <li>Use "Get a Hint" for step-by-step help, or "Clear Board" to start over.</li>
+                </ol>
+            </section>
+            <div class="controls-bleed">
+            <div class="controls">
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="findBtn" onclick="findWords()">
+                        Show Me Best Move
+                    </button>
+                    <button class="btn btn-hint" onclick="getHint()">
+                        Get a Hint
+                    </button>
+                </div>
+                <button class="btn btn-secondary" onclick="clearBoard()">
+                    Clear Board
+                </button>
+
+                <div class="results" id="results"></div>
+            </div>
+            </div>
+            </div>
+
+
+            <section class="seo-content">
+                <h2>Words with Friends scoring on this board</h2>
+                <p>Show Me Best Move uses Words with Friends letter values, that game's bonus squares, and a 35-point bingo when you play all 7 tiles. The center square is not a bonus. For NYT Crossplay, use the <a href="/">Crossplay word finder</a>.</p>
+                <h3>Words with Friends tile values</h3>
+                <table>
+                    <caption>Letter points from the Words with Friends scoring table.</caption>
+                    <thead><tr><th>Letter</th><th>Points</th></tr></thead>
+                    <tbody>
+                        <!-- Generated from LETTER_POINTS_BY_GAME.wwf. Do not edit these numbers by hand. -->
+                        <tr><td>A</td><td>1</td></tr>
+                        <tr><td>B</td><td>4</td></tr>
+                        <tr><td>C</td><td>4</td></tr>
+                        <tr><td>D</td><td>2</td></tr>
+                        <tr><td>E</td><td>1</td></tr>
+                        <tr><td>F</td><td>4</td></tr>
+                        <tr><td>G</td><td>3</td></tr>
+                        <tr><td>H</td><td>3</td></tr>
+                        <tr><td>I</td><td>1</td></tr>
+                        <tr><td>J</td><td>10</td></tr>
+                        <tr><td>K</td><td>5</td></tr>
+                        <tr><td>L</td><td>2</td></tr>
+                        <tr><td>M</td><td>4</td></tr>
+                        <tr><td>N</td><td>2</td></tr>
+                        <tr><td>O</td><td>1</td></tr>
+                        <tr><td>P</td><td>4</td></tr>
+                        <tr><td>Q</td><td>10</td></tr>
+                        <tr><td>R</td><td>1</td></tr>
+                        <tr><td>S</td><td>1</td></tr>
+                        <tr><td>T</td><td>1</td></tr>
+                        <tr><td>U</td><td>2</td></tr>
+                        <tr><td>V</td><td>5</td></tr>
+                        <tr><td>W</td><td>4</td></tr>
+                        <tr><td>X</td><td>8</td></tr>
+                        <tr><td>Y</td><td>3</td></tr>
+                        <tr><td>Z</td><td>10</td></tr>
+                        <tr><td>Blank (?)</td><td>0</td></tr>
+                    </tbody>
+                </table>
+                <h3>Letters that differ from Scrabble</h3>
+                <ul>
+                    <li>B is 4 in Words with Friends and 3 in Scrabble.</li>
+                    <li>C is 4 in Words with Friends and 3 in Scrabble.</li>
+                    <li>G is 3 in Words with Friends and 2 in Scrabble.</li>
+                    <li>H is 3 in Words with Friends and 4 in Scrabble.</li>
+                    <li>J is 10 in Words with Friends and 8 in Scrabble.</li>
+                    <li>L is 2 in Words with Friends and 1 in Scrabble.</li>
+                    <li>M is 4 in Words with Friends and 3 in Scrabble.</li>
+                    <li>N is 2 in Words with Friends and 1 in Scrabble.</li>
+                    <li>P is 4 in Words with Friends and 3 in Scrabble.</li>
+                    <li>U is 2 in Words with Friends and 1 in Scrabble.</li>
+                    <li>V is 5 in Words with Friends and 4 in Scrabble.</li>
+                    <li>Y is 3 in Words with Friends and 4 in Scrabble.</li>
+                </ul>
+                <h2>Frequently asked questions</h2>
+                <dl>
+                    <dt>What is the Words with Friends bingo bonus?</dt>
+                    <dd>Using all 7 tiles in one turn adds 35 points in Words with Friends. Scrabble's bingo is 50 points. Crossplay's sweep is 40.</dd>
+                    <dt>How many blank tiles are in Words with Friends?</dt>
+                    <dd>Words with Friends has 2 blank tiles. Enter each one as ? on your rack. Crossplay has 3.</dd>
+                    <dt>Does Words with Friends have a center star?</dt>
+                    <dd>No. The center square has no score bonus, and the board does not show a star. The first word still has to cover the center. Scrabble's center star is a double word. Crossplay shows a star that does not multiply the score.</dd>
+                    <dt>Does this word finder use Words with Friends letter values?</dt>
+                    <dd>Yes. This page opens the solver on Words with Friends letter values, not Scrabble's or Crossplay's. Letters that differ from Scrabble: B is 4 in Words with Friends and 3 in Scrabble; C is 4 in Words with Friends and 3 in Scrabble; G is 3 in Words with Friends and 2 in Scrabble; H is 3 in Words with Friends and 4 in Scrabble; J is 10 in Words with Friends and 8 in Scrabble; L is 2 in Words with Friends and 1 in Scrabble; M is 4 in Words with Friends and 3 in Scrabble; N is 2 in Words with Friends and 1 in Scrabble; P is 4 in Words with Friends and 3 in Scrabble; U is 2 in Words with Friends and 1 in Scrabble; V is 5 in Words with Friends and 4 in Scrabble; Y is 3 in Words with Friends and 4 in Scrabble.</dd>
+                    <dt>What word list does this Words with Friends solver use?</dt>
+                    <dd>This helper uses one shared list for Words with Friends, Scrabble, and Crossplay: the older TWL, 178,691 words. Words with Friends has its own official list, which this helper does not load separately.</dd>
+                </dl>
+            </section>
+        </div>
+    </div>
+    <footer style="max-width: 1400px; margin: 40px auto 20px; padding: 20px; text-align: center; color: var(--text-secondary); font-size: 12px; border-top: 1px solid #333;">
+        <p style="margin-bottom: 10px;">
+            <strong>Word Game Helper</strong> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
+        </p>
+        <p style="margin-bottom: 10px;"><a href="/">Crossplay word finder</a> · <a href="/scrabble-word-finder">Scrabble word finder</a></p>
+        <p style="margin-bottom: 10px; color: #555; font-size: 11px;">Build: 2026-03-07-40</p>
+        <p style="margin-bottom: 10px;">Works entirely in your browser. No account required. Your game data stays on your device.</p>
+        <p style="color: #666;">
+            Not affiliated with The New York Times, Hasbro, or Zynga.
+            Crossplay™ is a trademark of The New York Times.
+            Scrabble® is a trademark of Hasbro.
+            Words with Friends™ is a trademark of Zynga.
+        </p>
+    </footer>
+    <script defer src="/game-rules.js"></script>
+    <script defer src="/dictionary.20261013.js"></script>
+    <script defer src="/app.js"></script>
+</body>
+</html>
