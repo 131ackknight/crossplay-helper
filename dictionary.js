@@ -1,6 +1,7 @@
 // Comprehensive Scrabble/Crossplay Dictionary
 // Version: 2.1 - Fixed cross-word validation
-// 178,691 words from TWL (Tournament Word List)
+// 178,691 words from TWL (the older North American tournament list).
+// NYT Crossplay uses NWL2023, with NYT edits, so some newer words are not in this list.
 
 const DICTIONARY = new Set([
 

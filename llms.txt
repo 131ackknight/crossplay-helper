@@ -22,17 +22,21 @@ Word Game Helper is a web-based tool that helps players find the best possible w
 
 - Interactive 15x15 game board
 - Automatic score calculation with bonus squares (Double Letter, Triple Letter, Double Word, Triple Word)
-- Support for blank/wildcard tiles (up to 4)
+- Support for blank tiles: 3 in NYT Crossplay, 2 in Scrabble and Words with Friends
 - Save multiple game boards for different games in progress
 - Works entirely in your browser - no account needed
 
 ## Scoring
 
 The tool calculates scores based on:
-- Letter point values specific to each game
-- Bonus square multipliers
+- Letter point values specific to each game. Crossplay differs from Scrabble on nine letters: B, G, H, J, K, L, U, V, and W.
+- Bonus square multipliers. The Crossplay center star marks the first-word square and does not multiply the score. Scrabble's center star is a double word. Words with Friends has no center bonus.
 - Cross-word scores (words formed perpendicular to your play)
-- 40-point bonus for using all 7 tiles (bingo)
+- All-tiles bonus: 40 points in Crossplay (a sweep), 50 in Scrabble, 35 in Words with Friends
+
+## Word list
+
+The finder uses the older North American TWL. Crossplay's official list is NWL2023 with New York Times edits, so a few newer words may be missing.
 
 ## Privacy
 

@@ -8,7 +8,7 @@ A web-based tool to find the highest-scoring words for your NYT Crossplay game.
 - **Visual Special Squares**: Double/Triple Letter and Word squares are color-coded
 - **Tile Rack Input**: Enter your 7 available tiles (use `?` for blank tiles)
 - **Smart Word Finder**: Finds all valid word placements and ranks them by score
-- **Score Calculation**: Uses Crossplay scoring with 40-point bingo bonus
+- **Score Calculation**: Crossplay sweep is 40, Scrabble bingo is 50, Words with Friends bingo is 35
 - **Hover Preview**: Hover over results to see exactly where the word would be placed
 
 ## How to Use
@@ -48,10 +48,10 @@ The app uses NYT Crossplay scoring:
 - **TL (Dark Blue)**: Triple Letter Score  
 - **DW (Pink)**: Double Word Score
 - **TW (Red)**: Triple Word Score
-- **★ (Center)**: Double Word Score (first word must cover this)
+- **★ (Center)**: Opening square. It does not multiply the score. The first word must cover it.
 
-### Bingo Bonus
-Using all 7 tiles in one play earns a **40-point bonus**!
+### All-tiles bonus
+Using all 7 tiles earns **40** in Crossplay, **50** in Scrabble, and **35** in Words with Friends. Crossplay has 3 blanks; Scrabble and Words with Friends have 2. The Crossplay center star does not multiply the score.
 
 ## Note on Board Layout
 

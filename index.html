@@ -101,7 +101,7 @@
                 "name": "Does Word Game Helper work with NYT Crossplay, Scrabble, and Words with Friends?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes. Word Game Helper supports all three. Choose your game in the dropdown so bonus squares and letter values match the official rules for NYT Crossplay, Scrabble, or Words with Friends."
+                    "text": "Yes. Choose your game so letter values, bonus squares, and the all-tiles bonus match that game: a 40-point sweep in Crossplay, 50 in Scrabble, and 35 in Words with Friends. Crossplay's center star marks the opening square and does not multiply the score. The word list is the older North American TWL; Crossplay's official list is NWL2023 with NYT edits, so a few newer words may be missing."
                 }
             },
             {
@@ -109,7 +109,7 @@
                 "name": "How do I enter blank or wildcard tiles?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Use a question mark (?) for each blank tile in your rack or on the board. You can enter up to 4 blanks."
+                    "text": "Use a question mark (?) for each blank on your rack. Crossplay has 3 blanks. Scrabble and Words with Friends have 2. The rack will not accept more than that game allows."
                 }
             },
             {
@@ -1031,10 +1031,10 @@
 
         <!-- Global tile rack, shown above the board on all layouts -->
         <section class="control-group tile-rack-top">
-            <label>Your Tiles (use ? for blank)</label>
+            <label>Your Tiles (use ? for a blank)</label>
             <div class="tile-input" id="tileInput"></div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-                <small>Enter the 7 letters on your rack</small>
+                <small id="blankHint">Enter the 7 letters on your rack. Blanks: up to 3 in Crossplay, 2 in Scrabble and Words with Friends.</small>
                 <button class="btn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);" onclick="clearTiles()">Clear Tiles</button>
             </div>
         </section>
@@ -1119,15 +1119,15 @@
             <section class="seo-content" style="max-width: 100%; margin: 48px 0 0 0; padding: 28px 20px; color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
                 <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 12px;">Free word finder for Crossplay, Scrabble and Words with Friends</h2>
                 <p style="margin: 0 0 12px 0;">Word Game Helper is a free word finder that works with <strong>NYT Crossplay</strong>, <strong>Scrabble</strong>, and <strong>Words with Friends</strong>. Enter the letters on the board and your rack, then get the highest-scoring words and best move in one click. Letter values, bonus squares, and the bingo for using all seven tiles match the game you pick: 40 points in Crossplay, 50 in Scrabble, and 35 in Words with Friends.</p>
-                <p style="margin: 0 0 20px 0;">Use this Crossplay word finder, Scrabble word finder, or Words with Friends word finder with no sign-up and no download—everything runs in your browser. Save multiple boards to switch between games, and use blanks (?) for wildcard tiles.</p>
+                <p style="margin: 0 0 20px 0;">Use this Crossplay word finder, Scrabble word finder, or Words with Friends word finder with no sign-up and no download—everything runs in your browser. Save multiple boards to switch between games. Blanks (?) are limited to the tiles in that game: 3 in Crossplay, 2 in Scrabble and Words with Friends.</p>
                 <h2 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 16px;">Frequently asked questions</h2>
                 <dl style="margin: 0;">
                     <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">How do I use Word Game Helper?</dt>
                     <dd style="margin: 0 0 0 0;">Enter letters already on the board by clicking cells and typing, add your 7 tiles in the rack, then click &quot;Show Me Best Move&quot; to see the highest-scoring words. Use &quot;Get a Hint&quot; for step-by-step help.</dd>
                     <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">Does Word Game Helper work with NYT Crossplay, Scrabble, and Words with Friends?</dt>
-                    <dd style="margin: 0 0 0 0;">Yes. Choose your game in the dropdown so bonus squares and letter values match the official rules for all three.</dd>
+                    <dd style="margin: 0 0 0 0;">Yes. Choose your game so letter values, bonus squares, and the all-tiles bonus match that game: a 40-point sweep in Crossplay, 50 in Scrabble, and 35 in Words with Friends. Crossplay's center star marks the opening square and does not multiply the score. The word list is the older North American TWL; Crossplay's official list is NWL2023 with NYT edits, so a few newer words may be missing.</dd>
                     <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">How do I enter blank or wildcard tiles?</dt>
-                    <dd style="margin: 0 0 0 0;">Use a question mark (?) for each blank tile in your rack or on the board. You can enter up to 4 blanks.</dd>
+                    <dd style="margin: 0 0 0 0;">Use a question mark (?) for each blank on your rack. Crossplay has 3 blanks. Scrabble and Words with Friends have 2. The rack will not accept more than that game allows.</dd>
                     <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">What does Show Me Best Move do?</dt>
                     <dd style="margin: 0 0 0 0;">It finds every valid word you can play with your tiles, scores them using that game's letter values and double/triple squares, then adds the bingo bonus for using all 7 tiles: 40 points in Crossplay, 50 in Scrabble, and 35 in Words with Friends.</dd>
                     <dt style="color: var(--text-primary); font-weight: 600; margin-top: 14px; margin-bottom: 4px;">Is Word Game Helper free? Do I need an account?</dt>
@@ -1150,7 +1150,7 @@
             Short form: Word Game Helper (wordgamehelp.com)
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-35
+            Build: 2026-03-07-36
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
@@ -1195,14 +1195,19 @@
             }
         };
         const BINGO_BONUS_BY_GAME = { crossplay: 40, scrabble: 50, wwf: 35 };
-        // Words with Friends center is an ordinary square. Crossplay and Scrabble double the word.
-        const CENTER_DOUBLE_WORD = { crossplay: true, scrabble: true, wwf: false };
+        const MAX_BLANKS_BY_GAME = { crossplay: 3, scrabble: 2, wwf: 2 };
+        // Scrabble's center star is a double word. Crossplay's star only marks the opening square.
+        // Words with Friends has no center bonus. Crossplay's 8 double-word squares are nine fewer than Scrabble's 17.
+        const CENTER_DOUBLE_WORD = { crossplay: false, scrabble: true, wwf: false };
+        const SHOW_CENTER_STAR = { crossplay: true, scrabble: true, wwf: false };
 
         function applyGameScoring(game) {
             const key = LETTER_POINTS_BY_GAME[game] ? game : 'crossplay';
             window.LETTER_POINTS = LETTER_POINTS_BY_GAME[key];
             window.BINGO_BONUS = BINGO_BONUS_BY_GAME[key];
+            window.maxBlanks = MAX_BLANKS_BY_GAME[key];
             window.centerScoresDoubleWord = CENTER_DOUBLE_WORD[key];
+            window.showCenterStar = SHOW_CENTER_STAR[key];
         }
 
         applyGameScoring('crossplay');
@@ -1312,7 +1317,7 @@
                     preset.dw.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'dw'; });
                     preset.tl.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'tl'; });
                     preset.dl.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'dl'; });
-                    if (CENTER_DOUBLE_WORD[currentGame]) {
+                    if (SHOW_CENTER_STAR[currentGame]) {
                         SPECIAL_SQUARES['7,7'] = 'center';
                     }
                     return;
@@ -1820,8 +1825,8 @@
             preset.tl.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'tl'; });
             preset.dl.forEach(([r, c]) => { SPECIAL_SQUARES[`${r},${c}`] = 'dl'; });
 
-            // Crossplay and Scrabble mark the center as a double-word star. Words with Friends does not.
-            if (window.centerScoresDoubleWord) {
+            // Star marks the opening square in Crossplay and Scrabble. Only Scrabble scores it as a double word.
+            if (window.showCenterStar) {
                 SPECIAL_SQUARES['7,7'] = 'center';
             }
 
@@ -1836,6 +1841,7 @@
             currentGame = select.value;
             applyGameScoring(currentGame);
             applyGamePreset(currentGame);
+            enforceBlankLimit(true);
             
             // Save selected game to localStorage
             localStorage.setItem('crossplayHelper_game', currentGame);
@@ -1967,9 +1973,10 @@
                         const currentBlanks = countBlanks();
                         // Don't count this input if it was already a blank
                         const wasBlank = e.target.dataset.prevValue === '?';
-                        if (!wasBlank && currentBlanks >= 4) {
+                        if (!wasBlank && currentBlanks > window.maxBlanks) {
                             e.target.value = '';
-                            alert('Maximum 4 blank tiles (?) allowed');
+                            const gameName = GAME_PRESETS[currentGame]?.name || 'This game';
+                            alert(`${gameName} has ${window.maxBlanks} blank ${window.maxBlanks === 1 ? 'tile' : 'tiles'}.`);
                             return;
                         }
                     }
@@ -2013,7 +2020,31 @@
             const inputs = document.querySelectorAll('#tileInput input');
             inputs.forEach((input, i) => {
                 input.value = tilesArray[i] || '';
+                input.dataset.prevValue = input.value;
             });
+            enforceBlankLimit(false);
+        }
+
+        // Drop rack blanks beyond the selected game's tile bag.
+        function enforceBlankLimit(notify) {
+            const inputs = document.querySelectorAll('#tileInput input');
+            let seen = 0;
+            let removed = 0;
+            inputs.forEach((input) => {
+                if (input.value === '?') {
+                    seen++;
+                    if (seen > window.maxBlanks) {
+                        input.value = '';
+                        input.dataset.prevValue = '';
+                        removed++;
+                    }
+                }
+            });
+            if (removed && notify) {
+                const gameName = GAME_PRESETS[currentGame]?.name || 'This game';
+                alert(`${gameName} allows ${window.maxBlanks} blanks. Extra blanks were cleared.`);
+            }
+            if (removed) savePlayerTiles();
         }
 
         // Save player tiles to localStorage
@@ -2149,6 +2180,13 @@
                 return;
             }
 
+            const tooManyBlanks = (tiles.match(/\?/g) || []).length;
+            if (tooManyBlanks > window.maxBlanks) {
+                const gameName = GAME_PRESETS[currentGame]?.name || 'This game';
+                showResults({ error: `${gameName} has only ${window.maxBlanks} blank tiles.` });
+                return;
+            }
+
             const resultsDiv = document.getElementById('results');
             const blankCount = (tiles.match(/\?/g) || []).length;
             const loadingMsg = blankCount >= 2 
@@ -2180,6 +2218,13 @@
             
             if (tiles.length === 0) {
                 showResults({ error: 'Please enter your available tiles first.' });
+                return;
+            }
+
+            const tooManyBlanks = (tiles.match(/\?/g) || []).length;
+            if (tooManyBlanks > window.maxBlanks) {
+                const gameName = GAME_PRESETS[currentGame]?.name || 'This game';
+                showResults({ error: `${gameName} has only ${window.maxBlanks} blank tiles.` });
                 return;
             }
 
@@ -2405,7 +2450,8 @@
                 const letter = word[i];
                 const isNew = newTiles.includes(i);
                 const isBlank = blankPositions.includes(i);
-                const special = SPECIAL_SQUARES[`${r},${c}`];
+                const rawSpecial = SPECIAL_SQUARES[`${r},${c}`];
+                const special = (rawSpecial === 'center' && !window.centerScoresDoubleWord) ? null : rawSpecial;
                 
                 let basePoints = isBlank ? 0 : (window.LETTER_POINTS[letter] || 0);
                 let letterMult = 1;
