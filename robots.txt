@@ -26,4 +26,10 @@ Allow: /
 User-agent: Perplexity-User
 Allow: /
 
+# Bing
+User-agent: Bingbot
+Allow: /
+User-agent: msnbot
+Allow: /
+
 Sitemap: https://wordgamehelp.com/sitemap.xml
