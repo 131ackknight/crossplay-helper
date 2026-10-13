@@ -11,6 +11,9 @@
     <meta name="author" content="Word Game Helper">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://wordgamehelp.com/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <!-- Suggested citation for AI and human attribution -->
     <meta name="citation_title" content="Word Game Helper: Crossplay Word Finder, Scrabble & WWF">
     <meta name="citation_author" content="Word Game Helper">
@@ -22,6 +25,9 @@
     <meta property="og:title" content="Word Game Helper: Crossplay Word Finder, Scrabble & WWF">
     <meta property="og:description" content="Free Crossplay word finder and board solver. Enter your board and tiles to find the highest-scoring move in NYT Crossplay, Scrabble or WWF. No sign-up.">
     <meta property="og:image" content="https://wordgamehelp.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Word Game Helper: four letter tiles spelling WORD">
     <meta property="og:site_name" content="Word Game Helper">
     <meta property="og:locale" content="en_US">
     
@@ -29,6 +35,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Word Game Helper: Crossplay Word Finder, Scrabble & WWF">
     <meta name="twitter:description" content="Free Crossplay word finder and board solver. Enter your board and tiles to find the highest-scoring move in NYT Crossplay, Scrabble or WWF. No sign-up.">
+    <meta name="twitter:image" content="https://wordgamehelp.com/og-image.png">
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L1Z9GXCWPB"></script>
@@ -1275,7 +1282,7 @@
             Short form: Word Game Helper (wordgamehelp.com)
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-38
+            Build: 2026-03-07-39
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
@@ -1288,7 +1295,7 @@
         </p>
     </footer>
 
-    <script src="dictionary.js"></script>
+    <script defer src="dictionary.20261013.js"></script>
     <script>
         // Board configuration
         const BOARD_SIZE = 15;
@@ -2312,6 +2319,11 @@
                 return;
             }
 
+            if (typeof findAllMoves !== 'function') {
+                showResults({ error: 'The word list is still loading. Try again in a moment.' });
+                return;
+            }
+
             const resultsDiv = document.getElementById('results');
             const blankCount = (tiles.match(/\?/g) || []).length;
             const loadingMsg = blankCount >= 2 
@@ -2350,6 +2362,11 @@
             if (tooManyBlanks > window.maxBlanks) {
                 const gameName = GAME_PRESETS[currentGame]?.name || 'This game';
                 showResults({ error: `${gameName} has only ${window.maxBlanks} blank tiles.` });
+                return;
+            }
+
+            if (typeof findAllMoves !== 'function') {
+                showResults({ error: 'The word list is still loading. Try again in a moment.' });
                 return;
             }
 
