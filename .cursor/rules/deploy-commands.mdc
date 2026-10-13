@@ -1,14 +1,19 @@
 ---
-description: Always give deployment terminal commands with a concrete commit message
+description: Increment build number and always give deployment commands to ship to GitHub
 alwaysApply: true
 ---
 
+# Build number
+
+Whenever you make changes that will be shipped, **increment the build number** in `index.html`. Search for `Build: 2026-` (or the current year); the format is `Build: YYYY-MM-DD-NN`. Bump the last number (e.g. `2026-03-07-34` → `2026-03-07-35`).
+
 # Deployment
 
-When you make changes to this project, **always** provide the full deployment terminal commands the user can run, and use a **concrete commit message** that describes the change—never use placeholders like "Your commit message" or "Update".
+When you make changes to this project, **always** provide the full deployment terminal commands the user can run to build and ship to GitHub. Use a **concrete commit message** that describes the change—never use placeholders like "Your commit message" or "Update".
 
 Example:
 ```bash
+cd /Users/peterk/Downloads/crossplay-helper
 git add -A
 git commit -m "Fix board stretch: use fixed 32px grid so cells stay square"
 git push

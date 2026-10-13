@@ -29270,6 +29270,22 @@ function createMove(anchorRow, anchorCol, startPos, word, direction, isFirstMove
     return { word, row, col, direction, score, newTiles, blankPositions: Array.from(blankPositions) };
 }
 
+function currentLetterPoints(letter) {
+    const table = (typeof window !== 'undefined' && window.LETTER_POINTS) ? window.LETTER_POINTS : null;
+    return table ? (table[letter] || 0) : 0;
+}
+
+function currentBingoBonus() {
+    if (typeof window !== 'undefined' && typeof window.BINGO_BONUS === 'number') {
+        return window.BINGO_BONUS;
+    }
+    return 40;
+}
+
+function centerScoresDouble() {
+    return typeof window === 'undefined' || window.centerScoresDoubleWord !== false;
+}
+
 function calculateScore(row, col, word, direction, newTiles, blankPositions = new Set()) {
     const isHorizontal = direction === 'H';
     let wordScore = 0;
@@ -29287,13 +29303,13 @@ function calculateScore(row, col, word, direction, newTiles, blankPositions = ne
         
         // Blank tiles (wildcards) are worth 0 points
         const isBlank = blankPositions.has(i);
-        let letterScore = isBlank ? 0 : (LETTER_POINTS[letter] || 0);
+        let letterScore = isBlank ? 0 : currentLetterPoints(letter);
         
         // Apply bonus only for new tiles (but blanks still worth 0 even with multiplier)
-        // Center (7,7) is always double-word only, never double-letter (standard rule)
+        // Center is double-word in Crossplay and Scrabble, and a normal square in Words with Friends
         if (bonusEnabled && newTiles.includes(i)) {
             const special = SPECIAL_SQUARES[`${r},${c}`];
-            if (r === 7 && c === 7) {
+            if (r === 7 && c === 7 && centerScoresDouble()) {
                 wordMultiplier *= 2;
             } else if (special === 'dl') {
                 letterScore *= 2;
@@ -29311,9 +29327,9 @@ function calculateScore(row, col, word, direction, newTiles, blankPositions = ne
     
     wordScore *= wordMultiplier;
     
-    // Bingo bonus for using all 7 tiles (Crossplay uses 40 points)
+    // Bingo: Crossplay 40, Scrabble 50, Words with Friends 35
     if (newTiles.length === 7) {
-        wordScore += 40;
+        wordScore += currentBingoBonus();
     }
     
     // Add cross-word scores
@@ -29390,13 +29406,13 @@ function calculateCrossWordScore(row, col, letter, mainDirection, isBlankTile = 
         const isNewTile = (isHorizontal && r === row) || (!isHorizontal && c === col);
         
         // Blank tiles are worth 0 points
-        let letterScore = (isNewTile && isBlankTile) ? 0 : (LETTER_POINTS[char] || 0);
+        let letterScore = (isNewTile && isBlankTile) ? 0 : currentLetterPoints(char);
         
         // Only apply bonuses for the new tile position (if bonuses enabled)
-        // Center (7,7) is double-word only, never letter premium
+        // Center is double-word in Crossplay and Scrabble, not in Words with Friends
         if (bonusEnabled && isNewTile) {
             const special = SPECIAL_SQUARES[`${r},${c}`];
-            if (r === 7 && c === 7) {
+            if (r === 7 && c === 7 && centerScoresDouble()) {
                 multiplier *= 2;
             } else if (special === 'dl') letterScore *= 2;
             else if (special === 'tl') letterScore *= 3;
