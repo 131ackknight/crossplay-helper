@@ -83,7 +83,8 @@
             "Interactive game board",
             "Support for blank/wildcard tiles",
             "Score calculation with bonus squares",
-            "Save multiple game boards"
+            "Save multiple game boards",
+            "Read a Crossplay board from a screenshot on your device"
         ]
     }
     </script>
@@ -168,6 +169,14 @@
             },
             {
                 "@type": "Question",
+                "name": "Can I upload a screenshot of my Crossplay board?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Tap Upload Screenshot and choose a picture of the game, or paste one. The board and your rack are read on your device. The picture is not sent to a server. Check the grid, fix any letter that looks wrong, then apply it."
+                }
+            },
+            {
+                "@type": "Question",
                 "name": "Does the Crossplay helper use Crossplay's letter values?",
                 "acceptedAnswer": {
                     "@type": "Answer",
@@ -186,7 +195,7 @@
         "name": "How to find the best word in Crossplay, Scrabble or Words with Friends",
         "description": "Use this free word finder to get the highest-scoring move for NYT Crossplay, Scrabble, or Words with Friends.",
         "step": [
-            { "@type": "HowToStep", "name": "Set up the board", "text": "Click cells and type letters already on the board (use ? for blanks). Use the game dropdown to match Crossplay, Scrabble, or Words with Friends." },
+            { "@type": "HowToStep", "name": "Set up the board", "text": "Click cells and type letters already on the board, or tap Upload Screenshot and choose a picture of your Crossplay game. The picture is read on your device. Use the game dropdown to match Crossplay, Scrabble, or Words with Friends." },
             { "@type": "HowToStep", "name": "Enter your tiles", "text": "Type your 7 letters in the tile rack. Use ? for blank or wildcard tiles." },
             { "@type": "HowToStep", "name": "Get the best move", "text": "Click Show Me Best Move to see the highest-scoring words. Scores use the selected game's letter values, bonus squares, and bingo bonus (40 in Crossplay, 50 in Scrabble, 35 in Words with Friends)." },
             { "@type": "HowToStep", "name": "Place your word", "text": "Pick a word from the list and place it on the board, then continue with your next turn." }
@@ -218,7 +227,11 @@
             <div class="tile-input" id="tileInput"></div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
                 <small id="blankHint">Enter the 7 letters on your rack. Blanks: up to 3 in Crossplay, 2 in Scrabble and Words with Friends.</small>
-                <button class="btn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);" onclick="clearTiles()">Clear Tiles</button>
+                <span class="rack-actions">
+                    <button type="button" class="btn" id="uploadShotBtn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);">Upload Screenshot</button>
+                    <button type="button" class="btn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);" onclick="clearTiles()">Clear Tiles</button>
+                </span>
+                <input id="shotFile" type="file" accept="image/*" hidden>
             </div>
         </section>
 
@@ -274,7 +287,7 @@
             <section class="instructions">
                 <h4>How to Use</h4>
                 <ol>
-                    <li><strong>Set up the board:</strong> Click or tap a square and type letters already on the board (use <strong>?</strong> for a blank). Arrow keys move between squares. Backspace clears.</li>
+                    <li><strong>Set up the board:</strong> Click or tap a square and type letters already on the board (use <strong>?</strong> for a blank). Arrow keys move between squares. Backspace clears. Or tap <strong>Upload Screenshot</strong> and choose a picture of your Crossplay game. It is read on your device.</li>
                     <li><strong>Enter your rack:</strong> Type your 7 letters in the tile rack.</li>
                     <li><strong>Get the best words:</strong> Choose the game, then click or tap "Show Me Best Move". Scores use that game's letter values, bonus squares, and all-tiles bonus (Crossplay 40, Scrabble 50, Words with Friends 35).</li>
                     <li>Use "Get a Hint" for step-by-step help, or "Clear Board" to start over.</li>
@@ -374,6 +387,8 @@
                     <dd>Crossplay has 3 blank tiles. Scrabble and Words with Friends have 2. Enter each one as ? on your rack.</dd>
                     <dt>What dictionary does Crossplay use?</dt>
                     <dd>NYT Crossplay uses NWL2023, with New York Times edits. This helper uses one shared list for Crossplay, Scrabble, and Words with Friends: the older TWL, 178,691 words. Some words added in NWL2023 are not in that list. Words with Friends has its own official list, which this helper does not load separately.</dd>
+                    <dt>Can I upload a screenshot of my Crossplay board?</dt>
+                    <dd>Yes. Tap Upload Screenshot and choose a picture of the game, or paste one. The board and your rack are read on your device. The picture is not sent to a server. Check the grid, fix any letter that looks wrong, then apply it.</dd>
                     <dt>Does the Crossplay helper use Crossplay's letter values?</dt>
                     <dd>Yes. With NYT Crossplay selected, the solver uses Crossplay's letter values, not Scrabble's. Nine letters differ: B, G, H, J, K, L, U, V, and W.</dd>
                 </dl>
@@ -392,7 +407,7 @@
             Short form: Word Game Helper (wordgamehelp.com)
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-40
+            Build: 2026-03-07-41
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
@@ -407,6 +422,29 @@
 
     <script defer src="/game-rules.js"></script>
     <script defer src="/dictionary.20261013.js"></script>
+    <div id="shotModal" class="shot-modal" hidden>
+        <div class="shot-dialog" role="dialog" aria-modal="true" aria-labelledby="shotTitle">
+            <h3 id="shotTitle">Check this board</h3>
+            <p id="shotStatus">Reading the board…</p>
+            <div id="shotCrop" hidden>
+                <canvas id="shotCanvas"></canvas>
+                <button type="button" class="btn btn-primary" id="shotReread">Read this area</button>
+            </div>
+            <div id="shotReview">
+                <div id="shotGrid" class="shot-grid"></div>
+                <p class="shot-rack-label">Your tiles</p>
+                <div id="shotRack" class="shot-rack"></div>
+            </div>
+            <div class="shot-actions">
+                <button type="button" class="btn btn-primary" id="shotApply">Apply</button>
+                <button type="button" class="btn" id="shotAdjust">Adjust crop</button>
+                <button type="button" class="btn" id="shotCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script defer src="/letter-templates.js"></script>
     <script defer src="/app.js"></script>
+    <script defer src="/screenshot-import.js"></script>
 </body>
 </html>
