@@ -7,7 +7,7 @@
     <!-- Primary Meta Tags -->
     <title>Word Game Helper: Crossplay Word Finder, Scrabble & WWF</title>
     <meta name="title" content="Word Game Helper: Crossplay Word Finder, Scrabble & WWF">
-    <meta name="description" content="Free Crossplay word finder and board solver. Enter your board and tiles to find the highest-scoring move in NYT Crossplay, Scrabble or WWF. No sign-up.">
+    <meta name="description" content="Free Crossplay word finder and board solver. Upload a screenshot of your NYT Crossplay board, or type it in. Also works for Scrabble and Words with Friends.">
     <meta name="author" content="Word Game Helper">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://wordgamehelp.com/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wordgamehelp.com/">
     <meta property="og:title" content="Word Game Helper: Crossplay Word Finder, Scrabble & WWF">
-    <meta property="og:description" content="Free Crossplay word finder and board solver. Enter your board and tiles to find the highest-scoring move in NYT Crossplay, Scrabble or WWF. No sign-up.">
+    <meta property="og:description" content="Free Crossplay word finder and board solver. Upload a screenshot of your NYT Crossplay board, or type it in. Also works for Scrabble and Words with Friends.">
     <meta property="og:image" content="https://wordgamehelp.com/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -34,7 +34,7 @@
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Word Game Helper: Crossplay Word Finder, Scrabble & WWF">
-    <meta name="twitter:description" content="Free Crossplay word finder and board solver. Enter your board and tiles to find the highest-scoring move in NYT Crossplay, Scrabble or WWF. No sign-up.">
+    <meta name="twitter:description" content="Free Crossplay word finder and board solver. Upload a screenshot of your NYT Crossplay board, or type it in. Also works for Scrabble and Words with Friends.">
     <meta name="twitter:image" content="https://wordgamehelp.com/og-image.png">
     
     <!-- Google tag (gtag.js) -->
@@ -55,7 +55,7 @@
         "name": "Word Game Helper",
         "url": "https://wordgamehelp.com/",
         "sameAs": "https://wordgamehelp.com/",
-        "description": "Free Crossplay word finder and board solver. Enter your board and tiles to find the highest-scoring move in NYT Crossplay, Scrabble or WWF. No sign-up.",
+        "description": "Free Crossplay word finder and board solver. Upload a screenshot of your NYT Crossplay board, or type it in. Also works for Scrabble and Words with Friends.",
         "applicationCategory": "GameApplication",
         "operatingSystem": "Any",
         "inLanguage": "en",
@@ -100,7 +100,7 @@
                 "name": "How do I use Word Game Helper?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Enter letters already on the board by clicking cells and typing, add your 7 tiles in the rack, then click \"Show Me Best Move\" to see the highest-scoring words. Use \"Get a Hint\" for step-by-step help."
+                    "text": "For NYT Crossplay, tap Upload Screenshot and choose a picture of your game. The board and your rack are read on your device. Or click cells and type the letters, add your 7 tiles, then click Show Me Best Move. Use Get a Hint for step-by-step help."
                 }
             },
             {
@@ -195,7 +195,7 @@
         "name": "How to find the best word in Crossplay, Scrabble or Words with Friends",
         "description": "Use this free word finder to get the highest-scoring move for NYT Crossplay, Scrabble, or Words with Friends.",
         "step": [
-            { "@type": "HowToStep", "name": "Set up the board", "text": "Click cells and type letters already on the board, or tap Upload Screenshot and choose a picture of your Crossplay game. The picture is read on your device. Use the game dropdown to match Crossplay, Scrabble, or Words with Friends." },
+            { "@type": "HowToStep", "name": "Upload a screenshot or type the board", "text": "For NYT Crossplay, tap Upload Screenshot and choose a picture of your game. The board and rack are read on your device. Or click cells and type the letters already on the board. Use the game dropdown for Scrabble or Words with Friends." },
             { "@type": "HowToStep", "name": "Enter your tiles", "text": "Type your 7 letters in the tile rack. Use ? for blank or wildcard tiles." },
             { "@type": "HowToStep", "name": "Get the best move", "text": "Click Show Me Best Move to see the highest-scoring words. Scores use the selected game's letter values, bonus squares, and bingo bonus (40 in Crossplay, 50 in Scrabble, 35 in Words with Friends)." },
             { "@type": "HowToStep", "name": "Place your word", "text": "Pick a word from the list and place it on the board, then continue with your next turn." }
@@ -218,7 +218,7 @@
     <div class="container">
         <header>
             <h1>Word Game Helper</h1>
-            <p>Free word finder for Crossplay, Scrabble &amp; Words with Friends — get the best move every time.</p>
+            <p>Free word finder for Crossplay, Scrabble, and Words with Friends. Upload a Crossplay screenshot, or type the board yourself.</p>
         </header>
 
         <!-- Global tile rack, shown above the board on all layouts -->
@@ -226,7 +226,7 @@
             <label>Your Tiles (use ? for a blank)</label>
             <div class="tile-input" id="tileInput"></div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-                <small id="blankHint">Enter the 7 letters on your rack. Blanks: up to 3 in Crossplay, 2 in Scrabble and Words with Friends.</small>
+                <small id="blankHint">Upload a Crossplay screenshot, or type your 7 letters. Blanks: up to 3 in Crossplay, 2 in Scrabble and Words with Friends.</small>
                 <span class="rack-actions">
                     <button type="button" class="btn" id="uploadShotBtn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);">Upload Screenshot</button>
                     <button type="button" class="btn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);" onclick="clearTiles()">Clear Tiles</button>
@@ -287,8 +287,8 @@
             <section class="instructions">
                 <h4>How to Use</h4>
                 <ol>
-                    <li><strong>Set up the board:</strong> Click or tap a square and type letters already on the board (use <strong>?</strong> for a blank). Arrow keys move between squares. Backspace clears. Or tap <strong>Upload Screenshot</strong> and choose a picture of your Crossplay game. It is read on your device.</li>
-                    <li><strong>Enter your rack:</strong> Type your 7 letters in the tile rack.</li>
+                    <li><strong>Upload a Crossplay screenshot:</strong> Tap <strong>Upload Screenshot</strong> and choose a picture of your NYT Crossplay game. Paste and drop work too. The board and your rack are read on your device. Fix any wrong letter, then apply.</li>
+                    <li><strong>Or type it in:</strong> Click or tap a square and type letters already on the board (use <strong>?</strong> for a blank). Arrow keys move between squares. Backspace clears. Then type your 7 letters in the tile rack.</li>
                     <li><strong>Get the best words:</strong> Choose the game, then click or tap "Show Me Best Move". Scores use that game's letter values, bonus squares, and all-tiles bonus (Crossplay 40, Scrabble 50, Words with Friends 35).</li>
                     <li>Use "Get a Hint" for step-by-step help, or "Clear Board" to start over.</li>
                 </ol>
@@ -317,6 +317,8 @@
                 <h2>Free word finder for Crossplay, Scrabble and Words with Friends</h2>
                 <p>Word Game Helper is a free word finder and board solver for NYT Crossplay, Scrabble, and Words with Friends. Enter the letters on the board and your rack, and it finds the highest-scoring move in one click. Bonus squares, letter values, and the all-tiles bonus are set for each game: 40 points for a sweep in Crossplay, 50 for a bingo in Scrabble, and 35 in Words with Friends.</p>
                 <p>Use it as a Crossplay word finder and helper, or switch the game to Scrabble or Words with Friends. There's nothing to sign up for or download, and everything runs in your browser. Save multiple boards to keep several games going, and use ? for blank tiles.</p>
+                <h2>Upload a Crossplay screenshot</h2>
+                <p>Take a screenshot of your NYT Crossplay game with the whole board visible. Tap Upload Screenshot and choose the picture, or paste it, or drop it on the board. Word Game Helper reads the letters already played and the 7 tiles on your rack, then shows a grid so you can fix a misread letter before you apply it. The picture stays on your device. It is not sent to a server. This reader is for Crossplay. Scrabble and Words with Friends use a board you type.</p>
                 <p>Open a <a href="/scrabble-word-finder">Scrabble word finder</a> or a <a href="/words-with-friends-word-finder">Words with Friends word finder</a>. For Crossplay rules, see <a href="/crossplay-tile-values">Crossplay tile values</a> and the <a href="/crossplay-board-layout">Crossplay board layout</a>.</p>
 
                 <h2>NYT Crossplay Word Finder &amp; Helper</h2>
@@ -370,7 +372,7 @@
                 <h2>Frequently asked questions</h2>
                 <dl>
                     <dt>How do I use Word Game Helper?</dt>
-                    <dd>Enter letters already on the board by clicking cells and typing, add your 7 tiles in the rack, then click "Show Me Best Move" to see the highest-scoring words. Use "Get a Hint" for step-by-step help.</dd>
+                    <dd>For NYT Crossplay, tap Upload Screenshot and choose a picture of your game. The board and your rack are read on your device. Or click cells and type the letters, add your 7 tiles, then click "Show Me Best Move" to see the highest-scoring words. Use "Get a Hint" for step-by-step help.</dd>
                     <dt>Does Word Game Helper work with NYT Crossplay, Scrabble, and Words with Friends?</dt>
                     <dd>Yes. Choose your game so letter values, bonus squares, and the all-tiles bonus match that game: a 40-point sweep in Crossplay, 50 in Scrabble, and 35 in Words with Friends. Crossplay's center star marks the opening square and does not multiply the score. Scrabble's center star is a double word.</dd>
                     <dt>How do I enter blank or wildcard tiles?</dt>
@@ -407,7 +409,7 @@
             Short form: Word Game Helper (wordgamehelp.com)
         </p>
         <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-41
+            Build: 2026-03-07-42
         </p>
         <p style="margin-bottom: 10px;">
             Works entirely in your browser. No account required. Your game data stays on your device.
