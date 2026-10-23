@@ -22,6 +22,9 @@
     <meta name="twitter:title" content="Crossplay Board Layout — Word Game Helper">
     <meta name="twitter:description" content="NYT Crossplay bonus squares on a 15 by 15 board. The center star marks the first word and does not multiply the score.">
     <meta name="twitter:image" content="https://wordgamehelp.com/og-image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=JetBrains+Mono:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
     <script type="application/ld+json">
 {
@@ -69,12 +72,32 @@
     </script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Crossplay Board Layout</h1>
-            <p>NYT Crossplay is played on a 15 by 15 board. The center star is where the first word must go. It does not multiply the score.</p>
-        </header>
-        <section class="seo-content">
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="logo" href="/">
+                <span class="logo-tiles" aria-hidden="true">
+                    <span class="logo-tile">W</span>
+                    <span class="logo-tile logo-tile-accent">G</span>
+                    <span class="logo-tile">H</span>
+                </span>
+                <span class="logo-name">Word Game Helper</span>
+            </a>
+            <nav class="site-nav">
+                <a href="/scrabble-word-finder">Scrabble finder</a>
+                <a href="/words-with-friends-word-finder">WWF finder</a>
+                <a href="/crossplay-tile-values">Crossplay values</a>
+                <a href="/crossplay-board-layout">Board layout</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="hero wrap">
+            <div class="hero-copy">
+                <h1>Crossplay Board Layout</h1>
+                <p>NYT Crossplay is played on a 15 by 15 board. The center star is where the first word must go. It does not multiply the score.</p>
+            </div>
+        </section>
+        <section class="prose wrap">
             <h2>Crossplay bonus squares</h2>
             <p>This is the board the <a href="/">Crossplay word finder</a> uses. It has 8 triple-word squares, 8 double-word squares, 20 triple-letter squares, and 20 double-letter squares. The center is a star, not a double-word square. Letter points are on the <a href="/crossplay-tile-values">Crossplay tile values</a> page.</p>
             <p>Triple word (TW) multiplies the whole word by 3. Double word (DW) multiplies it by 2. Triple letter (TL) and double letter (DL) multiply that new letter only. Bonuses apply to tiles you place on that turn.</p>
@@ -83,28 +106,27 @@
                     <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell center">★</div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>
                 </div>
             </div>
-            <h2>Frequently asked questions</h2>
-            <dl>
-                    <dt>Does the Crossplay center square score a bonus?</dt>
-                    <dd>No. The center star shows where the first word must go. It does not multiply the score. Scrabble's center star is a double word.</dd>
-                    <dt>How many bonus squares are on a Crossplay board?</dt>
-                    <dd>This layout has 8 triple-word squares, 8 double-word squares, 20 triple-letter squares, and 20 double-letter squares. The center is not one of the double-word squares.</dd>
-            </dl>
         </section>
-    </div>
-    <footer style="max-width: 1400px; margin: 40px auto 20px; padding: 20px; text-align: center; color: var(--text-secondary); font-size: 12px; border-top: 1px solid #333;">
-        <p style="margin-bottom: 10px;">
-            <strong>Word Game Helper</strong> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
-        </p>
-        <p style="margin-bottom: 10px;"><a href="/">Crossplay word finder</a> · <a href="/crossplay-tile-values">Crossplay tile values</a></p>
-        <p style="margin-bottom: 10px; color: #555; font-size: 11px;">Build: 2026-03-07-40</p>
-        <p style="margin-bottom: 10px;">Works entirely in your browser. No account required. Your game data stays on your device.</p>
-        <p style="color: #666;">
-            Not affiliated with The New York Times, Hasbro, or Zynga.
-            Crossplay™ is a trademark of The New York Times.
-            Scrabble® is a trademark of Hasbro.
-            Words with Friends™ is a trademark of Zynga.
-        </p>
+        <section class="faq-band">
+            <div class="faq-inner">
+                <h2>Frequently asked questions</h2>
+                <div class="faq-list">
+                    <details><summary>Does the Crossplay center square score a bonus?<span class="faq-plus">+</span></summary><p>No. The center star shows where the first word must go. It does not multiply the score. Scrabble's center star is a double word.</p></details>
+                    <details><summary>How many bonus squares are on a Crossplay board?<span class="faq-plus">+</span></summary><p>This layout has 8 triple-word squares, 8 double-word squares, 20 triple-letter squares, and 20 double-letter squares. The center is not one of the double-word squares.</p></details>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div>
+                <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
+                <p><a href="/">Crossplay word finder</a> · <a href="/crossplay-tile-values">Crossplay tile values</a></p>
+                <p class="footer-meta">Build: 2026-03-07-41</p>
+                <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
+            </div>
+            <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
+        </div>
     </footer>
     <script src="/game-rules.js"></script>
 </body>

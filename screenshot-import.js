@@ -673,6 +673,8 @@
         if (typeof savePlayerTiles === 'function') savePlayerTiles();
         const results = document.getElementById('results');
         if (results) results.innerHTML = '';
+        const meta = document.getElementById('resultsMeta');
+        if (meta) meta.textContent = '';
         closeModal();
     }
 
@@ -693,7 +695,7 @@
         const ctx = canvas.getContext('2d');
         ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
         const scale = canvas.width / (currentImage.naturalWidth || currentImage.width);
-        ctx.strokeStyle = '#e94560';
+        ctx.strokeStyle = '#2b6fd9';
         ctx.lineWidth = 3;
         ctx.strokeRect(cropRect.x * scale, cropRect.y * scale, cropRect.size * scale, cropRect.size * scale);
     }
@@ -830,6 +832,27 @@
             board.addEventListener('dragover', (event) => event.preventDefault());
             board.addEventListener('drop', (event) => {
                 event.preventDefault();
+                const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+                useFile(file);
+            });
+        }
+        const strip = document.getElementById('uploadStrip');
+        if (strip) {
+            strip.addEventListener('click', (event) => {
+                if (event.target.closest('#uploadShotBtn')) return;
+                input.click();
+            });
+            strip.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                strip.classList.add('drag');
+            });
+            strip.addEventListener('dragleave', (event) => {
+                if (event.relatedTarget && strip.contains(event.relatedTarget)) return;
+                strip.classList.remove('drag');
+            });
+            strip.addEventListener('drop', (event) => {
+                event.preventDefault();
+                strip.classList.remove('drag');
                 const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
                 useFile(file);
             });

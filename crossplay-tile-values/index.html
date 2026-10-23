@@ -22,6 +22,9 @@
     <meta name="twitter:title" content="Crossplay Tile Values — Word Game Helper">
     <meta name="twitter:description" content="NYT Crossplay letter points, including the nine tiles that differ from Scrabble. Blank tiles score 0. A sweep of all 7 tiles adds 40.">
     <meta name="twitter:image" content="https://wordgamehelp.com/og-image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=JetBrains+Mono:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
     <script type="application/ld+json">
 {
@@ -69,12 +72,32 @@
     </script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Crossplay Tile Values</h1>
-            <p>These are the letter points Word Game Helper uses when NYT Crossplay is selected. A blank scores 0. Playing all 7 tiles adds 40 points.</p>
-        </header>
-        <section class="seo-content">
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="logo" href="/">
+                <span class="logo-tiles" aria-hidden="true">
+                    <span class="logo-tile">W</span>
+                    <span class="logo-tile logo-tile-accent">G</span>
+                    <span class="logo-tile">H</span>
+                </span>
+                <span class="logo-name">Word Game Helper</span>
+            </a>
+            <nav class="site-nav">
+                <a href="/scrabble-word-finder">Scrabble finder</a>
+                <a href="/words-with-friends-word-finder">WWF finder</a>
+                <a href="/crossplay-tile-values">Crossplay values</a>
+                <a href="/crossplay-board-layout">Board layout</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="hero wrap">
+            <div class="hero-copy">
+                <h1>Crossplay Tile Values</h1>
+                <p>These are the letter points Word Game Helper uses when NYT Crossplay is selected. A blank scores 0. Playing all 7 tiles adds 40 points.</p>
+            </div>
+        </section>
+        <section class="prose wrap">
             <h2>Crossplay letter points</h2>
             <p>Crossplay changed nine letter values from Scrabble. The <a href="/">Crossplay word finder</a> uses this table, a 40-point sweep, and 3 blanks. The bonus squares are on the <a href="/crossplay-board-layout">Crossplay board layout</a>.</p>
             <table>
@@ -127,28 +150,27 @@
                     <tr><td>W</td><td>5</td><td>4</td></tr>
                 </tbody>
             </table>
-            <h2>Frequently asked questions</h2>
-            <dl>
-                    <dt>What are the Crossplay tile values?</dt>
-                    <dd>With NYT Crossplay selected, Word Game Helper scores letters from the Crossplay table on this page. A blank scores 0. Using all 7 tiles adds 40 points.</dd>
-                    <dt>Which Crossplay letters differ from Scrabble?</dt>
-                    <dd>Nine letters differ: B is 4 in Crossplay and 3 in Scrabble; G is 4 in Crossplay and 2 in Scrabble; H is 3 in Crossplay and 4 in Scrabble; J is 10 in Crossplay and 8 in Scrabble; K is 6 in Crossplay and 5 in Scrabble; L is 2 in Crossplay and 1 in Scrabble; U is 2 in Crossplay and 1 in Scrabble; V is 6 in Crossplay and 4 in Scrabble; W is 5 in Crossplay and 4 in Scrabble.</dd>
-            </dl>
         </section>
-    </div>
-    <footer style="max-width: 1400px; margin: 40px auto 20px; padding: 20px; text-align: center; color: var(--text-secondary); font-size: 12px; border-top: 1px solid #333;">
-        <p style="margin-bottom: 10px;">
-            <strong>Word Game Helper</strong> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
-        </p>
-        <p style="margin-bottom: 10px;"><a href="/">Crossplay word finder</a> · <a href="/crossplay-board-layout">Crossplay board layout</a></p>
-        <p style="margin-bottom: 10px; color: #555; font-size: 11px;">Build: 2026-03-07-40</p>
-        <p style="margin-bottom: 10px;">Works entirely in your browser. No account required. Your game data stays on your device.</p>
-        <p style="color: #666;">
-            Not affiliated with The New York Times, Hasbro, or Zynga.
-            Crossplay™ is a trademark of The New York Times.
-            Scrabble® is a trademark of Hasbro.
-            Words with Friends™ is a trademark of Zynga.
-        </p>
+        <section class="faq-band">
+            <div class="faq-inner">
+                <h2>Frequently asked questions</h2>
+                <div class="faq-list">
+                    <details><summary>What are the Crossplay tile values?<span class="faq-plus">+</span></summary><p>With NYT Crossplay selected, Word Game Helper scores letters from the Crossplay table on this page. A blank scores 0. Using all 7 tiles adds 40 points.</p></details>
+                    <details><summary>Which Crossplay letters differ from Scrabble?<span class="faq-plus">+</span></summary><p>Nine letters differ: B is 4 in Crossplay and 3 in Scrabble; G is 4 in Crossplay and 2 in Scrabble; H is 3 in Crossplay and 4 in Scrabble; J is 10 in Crossplay and 8 in Scrabble; K is 6 in Crossplay and 5 in Scrabble; L is 2 in Crossplay and 1 in Scrabble; U is 2 in Crossplay and 1 in Scrabble; V is 6 in Crossplay and 4 in Scrabble; W is 5 in Crossplay and 4 in Scrabble.</p></details>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div>
+                <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
+                <p><a href="/">Crossplay word finder</a> · <a href="/crossplay-board-layout">Crossplay board layout</a></p>
+                <p class="footer-meta">Build: 2026-03-07-41</p>
+                <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
+            </div>
+            <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
+        </div>
     </footer>
     <script src="/game-rules.js"></script>
 </body>

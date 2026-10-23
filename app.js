@@ -6,6 +6,97 @@
         window.BOARD_SIZE = BOARD_SIZE;
         window.CENTER = CENTER;
 
+        function bonusLabel(kind) {
+            return { tw: '3W', dw: '2W', tl: '3L', dl: '2L' }[kind] || '';
+        }
+
+        function decorateEmptyCell(cell, row, col) {
+            cell.classList.remove('has-tile', 'dl', 'tl', 'dw', 'tw', 'center', 'bonus-disabled');
+            delete cell.dataset.points;
+            const special = SPECIAL_SQUARES[`${row},${col}`];
+            if (!special) {
+                cell.textContent = '';
+                return;
+            }
+            cell.classList.add(special);
+            if (special === 'center' && window.centerScoresDoubleWord && window.bonusScoringEnabled) {
+                cell.classList.add('dw');
+            }
+            if (!window.bonusScoringEnabled) cell.classList.add('bonus-disabled');
+            cell.textContent = special === 'center' ? '★' : bonusLabel(special);
+        }
+
+        function setResultsMeta(text) {
+            const meta = document.getElementById('resultsMeta');
+            if (meta) meta.textContent = text || '';
+        }
+
+        function clearResults() {
+            const results = document.getElementById('results');
+            if (results) results.innerHTML = '';
+            setResultsMeta('');
+        }
+
+        function syncRackPoints() {
+            document.querySelectorAll('#tileInput .rack-slot').forEach((slot) => {
+                const input = slot.querySelector('input');
+                const pts = slot.querySelector('.rack-pts');
+                if (!input || !pts) return;
+                const letter = (input.value || '').toUpperCase();
+                pts.textContent = letter && letter !== '?' && window.LETTER_POINTS ? (window.LETTER_POINTS[letter] ?? '') : '';
+            });
+        }
+
+        function renderValueTiles() {
+            const grid = document.getElementById('valueTiles');
+            if (!grid || typeof LETTER_POINTS_BY_GAME === 'undefined') return;
+            const vals = LETTER_POINTS_BY_GAME[currentGame] || LETTER_POINTS_BY_GAME.crossplay;
+            const scrabble = LETTER_POINTS_BY_GAME.scrabble;
+            const name = GAME_PRESETS[currentGame]?.name || 'NYT Crossplay';
+            const title = document.getElementById('valuesTitle');
+            const note = document.getElementById('valuesNote');
+            if (title) title.textContent = name + ' tile values';
+            if (note) {
+                note.textContent = currentGame === 'crossplay'
+                    ? 'Highlighted letters score differently than in Scrabble.'
+                    : 'Letter points used when ' + name + ' is selected.';
+            }
+            grid.innerHTML = '';
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach((letter) => {
+                const tile = document.createElement('div');
+                const diff = currentGame === 'crossplay' && vals[letter] !== scrabble[letter];
+                tile.className = 'value-tile' + (diff ? ' diff' : '');
+                tile.innerHTML = '<span>' + letter + '</span><span class="value-pts">' + vals[letter] + '</span>';
+                grid.appendChild(tile);
+            });
+            const blank = document.createElement('div');
+            blank.className = 'value-tile blank';
+            blank.innerHTML = '<span>?</span><span class="value-pts">0</span>';
+            grid.appendChild(blank);
+        }
+
+        function syncGameChrome() {
+            document.querySelectorAll('.game-pill').forEach((btn) => {
+                const on = btn.dataset.game === currentGame;
+                btn.classList.toggle('active', on);
+                btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+            const hint = document.getElementById('blankHint');
+            if (hint) {
+                const name = GAME_PRESETS[currentGame]?.name || 'this game';
+                hint.innerHTML = 'Enter the 7 letters on your rack. Use <b>?</b> for a blank — up to ' + window.maxBlanks + ' in ' + name + '.';
+            }
+            renderValueTiles();
+            syncRackPoints();
+        }
+
+        function setGame(game) {
+            const select = document.getElementById('gameSelect');
+            if (!select || !GAME_PRESETS[game]) return;
+            select.value = game;
+            changeGame();
+        }
+
         function applyGameScoring(game) {
             const key = LETTER_POINTS_BY_GAME[game] ? game : 'crossplay';
             window.LETTER_POINTS = LETTER_POINTS_BY_GAME[key];
@@ -373,6 +464,7 @@
             // so switching back to "Unsaved Board" restores the previous unsaved state.
             saveBonusConfig();
             localStorage.setItem('crossplayHelper_game', currentGame);
+            syncGameChrome();
         }
 
         // Delete a saved board
@@ -405,7 +497,7 @@
                 setPlayerTiles([]);
                 
                 // Clear results
-                document.getElementById('results').innerHTML = '';
+                clearResults();
                 
                 // Save the cleared state
                 localStorage.setItem('crossplay_board', JSON.stringify(window.boardState));
@@ -439,7 +531,7 @@
             updateBoardSelect();
             
             // Clear results
-            document.getElementById('results').innerHTML = '';
+            clearResults();
             
             // Save the empty board (just to localStorage, not a named board)
             localStorage.setItem('crossplay_board', JSON.stringify(window.boardState));
@@ -513,10 +605,7 @@
                     cell.dataset.col = col;
 
                     const special = SPECIAL_SQUARES[`${row},${col}`];
-                    if (special) {
-                        cell.classList.add(special);
-                        cell.textContent = special === 'center' ? '★' : special.toUpperCase();
-                    }
+                    if (special) decorateEmptyCell(cell, row, col);
 
                     cell.addEventListener('click', () => handleCellClick(row, col));
                     boardEl.appendChild(cell);
@@ -587,15 +676,7 @@
         // Toggle bonus scoring on/off
         function toggleBonusScoring() {
             window.bonusScoringEnabled = document.getElementById('bonusEnabled').checked;
-            // Update visual indicator on cells
-            document.querySelectorAll('.cell').forEach(cell => {
-                const row = parseInt(cell.dataset.row);
-                const col = parseInt(cell.dataset.col);
-                const special = SPECIAL_SQUARES[`${row},${col}`];
-                if (special) {
-                    cell.classList.toggle('bonus-disabled', !window.bonusScoringEnabled);
-                }
-            });
+            refreshBonusDisplay();
             saveBonusConfig();
         }
 
@@ -619,9 +700,8 @@
             applyGameScoring(currentGame);
             applyGamePreset(currentGame);
             enforceBlankLimit(true);
-            
-            // Save selected game to localStorage
             localStorage.setItem('crossplayHelper_game', currentGame);
+            syncGameChrome();
         }
 
         // Refresh bonus display on all cells
@@ -629,16 +709,13 @@
             for (let row = 0; row < BOARD_SIZE; row++) {
                 for (let col = 0; col < BOARD_SIZE; col++) {
                     const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
-                    cell.classList.remove('dl', 'tl', 'dw', 'tw', 'center');
-                    
-                    if (!window.boardState[row][col]) {
-                        const special = SPECIAL_SQUARES[`${row},${col}`];
-                        if (special) {
-                            cell.classList.add(special);
-                            cell.textContent = special === 'center' ? '★' : special.toUpperCase();
-                        } else {
-                            cell.textContent = '';
-                        }
+                    if (!cell) continue;
+                    const letter = window.boardState[row][col];
+                    if (letter) {
+                        if (letter === '?') delete cell.dataset.points;
+                        else cell.dataset.points = window.LETTER_POINTS[letter] ?? '';
+                    } else {
+                        decorateEmptyCell(cell, row, col);
                     }
                 }
             }
@@ -719,8 +796,8 @@
                 deselectCell();
             }
 
-            // Tab - toggle direction
-            if (e.key === 'Tab') {
+            // Tab or Space - toggle direction
+            if (e.key === 'Tab' || e.key === ' ') {
                 e.preventDefault();
                 setDirection(typeDirection === 'H' ? 'V' : 'H');
             }
@@ -741,9 +818,10 @@
                 const input = document.createElement('input');
                 input.type = 'text';
                 input.maxLength = 1;
-                input.placeholder = '';
+                input.placeholder = ' ';
                 input.addEventListener('input', (e) => {
                     let value = e.target.value.toUpperCase();
+                    const slots = container.querySelectorAll('input');
                     
                     // Check if trying to add a blank (?)
                     if (value === '?') {
@@ -752,6 +830,7 @@
                         const wasBlank = e.target.dataset.prevValue === '?';
                         if (!wasBlank && currentBlanks > window.maxBlanks) {
                             e.target.value = '';
+                            syncRackPoints();
                             const gameName = GAME_PRESETS[currentGame]?.name || 'This game';
                             alert(`${gameName} has ${window.maxBlanks} blank ${window.maxBlanks === 1 ? 'tile' : 'tiles'}.`);
                             return;
@@ -760,20 +839,26 @@
                     
                     e.target.value = value;
                     e.target.dataset.prevValue = value;
+                    syncRackPoints();
                     
                     if (e.target.value && i < 6) {
-                        container.children[i + 1].focus();
+                        slots[i + 1].focus();
                     }
                     
                     savePlayerTiles();
                 });
                 input.addEventListener('keydown', (e) => {
                     if (e.key === 'Backspace' && !e.target.value && i > 0) {
-                        container.children[i - 1].focus();
+                        container.querySelectorAll('input')[i - 1].focus();
                     }
                 });
                 input.addEventListener('blur', savePlayerTiles);
-                container.appendChild(input);
+                const slot = document.createElement('div');
+                slot.className = 'rack-slot';
+                const pts = document.createElement('span');
+                pts.className = 'rack-pts';
+                slot.append(input, pts);
+                container.appendChild(slot);
             }
         }
 
@@ -799,6 +884,7 @@
                 input.value = tilesArray[i] || '';
                 input.dataset.prevValue = input.value;
             });
+            syncRackPoints();
             enforceBlankLimit(false);
         }
 
@@ -821,7 +907,10 @@
                 const gameName = GAME_PRESETS[currentGame]?.name || 'This game';
                 alert(`${gameName} allows ${window.maxBlanks} blanks. Extra blanks were cleared.`);
             }
-            if (removed) savePlayerTiles();
+            if (removed) {
+                syncRackPoints();
+                savePlayerTiles();
+            }
         }
 
         // Save player tiles to localStorage
@@ -855,33 +944,26 @@
         function clearTiles() {
             const inputs = document.querySelectorAll('#tileInput input');
             inputs.forEach(input => input.value = '');
+            syncRackPoints();
             inputs[0].focus();
-            document.getElementById('results').innerHTML = '';
+            clearResults();
             savePlayerTiles();
         }
 
         // Update cell display
         function updateCellDisplay(row, col) {
             const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+            if (!cell) return;
             const letter = window.boardState[row][col];
 
-            // Always clear bonus classes first
-            cell.classList.remove('dl', 'tl', 'dw', 'tw', 'center');
-
             if (letter) {
+                cell.classList.remove('dl', 'tl', 'dw', 'tw', 'center', 'bonus-disabled');
                 cell.classList.add('has-tile');
                 cell.textContent = letter;
-                cell.dataset.points = window.LETTER_POINTS[letter] || 0;
+                if (letter === '?') delete cell.dataset.points;
+                else cell.dataset.points = window.LETTER_POINTS[letter] ?? '';
             } else {
-                cell.classList.remove('has-tile');
-                const special = SPECIAL_SQUARES[`${row},${col}`];
-                if (special) {
-                    cell.classList.add(special);
-                    cell.textContent = special === 'center' ? '★' : special.toUpperCase();
-                } else {
-                    cell.textContent = '';
-                }
-                delete cell.dataset.points;
+                decorateEmptyCell(cell, row, col);
             }
         }
 
@@ -894,7 +976,7 @@
                 }
             }
             clearHighlights();
-            document.getElementById('results').innerHTML = '';
+            clearResults();
             // If we're viewing a saved board, don't overwrite it with empty — switch to unsaved so the saved board stays intact
             if (currentSavedBoardName) {
                 setCurrentBoardName('');
@@ -909,6 +991,7 @@
         function clearHighlights() {
             document.querySelectorAll('.cell.highlighted, .cell.new-tile').forEach(cell => {
                 cell.classList.remove('highlighted', 'new-tile');
+                updateCellDisplay(parseInt(cell.dataset.row, 10), parseInt(cell.dataset.col, 10));
             });
         }
 
@@ -921,7 +1004,7 @@
             let result = '';
             for (let i = 0; i < move.word.length; i++) {
                 if (move.blankPositions.includes(i)) {
-                    result += `<span style="text-transform: lowercase; color: #888;">${move.word[i].toLowerCase()}</span>`;
+                    result += `<span class="blank-letter">${move.word[i].toLowerCase()}</span>`;
                 } else {
                     result += move.word[i];
                 }
@@ -942,7 +1025,12 @@
                 if (cell) {
                     cell.classList.add('highlighted');
                     if (newTiles.includes(i)) {
+                        const blanks = move.blankPositions;
+                        const isBlank = blanks instanceof Set ? blanks.has(i) : Array.isArray(blanks) && blanks.includes(i);
                         cell.classList.add('new-tile');
+                        cell.textContent = word[i];
+                        if (isBlank) delete cell.dataset.points;
+                        else cell.dataset.points = window.LETTER_POINTS[word[i]] ?? '';
                     }
                 }
             }
@@ -1061,11 +1149,11 @@
             let hints = [];
             
             // Level 1: Score range
-            hints.push(`<div class="hint-item">The best word scores <strong>${best.score} points</strong></div>`);
+            hints.push(`The best word scores <strong>${best.score} points</strong>`);
             
             // Level 2: Word length
             if (level >= 2) {
-                hints.push(`<div class="hint-item">The word is <strong>${best.word.length} letters</strong> long</div>`);
+                hints.push(`The word is <strong>${best.word.length} letters</strong> long`);
             }
             
             // Level 3: Direction and general area
@@ -1073,30 +1161,32 @@
                 const direction = best.direction === 'H' ? 'horizontally (Across)' : 'vertically (Down)';
                 const rowArea = best.row < 5 ? 'top' : best.row > 9 ? 'bottom' : 'middle';
                 const colArea = best.col < 5 ? 'left' : best.col > 9 ? 'right' : 'center';
-                hints.push(`<div class="hint-item">Play it <strong>${direction}</strong> in the <strong>${rowArea}-${colArea}</strong> area</div>`);
+                hints.push(`Play it <strong>${direction}</strong> in the <strong>${rowArea}-${colArea}</strong> area`);
             }
             
             // Level 4: Number of tiles used and high-value tiles
             if (level >= 4) {
-                hints.push(`<div class="hint-item">You'll use <strong>${best.newTiles.length} tiles</strong> from your rack</div>`);
+                hints.push(`You'll use <strong>${best.newTiles.length} tiles</strong> from your rack`);
                 const highValue = usedTiles.filter(t => window.LETTER_POINTS[t] >= 4);
                 if (highValue.length > 0) {
-                    hints.push(`<div class="hint-item">High-value tiles used: <strong>${highValue.join(', ')}</strong></div>`);
+                    hints.push(`High-value tiles used: <strong>${highValue.join(', ')}</strong>`);
                 }
             }
             
             // Level 5: First letter hint
             if (level >= 5) {
-                hints.push(`<div class="hint-item">The word starts with <strong>"${best.word[0]}"</strong></div>`);
+                hints.push(`The word starts with <strong>"${best.word[0]}"</strong>`);
             }
             
-            const moreHints = level < 5 ? `<p class="hint-more">Click "Get a Hint" again for more clues (${level}/5)</p>` : '<p class="hint-more">That\'s all the hints! Use "Show Me Best Move" to see the answer.</p>';
+            const moreHints = level < 5
+                ? `Click "Get a Hint" again for more clues (${level}/5)`
+                : 'That\'s all the hints! Use "Show Me Best Move" to see the answer.';
             
+            setResultsMeta('Hints');
             resultsDiv.innerHTML = `
                 <div class="hint-container">
-                    <h3>Hints</h3>
-                    ${hints.join('')}
-                    ${moreHints}
+                    ${hints.map((text, i) => `<div class="hint-item"><span class="hint-num">${String(i + 1).padStart(2, '0')}</span><span>${text}</span></div>`).join('')}
+                    <p class="hint-more">${moreHints}</p>
                 </div>`;
         }
 
@@ -1105,11 +1195,13 @@
             const resultsDiv = document.getElementById('results');
 
             if (data.error) {
+                setResultsMeta('');
                 resultsDiv.innerHTML = `<div class="status error">${data.error}</div>`;
                 return;
             }
 
             if (!data.moves || data.moves.length === 0) {
+                setResultsMeta('');
                 resultsDiv.innerHTML = `
                     <div class="no-results">
                         <p>No valid words found.</p>
@@ -1119,21 +1211,25 @@
             }
 
             const top20 = data.moves.slice(0, 20);
+            const gameName = GAME_PRESETS[currentGame]?.name || '';
+            setResultsMeta(top20.length + (top20.length === 1 ? ' move' : ' moves') + ' · ' + gameName);
             
             resultsDiv.innerHTML = `
-                <h3>Best Words (${data.moves.length} found)</h3>
                 <div class="results-list">
                     ${top20.map((move, i) => `
                         <div class="result-item" 
                              onmouseenter="highlightWord(window.foundMoves[${i}])"
                              onmouseleave="clearHighlights()"
                              onclick="selectMove(${i})">
-                            <span class="result-word">${formatWordWithBlanks(move)}</span>
-                            <div class="result-info">
-                                <div class="result-score">${move.score} pts</div>
-                                <div class="result-position">${move.direction === 'H' ? 'Across' : 'Down'} at ${move.row + 1},${move.col + 1}</div>
-                            </div>
-                            <button class="place-btn" onclick="event.stopPropagation(); placeMove(${i})">Place</button>
+                            <span class="result-rank">${String(i + 1).padStart(2, '0')}</span>
+                            <span class="result-main">
+                                <span class="result-word">${formatWordWithBlanks(move)}</span>
+                                <span class="result-position">${move.direction === 'H' ? 'Across' : 'Down'} at ${move.row + 1},${move.col + 1}</span>
+                            </span>
+                            <span class="result-side">
+                                <span class="result-score">${move.score}</span>
+                                <button class="place-btn" onclick="event.stopPropagation(); placeMove(${i})">Place</button>
+                            </span>
                         </div>
                     `).join('')}
                 </div>`;
@@ -1208,6 +1304,7 @@
             inputs.forEach((input, i) => {
                 input.value = remainingTiles[i] || '';
             });
+            syncRackPoints();
             
             // Save the board state and player tiles
             saveBoardState();
@@ -1215,9 +1312,9 @@
             
             // Clear results and highlights
             clearHighlights();
+            setResultsMeta('');
             document.getElementById('results').innerHTML = 
-                '<div style="padding: 15px; text-align: center; color: var(--accent);">' +
-                `Placed "${word}" for ${move.score} points!</div>`;
+                '<div class="status">Placed "' + word + '" for ' + move.score + ' points.</div>';
         }
 
         // Show detailed score breakdown
@@ -1417,20 +1514,9 @@
             
             // Sync bonus enabled checkbox
             const checkbox = document.getElementById('bonusEnabled');
-            if (!checkbox) return;
-            checkbox.checked = window.bonusScoringEnabled;
-            
-            // Update visual state if bonuses are disabled
-            if (!window.bonusScoringEnabled) {
-                document.querySelectorAll('.cell').forEach(cell => {
-                    const row = parseInt(cell.dataset.row);
-                    const col = parseInt(cell.dataset.col);
-                    const special = SPECIAL_SQUARES[`${row},${col}`];
-                    if (special) {
-                        cell.classList.add('bonus-disabled');
-                    }
-                });
-            }
+            if (checkbox) checkbox.checked = window.bonusScoringEnabled;
+            if (!window.bonusScoringEnabled) refreshBonusDisplay();
+            syncGameChrome();
         }
 
         // Apply saved board state to display

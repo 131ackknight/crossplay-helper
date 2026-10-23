@@ -212,33 +212,85 @@
     }
     </script>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=JetBrains+Mono:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Word Game Helper</h1>
-            <p>Free word finder for Crossplay, Scrabble, and Words with Friends. Upload a Crossplay screenshot, or type the board yourself.</p>
-        </header>
-
-        <!-- Global tile rack, shown above the board on all layouts -->
-        <section class="control-group tile-rack-top">
-            <label>Your Tiles (use ? for a blank)</label>
-            <div class="tile-input" id="tileInput"></div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-                <small id="blankHint">Upload a Crossplay screenshot, or type your 7 letters. Blanks: up to 3 in Crossplay, 2 in Scrabble and Words with Friends.</small>
-                <span class="rack-actions">
-                    <button type="button" class="btn" id="uploadShotBtn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);">Upload Screenshot</button>
-                    <button type="button" class="btn" style="padding: 4px 10px; font-size: 12px; background: var(--bg-tertiary); color: var(--text-secondary);" onclick="clearTiles()">Clear Tiles</button>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="logo" href="/">
+                <span class="logo-tiles" aria-hidden="true">
+                    <span class="logo-tile">W</span>
+                    <span class="logo-tile logo-tile-accent">G</span>
+                    <span class="logo-tile">H</span>
                 </span>
-                <input id="shotFile" type="file" accept="image/*" hidden>
+                <span class="logo-name">Word Game Helper</span>
+            </a>
+            <nav class="site-nav">
+                <a href="/scrabble-word-finder">Scrabble finder</a>
+                <a href="/words-with-friends-word-finder">WWF finder</a>
+                <a href="/crossplay-tile-values">Crossplay values</a>
+                <a href="/crossplay-board-layout">Board layout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero wrap">
+            <div class="hero-copy">
+                <h1>Find the best move.</h1>
+                <p>Free word finder for Crossplay, Scrabble, and Words with Friends. Upload a Crossplay screenshot, or type the board yourself.</p>
+            </div>
+            <div class="game-field">
+                <span class="game-label">Game</span>
+                <div class="game-pills" role="group" aria-label="Game">
+                    <button type="button" class="game-pill active" data-game="crossplay" onclick="setGame('crossplay')">NYT Crossplay</button>
+                    <button type="button" class="game-pill" data-game="scrabble" onclick="setGame('scrabble')">Scrabble</button>
+                    <button type="button" class="game-pill" data-game="wwf" onclick="setGame('wwf')">Words with Friends</button>
+                </div>
+                <select id="gameSelect" class="visually-hidden" onchange="changeGame()" aria-hidden="true" tabindex="-1">
+                    <option value="crossplay" selected>NYT Crossplay</option>
+                    <option value="scrabble">Scrabble</option>
+                    <option value="wwf">Words with Friends</option>
+                </select>
             </div>
         </section>
 
-        <div class="main-layout">
-            <div class="board-container">
+        <section class="solver wrap">
+            <div class="board-column">
+                <div id="uploadStrip" class="upload-strip">
+                    <div class="upload-copy">
+                        <span class="upload-title">Upload a screenshot of your game</span>
+                        <span class="upload-sub">We'll fill in the board and your rack. Drop an image here or choose one.</span>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="uploadShotBtn">Upload Screenshot</button>
+                </div>
+                <input id="shotFile" type="file" accept="image/*" hidden>
+
+                <div class="toolbar">
+                    <div class="toolbar-group">
+                        <select id="boardSelect" onchange="loadSavedBoard()">
+                            <option value="" disabled>Saved boards…</option>
+                        </select>
+                        <button type="button" class="toolbar-btn" onclick="saveCurrentBoard()">Save</button>
+                        <button type="button" class="toolbar-btn" onclick="newBoard()">New</button>
+                        <button type="button" class="text-btn" onclick="deleteSavedBoard()">Delete</button>
+                    </div>
+                    <div class="toolbar-group">
+                        <div class="direction-toggle">
+                            <button type="button" id="dirH" class="active" onclick="setDirection('H')">→ Across</button>
+                            <button type="button" id="dirV" onclick="setDirection('V')">↓ Down</button>
+                        </div>
+                        <label class="bonus-check">
+                            <input type="checkbox" id="bonusEnabled" checked onchange="toggleBonusScoring()">
+                            Bonus tiles
+                        </label>
+                    </div>
+                </div>
+
                 <div class="board" id="board" tabindex="0"></div>
-                <!-- Hidden input used to trigger the mobile keyboard and route typing into the selected cell -->
                 <input id="boardInput"
                        type="text"
                        inputmode="latin"
@@ -246,180 +298,154 @@
                        autocorrect="off"
                        autocapitalize="characters"
                        spellcheck="false" />
-                <div class="direction-toggle">
-                    <span>Type direction:</span>
-                    <button id="dirH" class="active" onclick="setDirection('H')">→ Across</button>
-                    <button id="dirV" onclick="setDirection('V')">↓ Down</button>
-                </div>
-                <div class="bonus-controls">
-                    <label class="toggle-label">
-                        <span>Game:</span>
-                        <select id="gameSelect" onchange="changeGame()" style="padding: 4px 8px; border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary); border: 1px solid #444;">
-                            <option value="crossplay">NYT Crossplay</option>
-                            <option value="scrabble">Scrabble</option>
-                            <option value="wwf">Words with Friends</option>
-                        </select>
-                    </label>
-                </div>
-                <div class="bonus-controls" style="margin-top: 4px;">
-                    <label class="toggle-label">
-                        <span>Saved Boards:</span>
-                        <select id="boardSelect" onchange="loadSavedBoard()" style="padding: 4px 8px; border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary); border: 1px solid #444; min-width: 120px;">
-                            <option value="" disabled>Select a board...</option>
-                        </select>
-                    </label>
-                    <button onclick="saveCurrentBoard()" style="padding: 4px 8px; font-size: 11px; cursor: pointer; background: #2d6a4f; color: white; border: none; border-radius: 4px;">Save Board</button>
-                    <button onclick="deleteSavedBoard()" style="padding: 4px 8px; font-size: 11px; cursor: pointer; background: #6c757d; color: white; border: none; border-radius: 4px;">Delete</button>
-                    <button onclick="newBoard()" style="padding: 4px 8px; font-size: 11px; cursor: pointer; background: #0077b6; color: white; border: none; border-radius: 4px;">New Board</button>
-                </div>
-                <div class="bonus-controls" style="margin-top: 4px;">
-                    <label class="toggle-label">
-                        <input type="checkbox" id="bonusEnabled" checked onchange="toggleBonusScoring()">
-                        <span>Bonus tiles enabled</span>
-                    </label>
-                </div>
-                <div class="keyboard-hint">
-                    Click a cell, then type. Arrow keys to move. Backspace to clear. Esc to deselect.
-                </div>
+                <p class="keyboard-hint">Click a cell, then type. Arrow keys to move. Backspace to clear. Esc to deselect. Space flips direction.</p>
             </div>
 
-            <div class="side-column">
-            <section class="instructions">
-                <h4>How to Use</h4>
-                <ol>
-                    <li><strong>Upload a Crossplay screenshot:</strong> Tap <strong>Upload Screenshot</strong> and choose a picture of your NYT Crossplay game. Paste and drop work too. The board and your rack are read on your device. Fix any wrong letter, then apply.</li>
-                    <li><strong>Or type it in:</strong> Click or tap a square and type letters already on the board (use <strong>?</strong> for a blank). Arrow keys move between squares. Backspace clears. Then type your 7 letters in the tile rack.</li>
-                    <li><strong>Get the best words:</strong> Choose the game, then click or tap "Show Me Best Move". Scores use that game's letter values, bonus squares, and all-tiles bonus (Crossplay 40, Scrabble 50, Words with Friends 35).</li>
-                    <li>Use "Get a Hint" for step-by-step help, or "Clear Board" to start over.</li>
-                </ol>
-            </section>
-            <div class="controls-bleed">
-            <div class="controls">
-                <div class="action-buttons">
-                    <button class="btn btn-primary" id="findBtn" onclick="findWords()">
-                        Show Me Best Move
-                    </button>
-                    <button class="btn btn-hint" onclick="getHint()">
-                        Get a Hint
-                    </button>
+            <aside class="side-column">
+                <div class="panel">
+                    <div class="panel-head">
+                        <h2>Your tiles</h2>
+                        <button type="button" class="text-btn" onclick="clearTiles()">Clear tiles</button>
+                    </div>
+                    <div class="rack">
+                        <div class="tile-input" id="tileInput"></div>
+                    </div>
+                    <p class="blank-hint" id="blankHint">Enter the 7 letters on your rack. Use <b>?</b> for a blank — up to 3 in Crossplay.</p>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="findBtn" onclick="findWords()">Show Me Best Move</button>
+                        <button class="btn btn-hint" onclick="getHint()">Get a Hint</button>
+                    </div>
                 </div>
-                <button class="btn btn-secondary" onclick="clearBoard()">
-                    Clear Board
-                </button>
 
-                <div class="results" id="results"></div>
-            </div>
-            </div>
-            </div>
+                <div class="results-card">
+                    <div class="results-head">
+                        <h2>Results</h2>
+                        <span class="results-meta" id="resultsMeta"></span>
+                    </div>
+                    <p class="results-empty">Set up the board and your rack, then tap <b>Show Me Best Move</b>. Tap a result to preview it on the board.</p>
+                    <div class="results" id="results"></div>
+                    <button type="button" class="clear-link" onclick="clearBoard()">Clear Board</button>
+                </div>
 
-            <!-- SEO: targeted content for word finder / Crossplay / Scrabble / WWF queries -->
-            <section class="seo-content">
+                <p class="privacy-note">Works entirely in your browser. No account required. Your game data stays on your device.</p>
+            </aside>
+        </section>
+
+        <section class="how">
+            <div class="wrap how-grid">
+                <div>
+                    <span class="step-num">01</span>
+                    <h3>Upload a Crossplay screenshot</h3>
+                    <p>Tap <strong>Upload Screenshot</strong> and choose a picture of your NYT Crossplay game. Paste and drop work too. The board and your rack are read on your device. Fix any wrong letter, then apply.</p>
+                </div>
+                <div>
+                    <span class="step-num">02</span>
+                    <h3>Or type it in</h3>
+                    <p>Click or tap a square and type letters already on the board (use <strong>?</strong> for a blank). Arrow keys move between squares. Backspace clears. Then type your 7 letters in the tile rack.</p>
+                </div>
+                <div>
+                    <span class="step-num">03</span>
+                    <h3>Get the best words</h3>
+                    <p>Choose the game, then click or tap "Show Me Best Move". Scores use that game's letter values, bonus squares, and all-tiles bonus (Crossplay 40, Scrabble 50, Words with Friends 35).</p>
+                </div>
+                <div>
+                    <span class="step-num">04</span>
+                    <h3>Get a Hint</h3>
+                    <p>Use "Get a Hint" for step-by-step help, or "Clear Board" to start over.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="prose wrap">
                 <h2>Free word finder for Crossplay, Scrabble and Words with Friends</h2>
                 <p>Word Game Helper is a free word finder and board solver for NYT Crossplay, Scrabble, and Words with Friends. Enter the letters on the board and your rack, and it finds the highest-scoring move in one click. Bonus squares, letter values, and the all-tiles bonus are set for each game: 40 points for a sweep in Crossplay, 50 for a bingo in Scrabble, and 35 in Words with Friends.</p>
                 <p>Use it as a Crossplay word finder and helper, or switch the game to Scrabble or Words with Friends. There's nothing to sign up for or download, and everything runs in your browser. Save multiple boards to keep several games going, and use ? for blank tiles.</p>
                 <h2>Upload a Crossplay screenshot</h2>
                 <p>Take a screenshot of your NYT Crossplay game with the whole board visible. Tap Upload Screenshot and choose the picture, or paste it, or drop it on the board. Word Game Helper reads the letters already played and the 7 tiles on your rack, then shows a grid so you can fix a misread letter before you apply it. The picture stays on your device. It is not sent to a server. This reader is for Crossplay. Scrabble and Words with Friends use a board you type.</p>
                 <p>Open a <a href="/scrabble-word-finder">Scrabble word finder</a> or a <a href="/words-with-friends-word-finder">Words with Friends word finder</a>. For Crossplay rules, see <a href="/crossplay-tile-values">Crossplay tile values</a> and the <a href="/crossplay-board-layout">Crossplay board layout</a>.</p>
-
                 <h2>NYT Crossplay Word Finder &amp; Helper</h2>
+
+        </section>
+
+        <section class="values wrap">
+            <div class="values-copy">
+                <h2 id="valuesTitle">NYT Crossplay tile values</h2>
                 <p>Crossplay is played on a 15 by 15 board, like Scrabble, but the letter values and bonus squares are not Scrabble's. When NYT Crossplay is selected, this solver uses Crossplay's letter values, 40-point sweep, 3 blanks, and board. The center star shows where the first word must go, and it does not add a score bonus.</p>
-                <h3>Crossplay tile values</h3>
-                <table>
-                    <caption>Letter points from the Crossplay scoring table.</caption>
-                    <thead>
-                        <tr><th>Letter</th><th>Points</th></tr>
-                    </thead>
-                    <tbody>
-                        <!-- Generated from LETTER_POINTS_BY_GAME.crossplay. Do not edit these numbers by hand. -->
-                        <tr><td>A</td><td>1</td></tr>
-                        <tr><td>B</td><td>4</td></tr>
-                        <tr><td>C</td><td>3</td></tr>
-                        <tr><td>D</td><td>2</td></tr>
-                        <tr><td>E</td><td>1</td></tr>
-                        <tr><td>F</td><td>4</td></tr>
-                        <tr><td>G</td><td>4</td></tr>
-                        <tr><td>H</td><td>3</td></tr>
-                        <tr><td>I</td><td>1</td></tr>
-                        <tr><td>J</td><td>10</td></tr>
-                        <tr><td>K</td><td>6</td></tr>
-                        <tr><td>L</td><td>2</td></tr>
-                        <tr><td>M</td><td>3</td></tr>
-                        <tr><td>N</td><td>1</td></tr>
-                        <tr><td>O</td><td>1</td></tr>
-                        <tr><td>P</td><td>3</td></tr>
-                        <tr><td>Q</td><td>10</td></tr>
-                        <tr><td>R</td><td>1</td></tr>
-                        <tr><td>S</td><td>1</td></tr>
-                        <tr><td>T</td><td>1</td></tr>
-                        <tr><td>U</td><td>2</td></tr>
-                        <tr><td>V</td><td>6</td></tr>
-                        <tr><td>W</td><td>5</td></tr>
-                        <tr><td>X</td><td>8</td></tr>
-                        <tr><td>Y</td><td>4</td></tr>
-                        <tr><td>Z</td><td>10</td></tr>
-                        <tr><td>Blank (?)</td><td>0</td></tr>
-                    </tbody>
-                </table>
                 <h3>How Crossplay differs from Scrabble</h3>
-                <ul>
+                <ul class="diff-list">
                     <li>Using all 7 tiles scores 40 in Crossplay (a sweep) and 50 in Scrabble (a bingo).</li>
                     <li>Crossplay has 3 blanks. Scrabble has 2.</li>
                     <li>The Crossplay center star does not multiply the score. Scrabble's center star is a double word.</li>
                     <li>Nine letters have different values: B is 4 in Crossplay and 3 in Scrabble; G is 4 and 2; H is 3 and 4; J is 10 and 8; K is 6 and 5; L is 2 and 1; U is 2 and 1; V is 6 and 4; W is 5 and 4.</li>
                     <li>This helper uses the same word list for both games. That list is the older TWL, not NWL2023.</li>
                 </ul>
+            </div>
+            <div class="values-tiles">
+                <!-- Generated from LETTER_POINTS_BY_GAME.crossplay. Do not edit these numbers by hand. -->
+                <div class="value-grid" id="valueTiles" aria-label="Letter points from the Crossplay scoring table">
+                    <div class="value-tile"><span>A</span><span class="value-pts">1</span></div>
+                    <div class="value-tile diff"><span>B</span><span class="value-pts">4</span></div>
+                    <div class="value-tile"><span>C</span><span class="value-pts">3</span></div>
+                    <div class="value-tile"><span>D</span><span class="value-pts">2</span></div>
+                    <div class="value-tile"><span>E</span><span class="value-pts">1</span></div>
+                    <div class="value-tile"><span>F</span><span class="value-pts">4</span></div>
+                    <div class="value-tile diff"><span>G</span><span class="value-pts">4</span></div>
+                    <div class="value-tile diff"><span>H</span><span class="value-pts">3</span></div>
+                    <div class="value-tile"><span>I</span><span class="value-pts">1</span></div>
+                    <div class="value-tile diff"><span>J</span><span class="value-pts">10</span></div>
+                    <div class="value-tile diff"><span>K</span><span class="value-pts">6</span></div>
+                    <div class="value-tile diff"><span>L</span><span class="value-pts">2</span></div>
+                    <div class="value-tile"><span>M</span><span class="value-pts">3</span></div>
+                    <div class="value-tile"><span>N</span><span class="value-pts">1</span></div>
+                    <div class="value-tile"><span>O</span><span class="value-pts">1</span></div>
+                    <div class="value-tile"><span>P</span><span class="value-pts">3</span></div>
+                    <div class="value-tile"><span>Q</span><span class="value-pts">10</span></div>
+                    <div class="value-tile"><span>R</span><span class="value-pts">1</span></div>
+                    <div class="value-tile"><span>S</span><span class="value-pts">1</span></div>
+                    <div class="value-tile"><span>T</span><span class="value-pts">1</span></div>
+                    <div class="value-tile diff"><span>U</span><span class="value-pts">2</span></div>
+                    <div class="value-tile diff"><span>V</span><span class="value-pts">6</span></div>
+                    <div class="value-tile diff"><span>W</span><span class="value-pts">5</span></div>
+                    <div class="value-tile"><span>X</span><span class="value-pts">8</span></div>
+                    <div class="value-tile"><span>Y</span><span class="value-pts">4</span></div>
+                    <div class="value-tile"><span>Z</span><span class="value-pts">10</span></div>
+                    <div class="value-tile blank"><span>?</span><span class="value-pts">0</span></div>
+                </div>
+                <p class="values-note" id="valuesNote">Highlighted letters score differently than in Scrabble.</p>
+            </div>
+        </section>
 
+        <section class="faq-band">
+            <div class="faq-inner">
                 <h2>Frequently asked questions</h2>
-                <dl>
-                    <dt>How do I use Word Game Helper?</dt>
-                    <dd>For NYT Crossplay, tap Upload Screenshot and choose a picture of your game. The board and your rack are read on your device. Or click cells and type the letters, add your 7 tiles, then click "Show Me Best Move" to see the highest-scoring words. Use "Get a Hint" for step-by-step help.</dd>
-                    <dt>Does Word Game Helper work with NYT Crossplay, Scrabble, and Words with Friends?</dt>
-                    <dd>Yes. Choose your game so letter values, bonus squares, and the all-tiles bonus match that game: a 40-point sweep in Crossplay, 50 in Scrabble, and 35 in Words with Friends. Crossplay's center star marks the opening square and does not multiply the score. Scrabble's center star is a double word.</dd>
-                    <dt>How do I enter blank or wildcard tiles?</dt>
-                    <dd>Use a question mark (?) for each blank on your rack. Crossplay has 3 blanks. Scrabble and Words with Friends have 2. The rack will not accept more than that game allows.</dd>
-                    <dt>What does Show Me Best Move do?</dt>
-                    <dd>It finds every valid word you can play with your tiles, scores them with that game's letter values and bonus squares, then adds the all-tiles bonus: 40 points in Crossplay, 50 in Scrabble, and 35 in Words with Friends.</dd>
-                    <dt>Is Word Game Helper free? Do I need an account?</dt>
-                    <dd>Yes. Word Game Helper is free. No account or sign-up is required. It runs entirely in your browser.</dd>
-                    <dt>Where is my data stored? Is it private?</dt>
-                    <dd>Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games.</dd>
-                    <dt>What is a sweep in Crossplay?</dt>
-                    <dd>A sweep is using all 7 tiles in one turn. Crossplay adds 40 points. The same play is a 50-point bingo in Scrabble and a 35-point bingo in Words with Friends.</dd>
-                    <dt>How many blank tiles are in Crossplay?</dt>
-                    <dd>Crossplay has 3 blank tiles. Scrabble and Words with Friends have 2. Enter each one as ? on your rack.</dd>
-                    <dt>What dictionary does Crossplay use?</dt>
-                    <dd>NYT Crossplay uses NWL2023, with New York Times edits. This helper uses one shared list for Crossplay, Scrabble, and Words with Friends: the older TWL, 178,691 words. Some words added in NWL2023 are not in that list. Words with Friends has its own official list, which this helper does not load separately.</dd>
-                    <dt>Can I upload a screenshot of my Crossplay board?</dt>
-                    <dd>Yes. Tap Upload Screenshot and choose a picture of the game, or paste one. The board and your rack are read on your device. The picture is not sent to a server. Check the grid, fix any letter that looks wrong, then apply it.</dd>
-                    <dt>Does the Crossplay helper use Crossplay's letter values?</dt>
-                    <dd>Yes. With NYT Crossplay selected, the solver uses Crossplay's letter values, not Scrabble's. Nine letters differ: B, G, H, J, K, L, U, V, and W.</dd>
-                </dl>
-            </section>
-        </div>
-    </div>
+                <div class="faq-list">
+                    <details><summary>How do I use Word Game Helper?<span class="faq-plus">+</span></summary><p>For NYT Crossplay, tap Upload Screenshot and choose a picture of your game. The board and your rack are read on your device. Or click cells and type the letters, add your 7 tiles, then click "Show Me Best Move" to see the highest-scoring words. Use "Get a Hint" for step-by-step help.</p></details>
+                    <details><summary>Does Word Game Helper work with NYT Crossplay, Scrabble, and Words with Friends?<span class="faq-plus">+</span></summary><p>Yes. Choose your game so letter values, bonus squares, and the all-tiles bonus match that game: a 40-point sweep in Crossplay, 50 in Scrabble, and 35 in Words with Friends. Crossplay's center star marks the opening square and does not multiply the score. Scrabble's center star is a double word.</p></details>
+                    <details><summary>How do I enter blank or wildcard tiles?<span class="faq-plus">+</span></summary><p>Use a question mark (?) for each blank on your rack. Crossplay has 3 blanks. Scrabble and Words with Friends have 2. The rack will not accept more than that game allows.</p></details>
+                    <details><summary>What does Show Me Best Move do?<span class="faq-plus">+</span></summary><p>It finds every valid word you can play with your tiles, scores them with that game's letter values and bonus squares, then adds the all-tiles bonus: 40 points in Crossplay, 50 in Scrabble, and 35 in Words with Friends.</p></details>
+                    <details><summary>Is Word Game Helper free? Do I need an account?<span class="faq-plus">+</span></summary><p>Yes. Word Game Helper is free. No account or sign-up is required. It runs entirely in your browser.</p></details>
+                    <details><summary>Where is my data stored? Is it private?<span class="faq-plus">+</span></summary><p>Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games.</p></details>
+                    <details><summary>What is a sweep in Crossplay?<span class="faq-plus">+</span></summary><p>A sweep is using all 7 tiles in one turn. Crossplay adds 40 points. The same play is a 50-point bingo in Scrabble and a 35-point bingo in Words with Friends.</p></details>
+                    <details><summary>How many blank tiles are in Crossplay?<span class="faq-plus">+</span></summary><p>Crossplay has 3 blank tiles. Scrabble and Words with Friends have 2. Enter each one as ? on your rack.</p></details>
+                    <details><summary>What dictionary does Crossplay use?<span class="faq-plus">+</span></summary><p>NYT Crossplay uses NWL2023, with New York Times edits. This helper uses one shared list for Crossplay, Scrabble, and Words with Friends: the older TWL, 178,691 words. Some words added in NWL2023 are not in that list. Words with Friends has its own official list, which this helper does not load separately.</p></details>
+                    <details><summary>Can I upload a screenshot of my Crossplay board?<span class="faq-plus">+</span></summary><p>Yes. Tap Upload Screenshot and choose a picture of the game, or paste one. The board and your rack are read on your device. The picture is not sent to a server. Check the grid, fix any letter that looks wrong, then apply it.</p></details>
+                    <details><summary>Does the Crossplay helper use Crossplay's letter values?<span class="faq-plus">+</span></summary><p>Yes. With NYT Crossplay selected, the solver uses Crossplay's letter values, not Scrabble's. Nine letters differ: B, G, H, J, K, L, U, V, and W.</p></details>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <footer style="max-width: 1400px; margin: 40px auto 20px; padding: 20px; text-align: center; color: var(--text-secondary); font-size: 12px; border-top: 1px solid #333;">
-        <p style="margin-bottom: 10px;">
-            <strong>Word Game Helper</strong> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.
-        </p>
-        <p id="suggested-citation" style="margin-bottom: 8px; color: var(--text-primary); font-size: 13px;" data-citation="true">
-            <strong>Suggested citation:</strong> Word Game Helper. Free word finder for Crossplay, Scrabble &amp; Words with Friends. <a href="https://wordgamehelp.com/" style="color: var(--accent);">https://wordgamehelp.com/</a>
-        </p>
-        <p style="margin-bottom: 10px; color: #666; font-size: 11px;">
-            Short form: Word Game Helper (wordgamehelp.com)
-        </p>
-        <p style="margin-bottom: 10px; color: #555; font-size: 11px;">
-            Build: 2026-03-07-42
-        </p>
-        <p style="margin-bottom: 10px;">
-            Works entirely in your browser. No account required. Your game data stays on your device.
-        </p>
-        <p style="color: #666;">
-            Not affiliated with The New York Times, Hasbro, or Zynga. 
-            Crossplay™ is a trademark of The New York Times. 
-            Scrabble® is a trademark of Hasbro. 
-            Words with Friends™ is a trademark of Zynga.
-        </p>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div>
+                <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
+                <p id="suggested-citation" data-citation="true"><b>Suggested citation:</b> Word Game Helper. Free word finder for Crossplay, Scrabble &amp; Words with Friends. <a href="https://wordgamehelp.com/">https://wordgamehelp.com/</a></p>
+                <p class="footer-meta">Short form: Word Game Helper (wordgamehelp.com)</p>
+                <p class="footer-meta">Build: 2026-03-07-43</p>
+                <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
+            </div>
+            <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
+        </div>
     </footer>
 
     <script defer src="/game-rules.js"></script>
