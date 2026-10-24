@@ -1149,3 +1149,72 @@ a:hover { color: var(--accent-hover); }
     .values { gap: 28px; }
     .site-footer-inner { flex-direction: column; }
 }
+
+.ad-slot {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ad-slot-label {
+    margin: 0 0 4px;
+    font: 500 10px/1.2 'JetBrains Mono', ui-monospace, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #8a7660;
+    text-align: center;
+}
+
+.ad-slot-frame {
+    width: 100%;
+    background: #f4ecdc;
+    border: 1px dashed #cbb58e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.ad-slot--filled .ad-slot-frame {
+    border-color: transparent;
+    overflow: visible;
+}
+
+.ad-slot--sidebar {
+    max-width: 336px;
+    align-self: center;
+    min-height: 250px;
+}
+
+.ad-slot--sidebar .ad-slot-frame {
+    min-height: 250px;
+}
+
+.ad-incontent {
+    padding-top: 40px;
+}
+
+.ad-slot--incontent {
+    min-height: 100px;
+}
+
+.ad-slot--incontent .ad-slot-frame {
+    min-height: 100px;
+}
+
+@media (max-width: 639px) {
+    .ad-slot--incontent,
+    .ad-slot--incontent .ad-slot-frame {
+        min-height: 250px;
+    }
+}
+
+.ad-slot--faq {
+    min-height: 250px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line-2);
+}
+
+.ad-slot--faq .ad-slot-frame {
+    min-height: 250px;
+}

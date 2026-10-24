@@ -47,6 +47,29 @@
       gtag('config', 'G-L1Z9GXCWPB');
     </script>
 
+    <!-- Google Privacy & messaging (certified CMP) for EEA, UK, and Switzerland -->
+    <script async src="https://fundingchoicesmessages.google.com/i/pub-7341916491959984?ers=1"></script>
+    <script>
+      (function () {
+        function signalGooglefcPresent() {
+          if (!window.frames['googlefcPresent']) {
+            if (document.body) {
+              var iframe = document.createElement('iframe');
+              iframe.style.cssText = 'width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;';
+              iframe.style.display = 'none';
+              iframe.name = 'googlefcPresent';
+              document.body.appendChild(iframe);
+            } else {
+              setTimeout(signalGooglefcPresent, 0);
+            }
+          }
+        }
+        signalGooglefcPresent();
+      })();
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7341916491959984"
+         crossorigin="anonymous"></script>
+
     <!-- Structured Data for Search Engines and AI Citation -->
     <script type="application/ld+json">
     {
@@ -140,7 +163,7 @@
                 "name": "Where is my data stored? Is it private?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games."
+                    "text": "Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games. Ads are served by Google and may use cookies."
                 }
             },
             {
@@ -327,6 +350,13 @@
                     <button type="button" class="clear-link" onclick="clearBoard()">Clear Board</button>
                 </div>
 
+                <div class="ad-slot ad-slot--sidebar" data-ad-unit="sidebar">
+                    <p class="ad-slot-label">Advertisement</p>
+                    <div class="ad-slot-frame">
+                        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7341916491959984" data-ad-slot="SLOT_SIDEBAR" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    </div>
+                </div>
+
                 <p class="privacy-note">Works entirely in your browser. No account required. Your game data stays on your device.</p>
             </aside>
         </section>
@@ -355,6 +385,15 @@
                 </div>
             </div>
         </section>
+
+        <div class="wrap ad-incontent">
+            <div class="ad-slot ad-slot--incontent" data-ad-unit="incontent-1">
+                <p class="ad-slot-label">Advertisement</p>
+                <div class="ad-slot-frame">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7341916491959984" data-ad-slot="SLOT_INCONTENT_1" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+            </div>
+        </div>
 
         <section class="prose wrap">
                 <h2>Free word finder for Crossplay, Scrabble and Words with Friends</h2>
@@ -424,7 +463,13 @@
                     <details><summary>How do I enter blank or wildcard tiles?<span class="faq-plus">+</span></summary><p>Use a question mark (?) for each blank on your rack. Crossplay has 3 blanks. Scrabble and Words with Friends have 2. The rack will not accept more than that game allows.</p></details>
                     <details><summary>What does Show Me Best Move do?<span class="faq-plus">+</span></summary><p>It finds every valid word you can play with your tiles, scores them with that game's letter values and bonus squares, then adds the all-tiles bonus: 40 points in Crossplay, 50 in Scrabble, and 35 in Words with Friends.</p></details>
                     <details><summary>Is Word Game Helper free? Do I need an account?<span class="faq-plus">+</span></summary><p>Yes. Word Game Helper is free. No account or sign-up is required. It runs entirely in your browser.</p></details>
-                    <details><summary>Where is my data stored? Is it private?<span class="faq-plus">+</span></summary><p>Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games.</p></details>
+                    <div class="ad-slot ad-slot--faq" data-ad-unit="faq">
+                        <p class="ad-slot-label">Advertisement</p>
+                        <div class="ad-slot-frame">
+                            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7341916491959984" data-ad-slot="SLOT_FAQ" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                        </div>
+                    </div>
+                    <details><summary>Where is my data stored? Is it private?<span class="faq-plus">+</span></summary><p>Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games. Ads are served by Google and may use cookies.</p></details>
                     <details><summary>What is a sweep in Crossplay?<span class="faq-plus">+</span></summary><p>A sweep is using all 7 tiles in one turn. Crossplay adds 40 points. The same play is a 50-point bingo in Scrabble and a 35-point bingo in Words with Friends.</p></details>
                     <details><summary>How many blank tiles are in Crossplay?<span class="faq-plus">+</span></summary><p>Crossplay has 3 blank tiles. Scrabble and Words with Friends have 2. Enter each one as ? on your rack.</p></details>
                     <details><summary>What dictionary does Crossplay use?<span class="faq-plus">+</span></summary><p>NYT Crossplay uses NWL2023, with New York Times edits. This helper uses one shared list for Crossplay, Scrabble, and Words with Friends: the older TWL, 178,691 words. Some words added in NWL2023 are not in that list. Words with Friends has its own official list, which this helper does not load separately.</p></details>
@@ -441,8 +486,8 @@
                 <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
                 <p id="suggested-citation" data-citation="true"><b>Suggested citation:</b> Word Game Helper. Free word finder for Crossplay, Scrabble &amp; Words with Friends. <a href="https://wordgamehelp.com/">https://wordgamehelp.com/</a></p>
                 <p class="footer-meta">Short form: Word Game Helper (wordgamehelp.com)</p>
-                <p class="footer-meta">Build: 2026-03-07-43</p>
-                <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
+                <p class="footer-meta">Build: 2026-03-07-44</p>
+                <p>Works entirely in your browser. No account required. Your game data stays on your device. Ads are served by Google and may use cookies. <a href="/privacy">Privacy policy</a></p>
             </div>
             <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
         </div>
@@ -474,5 +519,6 @@
     <script defer src="/letter-templates.js"></script>
     <script defer src="/app.js"></script>
     <script defer src="/screenshot-import.js"></script>
+    <script defer src="/ads.js"></script>
 </body>
 </html>

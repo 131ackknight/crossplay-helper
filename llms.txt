@@ -37,7 +37,8 @@ Crossplay, Scrabble, and Words with Friends all use the same list in this helper
 - https://wordgamehelp.com/words-with-friends-word-finder — Words with Friends word finder. 35-point bingo, 2 blanks, no center star.
 - https://wordgamehelp.com/crossplay-tile-values — Crossplay letter points, including the nine letters that differ from Scrabble.
 - https://wordgamehelp.com/crossplay-board-layout — Crossplay bonus squares. The center star does not multiply the score.
+- https://wordgamehelp.com/privacy — Privacy policy. Game data stays on the device. Ads are served by Google and may use cookies.
 
 ## Privacy
 
-This tool runs entirely in your browser. No data is sent to any server. Game state is saved in your browser's local storage.
+Your game data stays on your device. The board, tiles, and screenshots are not sent to a server. Game state is saved in the browser's local storage. Ads on the homepage are served by Google and may use cookies. https://wordgamehelp.com/privacy
