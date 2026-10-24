@@ -28,7 +28,7 @@ The tool calculates scores based on:
 
 ## Word list
 
-Crossplay, Scrabble, and Words with Friends all use the same list in this helper: the older North American TWL (178,691 words). NYT Crossplay's official list is NWL2023 with New York Times edits, so some newer words may be missing. Words with Friends has its own official list, which this helper does not load separately.
+Crossplay, Scrabble, and Words with Friends all use the same list in this helper: the older North American TWL, plus the two-letter words DA, GI, PO, TE, EW, and OK (178,697 words). NYT Crossplay's official list is NWL2023 with New York Times edits, so longer words added since 2006 can still be missing. Words with Friends has its own official list, which this helper does not load separately.
 
 ## Pages
 

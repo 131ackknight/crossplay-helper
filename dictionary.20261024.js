@@ -1,7 +1,8 @@
 // Comprehensive Scrabble/Crossplay Dictionary
-// Version: 3.0 - Compact word list; prefixes built at load
-// 178,691 words from TWL (the older North American tournament list).
-// NYT Crossplay uses NWL2023, with NYT edits, so some newer words are not in this list.
+// Version: 3.1 - Compact word list; prefixes built at load
+// 178,697 words. Base list is TWL06 (178,691 words).
+// Added the six two-letter words missing from TWL06: DA, GI, PO, TE, EW, OK.
+// NYT Crossplay uses NWL2023, with NYT edits. Longer words added since 2006 are still missing.
 
 const WORD_DATA = `AA
 AAH
@@ -37335,6 +37336,7 @@ CZARISTS
 CZARITZA
 CZARITZAS
 CZARS
+DA
 DAB
 DABBED
 DABBER
@@ -53318,6 +53320,7 @@ EVULSION
 EVULSIONS
 EVZONE
 EVZONES
+EW
 EWE
 EWER
 EWERS
@@ -64027,6 +64030,7 @@ GHOULISHNESSES
 GHOULS
 GHYLL
 GHYLLS
+GI
 GIANT
 GIANTESS
 GIANTESSES
@@ -105142,6 +105146,7 @@ OINTMENT
 OINTMENTS
 OITICICA
 OITICICAS
+OK
 OKA
 OKAPI
 OKAPIS
@@ -117955,6 +117960,7 @@ PNEUMONITISES
 PNEUMOTHORACES
 PNEUMOTHORAX
 PNEUMOTHORAXES
+PO
 POACEOUS
 POACH
 POACHABLE
@@ -157575,6 +157581,7 @@ TAZZAS
 TAZZE
 TCHOTCHKE
 TCHOTCHKES
+TE
 TEA
 TEABERRIES
 TEABERRY
