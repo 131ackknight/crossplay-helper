@@ -144,11 +144,17 @@ a:hover { color: var(--accent-hover); }
 }
 
 .hero-copy { max-width: 620px; }
+.hero-copy:has(.hero-title) { max-width: 700px; }
 
 .hero h1 {
     margin: 0;
     font: 800 clamp(36px, 5.5vw, 64px) / 0.95 'Bitter', serif;
     letter-spacing: -0.035em;
+}
+
+.hero h1.hero-title {
+    font: 800 clamp(30px, 4vw, 46px) / 1.05 'Bitter', serif;
+    letter-spacing: -0.03em;
 }
 
 .hero p {
