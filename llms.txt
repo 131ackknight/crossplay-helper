@@ -1,6 +1,6 @@
 # Word Game Helper
 
-> Free Crossplay word finder and board solver. Upload a screenshot of your NYT Crossplay board, or type it in. Also works for Scrabble and Words with Friends.
+> Crossplay board solver for an NYT game. Upload a screenshot of the board, or type it in. Also finds words for Scrabble and Words with Friends.
 
 ## What is this?
 
@@ -32,7 +32,7 @@ Crossplay, Scrabble, and Words with Friends all use the same list in this helper
 
 ## Pages
 
-- https://wordgamehelp.com/ — NYT Crossplay word finder. The homepage solver opens on Crossplay.
+- https://wordgamehelp.com/ — Crossplay board solver and word finder. The homepage solver opens on Crossplay.
 - https://wordgamehelp.com/scrabble-word-finder — Scrabble word finder. 50-point bingo, 2 blanks, double-word center star.
 - https://wordgamehelp.com/words-with-friends-word-finder — Words with Friends word finder. 35-point bingo, 2 blanks, no center star.
 - https://wordgamehelp.com/crossplay-tile-values — Crossplay letter points, including the nine letters that differ from Scrabble.
