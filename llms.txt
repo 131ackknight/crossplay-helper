@@ -35,7 +35,7 @@ Crossplay, Scrabble, and Words with Friends all use the same list in this helper
 - https://wordgamehelp.com/ — Crossplay board solver and word finder. The homepage solver opens on Crossplay.
 - https://wordgamehelp.com/scrabble-word-finder — Scrabble word finder. 50-point bingo, 2 blanks, double-word center star.
 - https://wordgamehelp.com/words-with-friends-word-finder — Words with Friends word finder. 35-point bingo, 2 blanks, no center star.
-- https://wordgamehelp.com/crossplay-tile-values — Crossplay letter points, including the nine letters that differ from Scrabble.
+- https://wordgamehelp.com/crossplay-tile-values — Crossplay letter values and tile counts, the nine letters that differ from Scrabble, and a tile reference chart.
 - https://wordgamehelp.com/crossplay-board-layout — Crossplay bonus squares. The center star does not multiply the score.
 - https://wordgamehelp.com/privacy — Privacy policy. Game data stays on the device. Ads are served by Google and may use cookies.
 
