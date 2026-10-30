@@ -1271,6 +1271,15 @@ a:hover { color: var(--accent-hover); }
 
 .ref-section { padding-bottom: 56px; }
 
+.ref-sheet .layout-board {
+    width: 100%;
+    max-width: none;
+}
+
+.ref-section:has(+ .tile-body) { padding-bottom: 12px; }
+
+.ref-section + .prose.tile-body { padding-top: 28px; }
+
 .ref-sheet {
     max-width: 760px;
     margin-top: 4px;
@@ -1402,7 +1411,9 @@ a:hover { color: var(--accent-hover); }
 @media print {
     .ref-sheet,
     .ref-sheet .value-tile,
-    .ref-swatch {
+    .ref-swatch,
+    .board,
+    .cell {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }

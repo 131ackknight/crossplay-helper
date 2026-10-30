@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crossplay Board Layout — Word Game Helper</title>
-    <meta name="description" content="NYT Crossplay bonus squares on a 15 by 15 board. The center star marks the first word and does not multiply the score.">
+    <title>NYT Crossplay Board Layout | Word Game Helper</title>
+    <meta name="description" content="NYT Crossplay board layout: 8 triple-word, 8 double-word, 20 triple-letter, and 20 double-letter squares. The center star does not score.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://wordgamehelp.com/crossplay-board-layout">
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -12,16 +12,19 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wordgamehelp.com/crossplay-board-layout">
-    <meta property="og:title" content="Crossplay Board Layout — Word Game Helper">
-    <meta property="og:description" content="NYT Crossplay bonus squares on a 15 by 15 board. The center star marks the first word and does not multiply the score.">
-    <meta property="og:image" content="https://wordgamehelp.com/og-image.png?v=2">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:title" content="NYT Crossplay Board Layout | Word Game Helper">
+    <meta property="og:description" content="NYT Crossplay board layout: 8 triple-word, 8 double-word, 20 triple-letter, and 20 double-letter squares. The center star does not score.">
+    <meta property="og:image" content="https://wordgamehelp.com/crossplay-board-layout/reference-chart.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="2400">
+    <meta property="og:image:height" content="1260">
+    <meta property="og:image:alt" content="Crossplay board reference chart. 15 by 15 bonus squares: 8 triple word, 8 double word, 20 triple letter, 20 double letter. The center star does not score.">
     <meta property="og:site_name" content="Word Game Helper">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Crossplay Board Layout — Word Game Helper">
-    <meta name="twitter:description" content="NYT Crossplay bonus squares on a 15 by 15 board. The center star marks the first word and does not multiply the score.">
-    <meta name="twitter:image" content="https://wordgamehelp.com/og-image.png?v=2">
+    <meta name="twitter:title" content="NYT Crossplay Board Layout | Word Game Helper">
+    <meta name="twitter:description" content="NYT Crossplay board layout: 8 triple-word, 8 double-word, 20 triple-letter, and 20 double-letter squares. The center star does not score.">
+    <meta name="twitter:image" content="https://wordgamehelp.com/crossplay-board-layout/reference-chart.png">
+    <meta name="twitter:image:alt" content="Crossplay board reference chart. 15 by 15 bonus squares: 8 triple word, 8 double word, 20 triple letter, 20 double letter. The center star does not score.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=JetBrains+Mono:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -45,6 +48,22 @@
                         "acceptedAnswer": {
                                 "@type": "Answer",
                                 "text": "This layout has 8 triple-word squares, 8 double-word squares, 20 triple-letter squares, and 20 double-letter squares. The center is not one of the double-word squares."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "Where are the triple word squares on a Crossplay board?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "The four corners are triple letter squares. Each triple word square is the fourth square from a corner, along the edge. There are 8."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "How does the Crossplay board differ from Scrabble?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Crossplay has 8 double-word squares. Scrabble has 17, and its center is one of them. Crossplay has 20 triple-letter squares. Scrabble has 12. Crossplay has 20 double-letter squares. Scrabble has 24. Both have 8 triple-word squares, in different places."
                         }
                 }
         ]
@@ -97,15 +116,47 @@
                 <p>NYT Crossplay is played on a 15 by 15 board. The center star is where the first word must go. It does not multiply the score.</p>
             </div>
         </section>
-        <section class="prose wrap">
-            <h2>Crossplay bonus squares</h2>
+        <section class="prose wrap tile-body">
+            <h2>Crossplay board layout and bonus squares</h2>
             <p>This is the board the <a href="/">Crossplay board solver</a> uses. It has 8 triple-word squares, 8 double-word squares, 20 triple-letter squares, and 20 double-letter squares. The center is a star, not a double-word square. Letter points are on the <a href="/crossplay-tile-values">Crossplay tile values</a> page.</p>
             <p>Triple word (TW) multiplies the whole word by 3. Double word (DW) multiplies it by 2. Triple letter (TL) and double letter (DL) multiply that new letter only. Bonuses apply to tiles you place on that turn.</p>
-            <div class="layout-scroll">
+        </section>
+        <section class="prose wrap ref-section" id="reference-chart">
+            <div class="ref-sheet">
+                <h2>Crossplay board reference chart</h2>
+                <p class="ref-kicker">8 triple word · 8 double word · 20 triple letter · 20 double letter</p>
+                <p class="ref-lead">The center star marks the first word. It does not multiply the score.</p>
+                <div class="layout-scroll">
                 <div class="board layout-board" aria-label="Crossplay bonus square layout">
                     <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell center">★</div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dw">DW</div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell dl">DL</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tw">TW</div>                    <div class="cell"></div>                    <div class="cell"></div>                    <div class="cell tl">TL</div>
                 </div>
+                </div>
+                <p class="ref-note">TW triples the word. DW doubles the word. TL triples one letter. DL doubles one letter. Bonuses apply to tiles placed on that turn.</p>
+                <p class="ref-source">wordgamehelp.com/crossplay-board-layout</p>
             </div>
+            <div class="ref-actions no-print">
+                <button type="button" class="btn-hint" id="printChart">Print reference chart</button>
+                <a class="btn-hint" href="/crossplay-board-layout/reference-chart.png">Open chart image</a>
+            </div>
+        </section>
+        <section class="prose wrap tile-body">
+            <h2>How the Crossplay board differs from Scrabble</h2>
+            <p>Both boards are 15 by 15. Crossplay has 8 double-word squares. Scrabble has 17, and its center is one of them. Crossplay has 20 triple-letter squares. Scrabble has 12. Crossplay has 20 double-letter squares. Scrabble has 24. Both have 8 triple-word squares, in different places.</p>
+            <!-- Counts match GAME_PRESETS in game-rules.js. Scrabble: 8 TW, 17 DW including the center, 12 TL, 24 DL. -->
+            <table class="compare-table">
+                <caption>Bonus square counts compared with Scrabble.</caption>
+                <thead>
+                    <tr><th>Square</th><th>Crossplay</th><th>Scrabble</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Triple word</td><td>8</td><td>8</td></tr>
+                    <tr><td>Double word</td><td>8</td><td>17</td></tr>
+                    <tr><td>Triple letter</td><td>20</td><td>12</td></tr>
+                    <tr><td>Double letter</td><td>20</td><td>24</td></tr>
+                    <tr><td>Center</td><td>No bonus</td><td>Double word</td></tr>
+                </tbody>
+            </table>
+            <p>The four corners on this board are triple letter squares. Each triple word square is the fourth square from a corner, along the edge. Scrabble puts a triple word square on each corner and in the middle of each edge.</p>
         </section>
         <section class="faq-band">
             <div class="faq-inner">
@@ -113,6 +164,8 @@
                 <div class="faq-list">
                     <details><summary>Does the Crossplay center square score a bonus?<span class="faq-plus">+</span></summary><p>No. The center star shows where the first word must go. It does not multiply the score. Scrabble's center star is a double word.</p></details>
                     <details><summary>How many bonus squares are on a Crossplay board?<span class="faq-plus">+</span></summary><p>This layout has 8 triple-word squares, 8 double-word squares, 20 triple-letter squares, and 20 double-letter squares. The center is not one of the double-word squares.</p></details>
+                    <details><summary>Where are the triple word squares on a Crossplay board?<span class="faq-plus">+</span></summary><p>The four corners are triple letter squares. Each triple word square is the fourth square from a corner, along the edge. There are 8.</p></details>
+                    <details><summary>How does the Crossplay board differ from Scrabble?<span class="faq-plus">+</span></summary><p>Crossplay has 8 double-word squares. Scrabble has 17, and its center is one of them. Crossplay has 20 triple-letter squares. Scrabble has 12. Crossplay has 20 double-letter squares. Scrabble has 24. Both have 8 triple-word squares, in different places.</p></details>
                 </div>
             </div>
         </section>
@@ -122,12 +175,21 @@
             <div>
                 <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
                 <p><a href="/">Crossplay word finder</a> · <a href="/crossplay-tile-values">Crossplay tile values</a></p>
-                <p class="footer-meta">Build: 2026-03-07-42</p>
+                <p class="footer-meta">Build: 2026-03-07-51</p>
                 <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
             </div>
             <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
         </div>
     </footer>
     <script src="/game-rules.js"></script>
+    <script>
+        document.getElementById('printChart').addEventListener('click', function () {
+            document.body.classList.add('print-chart');
+            window.print();
+        });
+        window.addEventListener('afterprint', function () {
+            document.body.classList.remove('print-chart');
+        });
+    </script>
 </body>
 </html>
