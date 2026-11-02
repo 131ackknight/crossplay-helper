@@ -102,10 +102,12 @@
                 <span class="logo-name">Word Game Helper</span>
             </a>
             <nav class="site-nav">
+                <a href="/guides">Guides</a>
                 <a href="/scrabble-word-finder">Scrabble finder</a>
                 <a href="/words-with-friends-word-finder">WWF finder</a>
                 <a href="/crossplay-tile-values">Crossplay values</a>
-                <a href="/crossplay-board-layout">Board layout</a>
+                <a href="/crossplay-board-layout" aria-current="page">Board layout</a>
+                <a href="/about">About</a>
             </nav>
         </div>
     </header>
@@ -120,6 +122,7 @@
             <h2>Crossplay board layout and bonus squares</h2>
             <p>This is the board the <a href="/">Crossplay board solver</a> uses. It has 8 triple-word squares, 8 double-word squares, 20 triple-letter squares, and 20 double-letter squares. The center is a star, not a double-word square. Letter points are on the <a href="/crossplay-tile-values">Crossplay tile values</a> page.</p>
             <p>Triple word (TW) multiplies the whole word by 3. Double word (DW) multiplies it by 2. Triple letter (TL) and double letter (DL) multiply that new letter only. Bonuses apply to tiles you place on that turn.</p>
+            <p>Letter bonuses are applied before word bonuses. A tile on a triple letter that shares a word with a triple word is tripled, and then that tripled value is tripled again with the rest of the word. The center star is not part of either multiplication. On row 8, columns 6 and 10 are double letter, and columns 4 and 12 are double word. Columns 1 and 15, the ends of that row, are double letter too. There is no triple word on the center row, so an opening through the star cannot triple the word. The arithmetic, including JAZZ from the corner to the first triple word, is on <a href="/guides/how-crossplay-scoring-works">how a score is calculated</a>.</p>
         </section>
         <section class="prose wrap ref-section" id="reference-chart">
             <div class="ref-sheet">
@@ -174,8 +177,8 @@
         <div class="site-footer-inner">
             <div>
                 <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
-                <p><a href="/">Crossplay word finder</a> · <a href="/crossplay-tile-values">Crossplay tile values</a></p>
-                <p class="footer-meta">Build: 2026-03-07-51</p>
+                <p><a href="/">Crossplay word finder</a> · <a href="/crossplay-tile-values">Crossplay tile values</a> · <a href="/guides">Guides</a> · <a href="/about">About</a></p>
+                <p class="footer-meta">Build: 2026-03-07-52</p>
                 <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
             </div>
             <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>

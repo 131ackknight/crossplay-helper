@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How a Crossplay Turn Works | Word Game Helper</title>
+    <meta name="description" content="The rules Word Game Helper uses for an NYT Crossplay turn: the center star, hooks, blanks, and the 40-point sweep.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wordgamehelp.com/guides/how-to-play-crossplay">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://wordgamehelp.com/guides/how-to-play-crossplay">
+    <meta property="og:title" content="How a Crossplay Turn Works | Word Game Helper">
+    <meta property="og:description" content="The rules Word Game Helper uses for an NYT Crossplay turn: the center star, hooks, blanks, and the 40-point sweep.">
+    <meta property="og:image" content="https://wordgamehelp.com/og-image.png?v=2">
+    <meta property="og:site_name" content="Word Game Helper">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How a Crossplay Turn Works | Word Game Helper">
+    <meta name="twitter:description" content="The rules Word Game Helper uses for an NYT Crossplay turn: the center star, hooks, blanks, and the 40-point sweep.">
+    <meta name="twitter:image" content="https://wordgamehelp.com/og-image.png?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=JetBrains+Mono:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How a Crossplay turn works",
+        "description": "The rules Word Game Helper uses for an NYT Crossplay turn: the center star, hooks, blanks, and the 40-point sweep.",
+        "url": "https://wordgamehelp.com/guides/how-to-play-crossplay",
+        "mainEntityOfPage": "https://wordgamehelp.com/guides/how-to-play-crossplay",
+        "datePublished": "2026-11-02",
+        "dateModified": "2026-11-02",
+        "author": { "@type": "Organization", "name": "Word Game Helper", "url": "https://wordgamehelp.com/" },
+        "publisher": { "@type": "Organization", "name": "Word Game Helper", "url": "https://wordgamehelp.com/" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Word Game Helper", "item": "https://wordgamehelp.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://wordgamehelp.com/guides" },
+            { "@type": "ListItem", "position": 3, "name": "How a Crossplay turn works", "item": "https://wordgamehelp.com/guides/how-to-play-crossplay" }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="logo" href="/">
+                <span class="logo-tiles" aria-hidden="true">
+                    <span class="logo-tile">W</span>
+                    <span class="logo-tile logo-tile-accent">G</span>
+                    <span class="logo-tile">H</span>
+                </span>
+                <span class="logo-name">Word Game Helper</span>
+            </a>
+            <nav class="site-nav">
+                <a href="/guides" aria-current="page">Guides</a>
+                <a href="/scrabble-word-finder">Scrabble finder</a>
+                <a href="/words-with-friends-word-finder">WWF finder</a>
+                <a href="/crossplay-tile-values">Crossplay values</a>
+                <a href="/crossplay-board-layout">Board layout</a>
+                <a href="/about">About</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <article class="prose wrap guide">
+            <p class="guide-kicker"><a href="/guides">Guides</a></p>
+            <h1>How a Crossplay turn works</h1>
+            <p>This is the procedure the <a href="/">Crossplay board solver</a> follows. It describes a legal play and how that play is scored. It is not the New York Times rulebook. Where the game's word list and this site's word list disagree, the <a href="/about">about page</a> says which list you are looking at.</p>
+
+            <h2>The board and the rack</h2>
+            <p>Crossplay is played on a 15 by 15 board. Your rack holds up to seven tiles. The bag has 100 tiles: 97 letters and 3 blanks. Points and counts for each letter are on the <a href="/crossplay-tile-values">tile values</a> page. The colored squares are on the <a href="/crossplay-board-layout">board layout</a>.</p>
+            <p>On this site you either type the letters already played, or you upload a screenshot of the NYT board. The screenshot reader fills the grid and the rack on your device. Fix any letter that looks wrong, then apply it. After that, type any rack letter the reader missed. Use ? for a blank.</p>
+
+            <h2>The first word</h2>
+            <p>On an empty board the first word has to cover the center star. In the results list that square is row 8, column 8. The star marks the opening. It does not double or triple the word. Scrabble's star does. That difference is the main reason an opening score changes when you switch games.</p>
+            <p>The shortest opening is two letters, and one of them has to sit on the star. A two-letter opening is legal. The <a href="/guides/two-letter-words">two-letter list</a> is every hook this solver will accept, including that opening.</p>
+            <p>A seven-letter word through the star uses the whole rack, so it earns the 40-point sweep. On row 8 the squares two steps from the star, columns 6 and 10, are double letter. The squares four steps out, columns 4 and 12, are double word. There is no triple-word square on the center row. An opening through the star can double a letter, and if it reaches column 4 or column 12 it can double the whole word. It cannot triple the word.</p>
+            <p>Where the word sits on that row changes the score. With QUIXOTE on the rack, Show Me Best Move lists Across at 8,6 for 110: Q on a double letter, E on a double word, then the 40-point sweep. The centered line, Across at 8,5, misses the double word and scores 67. The square-by-square totals are on the <a href="/guides/how-crossplay-scoring-works">scoring page</a>.</p>
+
+            <h2>Every later turn</h2>
+            <p>After the opening, a play is one straight line, across or down. You choose the direction with the Across and Down control when you are typing. The solver tries both.</p>
+            <p>The line can run through letters already on the board. Those letters have to match the word. You fill the empty squares from your rack. You have to place at least one new tile. The finished string has to be at least two letters, and it has to be in the word list.</p>
+            <p>The new tiles also have to touch the words already on the board. Touching can mean extending a word, crossing one, or sitting beside a tile so that a second word is formed at a right angle. A word floating in open space is rejected.</p>
+            <p>Every new string counts. If the tile you add beside ON makes OX downward while your main word runs across, both words have to be in the list. A single bad hook rejects the whole play. Most of those hooks are two letters long, which is why that list is the page to check when a move you expected is missing.</p>
+
+            <h2>Blanks</h2>
+            <p>Crossplay has three blanks in the bag. The rack on this site will not take a fourth ?. A blank is any letter for building the word, and it scores 0. A double-letter or triple-letter square does not change that 0. A double-word or triple-word square still multiplies the other letters if the blank is the tile that lands there. QUIZ with the U as a blank is the worked example on the scoring page.</p>
+
+            <h2>The sweep</h2>
+            <p>Using all seven tiles from your rack adds 40 points. Crossplay calls that a sweep. The 40 is added after letter bonuses and word bonuses. A double-word square does not double the 40.</p>
+            <p>The bonus follows the rack, not the length of the word. Five tiles added to a letter already on the board make a six-letter word and do not sweep. Seven tiles played through one existing letter make an eight-letter word and do sweep, because all seven left the rack.</p>
+
+            <h2>What the buttons do</h2>
+            <p>Show Me Best Move searches the legal lines, drops any line that forms a word missing from the list, scores the rest, and shows the highest. Click a row in the results to put the word on the board in yellow and open the score breakdown. Place writes the word onto the grid and takes those tiles off the rack. Get a Hint reveals the same search in steps if you want a clue before the word.</p>
+            <p>Clear Board wipes the grid. Save stores the current grid in this browser under a name, so you can leave one game and come back. Bonus tiles, the checkbox above the board, should stay on. Turning it off scores every letter at face value. The sweep is still added.</p>
+
+            <h2>What the score will not decide</h2>
+            <p>The solver does not see the bag or the other rack. A 40-point sweep that spends your only X can be a worse leave than a smaller play. Read the number as this turn's score.</p>
+            <p>It also will not know a longer word NYT added after 2006. If the game accepts the word and this page does not, the game is right about its own list. Details are on the <a href="/about">about page</a>.</p>
+
+            <h2>Another game</h2>
+            <p>Switch the game control before you trust the total. Scrabble pays 50 for a bingo and doubles the center star. Words with Friends pays 35 and does not mark the center. Nine Crossplay letters differ from Scrabble. The <a href="/guides/crossplay-scrabble-and-words-with-friends">comparison</a> lists every letter.</p>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div>
+                <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
+                <p><a href="/">Board solver</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
+                <p class="footer-meta">Build: 2026-03-07-52</p>
+                <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
+            </div>
+            <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
+        </div>
+    </footer>
+</body>
+</html>

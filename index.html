@@ -164,7 +164,7 @@
                 "name": "Where is my data stored? Is it private?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games. Ads are served by Google and may use cookies."
+                    "text": "Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games. Google may serve ads and may use cookies."
                 }
             },
             {
@@ -205,6 +205,14 @@
                 "acceptedAnswer": {
                     "@type": "Answer",
                     "text": "Yes. With NYT Crossplay selected, the solver uses Crossplay's letter values, not Scrabble's. Nine letters differ: B, G, H, J, K, L, U, V, and W."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why was a word rejected, or why does the score disagree with the game?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "This helper uses one word list for Crossplay, Scrabble, and Words with Friends: the older TWL, plus DA, GI, PO, TE, EW, and OK. NYT Crossplay uses NWL2023 with New York Times edits, so a longer word added since 2006 can be legal in the game and missing here. Scores use the selected game. Crossplay's center star does not multiply the word, and a sweep of 40 is added after bonuses, not multiplied by them. The guides explain a turn and the scoring order."
                 }
             }
         ]
@@ -253,10 +261,12 @@
                 <span class="logo-name">Word Game Helper</span>
             </a>
             <nav class="site-nav">
+                <a href="/guides">Guides</a>
                 <a href="/scrabble-word-finder">Scrabble finder</a>
                 <a href="/words-with-friends-word-finder">WWF finder</a>
                 <a href="/crossplay-tile-values">Crossplay values</a>
                 <a href="/crossplay-board-layout">Board layout</a>
+                <a href="/about">About</a>
             </nav>
         </div>
     </header>
@@ -265,7 +275,7 @@
         <section class="hero wrap">
             <div class="hero-copy">
                 <h1 class="hero-title">Word Game Helper: Crossplay Board Solver &amp; Word Finder</h1>
-                <p>Free Crossplay board solver. Upload a screenshot of your NYT board, or type it in. Scrabble and Words with Friends work here too.</p>
+                <p>Free Crossplay board solver. Upload a screenshot of your NYT board, or type it in. Scrabble and Words with Friends work here too. The <a href="/guides">guides</a> explain a turn, the scoring order, and how the three games differ.</p>
             </div>
             <div class="game-field">
                 <span class="game-label">Game</span>
@@ -351,13 +361,6 @@
                     <button type="button" class="clear-link" onclick="clearBoard()">Clear Board</button>
                 </div>
 
-                <div class="ad-slot ad-slot--sidebar" data-ad-unit="sidebar">
-                    <p class="ad-slot-label">Advertisement</p>
-                    <div class="ad-slot-frame">
-                        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7341916491959984" data-ad-slot="SLOT_SIDEBAR" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                    </div>
-                </div>
-
                 <p class="privacy-note">Works entirely in your browser. No account required. Your game data stays on your device.</p>
             </aside>
         </section>
@@ -387,25 +390,19 @@
             </div>
         </section>
 
-        <div class="wrap ad-incontent">
-            <div class="ad-slot ad-slot--incontent" data-ad-unit="incontent-1">
-                <p class="ad-slot-label">Advertisement</p>
-                <div class="ad-slot-frame">
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7341916491959984" data-ad-slot="SLOT_INCONTENT_1" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                </div>
-            </div>
-        </div>
-
         <section class="prose wrap">
-                <h2>Free word finder for Crossplay, Scrabble and Words with Friends</h2>
-                <p>Word Game Helper is a Crossplay board solver for the NYT board. Enter the letters on the board and your rack, and it finds the highest-scoring move in one click. Bonus squares, letter values, and the all-tiles bonus are set for each game: 40 points for a sweep in Crossplay, 50 for a bingo in Scrabble, and 35 in Words with Friends.</p>
-                <p>Use it as a Crossplay word finder and helper, or switch the game to Scrabble or Words with Friends. There's nothing to sign up for or download, and everything runs in your browser. Save multiple boards to keep several games going, and use ? for blank tiles.</p>
-                <h2>Upload a Crossplay screenshot</h2>
-                <p>Take a screenshot of your NYT Crossplay game with the whole board visible. Tap Upload Screenshot and choose the picture, or paste it, or drop it on the board. Word Game Helper reads the letters already played and the 7 tiles on your rack, then shows a grid so you can fix a misread letter before you apply it. The picture stays on your device. It is not sent to a server. This reader is for Crossplay. Scrabble and Words with Friends use a board you type.</p>
-                <p>Open a <a href="/scrabble-word-finder">Scrabble word finder</a> or a <a href="/words-with-friends-word-finder">Words with Friends word finder</a>. For Crossplay rules, see <a href="/crossplay-tile-values">Crossplay tile values</a> and the <a href="/crossplay-board-layout">Crossplay board layout</a>.</p>
-                <h2>NYT Crossplay Word Finder &amp; Helper</h2>
-                <p>Word Game Helper is a Crossplay helper for the NYT board. Type the letters already played and the seven tiles on your rack, or upload a screenshot. It scores every legal play with Crossplay letter points, bonus squares, and the 40-point sweep.</p>
-
+                <h2>What the solver checks</h2>
+                <p>Show Me Best Move tries every straight line your rack can make on the current board. A line is kept only when every word it forms is in the word list, including a word built at a right angle to the one you played. Scores use the game you picked: Crossplay letter values, bonus squares, and a 40-point sweep, or the Scrabble and Words with Friends equivalents. The sweep is added after bonuses. A double-word square does not double the 40.</p>
+                <p>For Crossplay, upload a screenshot of the whole board, or paste it, or drop it on the grid. The picture is read in the browser and is not sent to a server. Fix a misread letter before you apply it. Scrabble and Words with Friends start from a board you type. Saved boards stay in this browser. Use ? for a blank. Crossplay allows three. Scrabble and Words with Friends allow two.</p>
+                <h2>Read the rule before you trust the number</h2>
+                <p>The highest score is this turn only. It does not know the bag or the other rack. These guides are the rules the number is using:</p>
+                <ul class="guide-list">
+                    <li><a href="/guides/how-to-play-crossplay"><strong>How a Crossplay turn works</strong><span>The center star, hooks, blanks, and when a play is legal.</span></a></li>
+                    <li><a href="/guides/how-crossplay-scoring-works"><strong>How a score is calculated</strong><span>Letter bonus, then word bonus, then the sweep. QUIXOTE's best opening on this board is 110.</span></a></li>
+                    <li><a href="/guides/crossplay-scrabble-and-words-with-friends"><strong>The three games</strong><span>The same opening can score 67, 96, or 61. Letter values for all three are in one table.</span></a></li>
+                    <li><a href="/guides/two-letter-words"><strong>Two-letter words</strong><span>107 hooks, including DA, GI, PO, TE, EW, and OK.</span></a></li>
+                </ul>
+                <p>The bag and the bonus map are the <a href="/crossplay-tile-values">Crossplay tile values</a> and the <a href="/crossplay-board-layout">Crossplay board layout</a>. Open a <a href="/scrabble-word-finder">Scrabble word finder</a> or a <a href="/words-with-friends-word-finder">Words with Friends word finder</a> when that is the game on the table. What the word list leaves out is on the <a href="/about">about page</a>.</p>
         </section>
 
         <section class="values wrap">
@@ -465,18 +462,13 @@
                     <details><summary>How do I enter blank or wildcard tiles?<span class="faq-plus">+</span></summary><p>Use a question mark (?) for each blank on your rack. Crossplay has 3 blanks. Scrabble and Words with Friends have 2. The rack will not accept more than that game allows.</p></details>
                     <details><summary>What does Show Me Best Move do?<span class="faq-plus">+</span></summary><p>It finds every valid word you can play with your tiles, scores them with that game's letter values and bonus squares, then adds the all-tiles bonus: 40 points in Crossplay, 50 in Scrabble, and 35 in Words with Friends.</p></details>
                     <details><summary>Is Word Game Helper free? Do I need an account?<span class="faq-plus">+</span></summary><p>Yes. Word Game Helper is free. No account or sign-up is required. It runs entirely in your browser.</p></details>
-                    <div class="ad-slot ad-slot--faq" data-ad-unit="faq">
-                        <p class="ad-slot-label">Advertisement</p>
-                        <div class="ad-slot-frame">
-                            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7341916491959984" data-ad-slot="SLOT_FAQ" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                        </div>
-                    </div>
-                    <details><summary>Where is my data stored? Is it private?<span class="faq-plus">+</span></summary><p>Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games. Ads are served by Google and may use cookies.</p></details>
+                    <details><summary>Where is my data stored? Is it private?<span class="faq-plus">+</span></summary><p>Your board and tiles stay on your device. Word Game Helper does not send your game data to a server. You can save boards locally in your browser if you want to switch between games. Google may serve ads and may use cookies.</p></details>
                     <details><summary>What is a sweep in Crossplay?<span class="faq-plus">+</span></summary><p>A sweep is using all 7 tiles in one turn. Crossplay adds 40 points. The same play is a 50-point bingo in Scrabble and a 35-point bingo in Words with Friends.</p></details>
                     <details><summary>How many blank tiles are in Crossplay?<span class="faq-plus">+</span></summary><p>Crossplay has 3 blank tiles. Scrabble and Words with Friends have 2. Enter each one as ? on your rack.</p></details>
                     <details><summary>What dictionary does Crossplay use?<span class="faq-plus">+</span></summary><p>NYT Crossplay uses NWL2023, with New York Times edits. This helper uses the older TWL, plus the two-letter words DA, GI, PO, TE, EW, and OK. Those six were added to the NASPA list in 2014 and 2018. Longer words added since 2006 can still be missing. Words with Friends has its own official list, which this helper does not load separately.</p></details>
                     <details><summary>Can I upload a screenshot of my Crossplay board?<span class="faq-plus">+</span></summary><p>Yes. Tap Upload Screenshot and choose a picture of the game, or paste one. The board and your rack are read on your device. The picture is not sent to a server. Check the grid, fix any letter that looks wrong, then apply it.</p></details>
                     <details><summary>Does the Crossplay helper use Crossplay's letter values?<span class="faq-plus">+</span></summary><p>Yes. With NYT Crossplay selected, the solver uses Crossplay's letter values, not Scrabble's. Nine letters differ: B, G, H, J, K, L, U, V, and W.</p></details>
+                    <details><summary>Why was a word rejected, or why does the score disagree with the game?<span class="faq-plus">+</span></summary><p>This helper uses one word list for Crossplay, Scrabble, and Words with Friends: the older TWL, plus DA, GI, PO, TE, EW, and OK. NYT Crossplay uses NWL2023 with New York Times edits, so a longer word added since 2006 can be legal in the game and missing here. Scores use the selected game. Crossplay's center star does not multiply the word, and a sweep of 40 is added after bonuses, not multiplied by them. The <a href="/guides">guides</a> explain a turn and the scoring order.</p></details>
                 </div>
             </div>
         </section>
@@ -488,8 +480,9 @@
                 <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
                 <p id="suggested-citation" data-citation="true"><b>Suggested citation:</b> Word Game Helper. Free board solver and word finder for Crossplay, Scrabble &amp; Words with Friends. <a href="https://wordgamehelp.com/">https://wordgamehelp.com/</a></p>
                 <p class="footer-meta">Short form: Word Game Helper (wordgamehelp.com)</p>
-                <p class="footer-meta">Build: 2026-03-07-51</p>
-                <p>Works entirely in your browser. No account required. Your game data stays on your device. Ads are served by Google and may use cookies. <a href="/privacy">Privacy policy</a></p>
+                <p class="footer-meta">Build: 2026-03-07-52</p>
+                <p><a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
+                <p>Works entirely in your browser. No account required. Your game data stays on your device. Google may serve ads and may use cookies. <a href="/privacy">Privacy policy</a></p>
             </div>
             <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
         </div>
@@ -521,6 +514,5 @@
     <script defer src="/letter-templates.js"></script>
     <script defer src="/app.js"></script>
     <script defer src="/screenshot-import.js"></script>
-    <script defer src="/ads.js"></script>
 </body>
 </html>

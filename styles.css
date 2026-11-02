@@ -850,9 +850,120 @@ a:hover { color: var(--accent-hover); }
 
 .prose p { margin: 0 0 12px; }
 
-.prose ul {
+.prose ul,
+.prose ol {
     margin: 0 0 16px;
     padding-left: 1.2em;
+}
+
+.prose li { margin: 0 0 8px; }
+
+.prose li:last-child { margin-bottom: 0; }
+
+.prose.guide {
+    max-width: 740px;
+    padding-bottom: 56px;
+}
+
+.prose h1 {
+    margin: 0 0 14px;
+    font: 800 clamp(32px, 4vw, 48px) / 1.05 'Bitter', serif;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+}
+
+.guide-kicker {
+    margin: 0 0 8px;
+    font: 500 12px 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.guide-kicker a { color: inherit; }
+
+.prose .note {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    background: var(--card);
+    border-left: 3px solid var(--accent);
+}
+
+.prose ul.guide-list,
+.guide-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 8px 0 24px;
+    padding: 0;
+    list-style: none;
+}
+
+.guide-list a {
+    display: block;
+    height: 100%;
+    padding: 16px 18px;
+    background: var(--card);
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.guide-list a:hover { border-color: var(--accent); color: var(--text); }
+
+.guide-list strong {
+    display: block;
+    margin-bottom: 6px;
+    font: 700 18px/1.25 'Bitter', serif;
+    color: var(--ink);
+}
+
+.guide-list span {
+    display: block;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.word-group { margin: 0 0 18px; }
+
+.word-group h3 {
+    margin: 0 0 6px;
+    font: 700 15px 'JetBrains Mono', monospace;
+}
+
+.prose ul.word-cols,
+.word-cols {
+    columns: 4 6.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.word-cols li {
+    margin: 0;
+    padding: 2px 0;
+    break-inside: avoid;
+    font: 600 14px 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+}
+
+.word-cols .added { color: var(--accent-hover); }
+
+.prose table.wide { max-width: 640px; }
+
+.prose table.score-table { max-width: 520px; }
+
+.prose td.num,
+.prose th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.prose tr.diff-row td { background: var(--tint); }
+
+.site-nav a[aria-current="page"] {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
 }
 
 .values {

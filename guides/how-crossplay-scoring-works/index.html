@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Crossplay Scoring Works | Word Game Helper</title>
+    <meta name="description" content="The order Word Game Helper uses to score a Crossplay play: letter bonus, word bonus, cross-words, then the 40-point sweep. Worked examples for QUIXOTE, JAZZ, and a blank.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wordgamehelp.com/guides/how-crossplay-scoring-works">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://wordgamehelp.com/guides/how-crossplay-scoring-works">
+    <meta property="og:title" content="How Crossplay Scoring Works | Word Game Helper">
+    <meta property="og:description" content="The order Word Game Helper uses to score a Crossplay play: letter bonus, word bonus, cross-words, then the 40-point sweep.">
+    <meta property="og:image" content="https://wordgamehelp.com/og-image.png?v=2">
+    <meta property="og:site_name" content="Word Game Helper">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How Crossplay Scoring Works | Word Game Helper">
+    <meta name="twitter:description" content="The order Word Game Helper uses to score a Crossplay play: letter bonus, word bonus, cross-words, then the 40-point sweep.">
+    <meta name="twitter:image" content="https://wordgamehelp.com/og-image.png?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=JetBrains+Mono:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How Crossplay scoring works",
+        "description": "The order Word Game Helper uses to score a Crossplay play: letter bonus, word bonus, cross-words, then the 40-point sweep.",
+        "url": "https://wordgamehelp.com/guides/how-crossplay-scoring-works",
+        "mainEntityOfPage": "https://wordgamehelp.com/guides/how-crossplay-scoring-works",
+        "datePublished": "2026-11-02",
+        "dateModified": "2026-11-02",
+        "author": { "@type": "Organization", "name": "Word Game Helper", "url": "https://wordgamehelp.com/" },
+        "publisher": { "@type": "Organization", "name": "Word Game Helper", "url": "https://wordgamehelp.com/" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Word Game Helper", "item": "https://wordgamehelp.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://wordgamehelp.com/guides" },
+            { "@type": "ListItem", "position": 3, "name": "How Crossplay scoring works", "item": "https://wordgamehelp.com/guides/how-crossplay-scoring-works" }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="logo" href="/">
+                <span class="logo-tiles" aria-hidden="true">
+                    <span class="logo-tile">W</span>
+                    <span class="logo-tile logo-tile-accent">G</span>
+                    <span class="logo-tile">H</span>
+                </span>
+                <span class="logo-name">Word Game Helper</span>
+            </a>
+            <nav class="site-nav">
+                <a href="/guides" aria-current="page">Guides</a>
+                <a href="/scrabble-word-finder">Scrabble finder</a>
+                <a href="/words-with-friends-word-finder">WWF finder</a>
+                <a href="/crossplay-tile-values">Crossplay values</a>
+                <a href="/crossplay-board-layout">Board layout</a>
+                <a href="/about">About</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <article class="prose wrap guide">
+            <p class="guide-kicker"><a href="/guides">Guides</a></p>
+            <h1>How a Crossplay score is calculated</h1>
+            <p>Word Game Helper scores a play in a fixed order. Letter bonuses come first, then word bonuses, then any cross-word, and the 40-point sweep is added last. The sweep is not multiplied. Click a result on the <a href="/">board</a> and the breakdown follows this same order.</p>
+            <p>Leave the Bonus tiles checkbox on. Turning it off scores every letter at face value. The sweep is still added. Letter points are the <a href="/crossplay-tile-values">Crossplay values</a>, not Scrabble's. The squares are the <a href="/crossplay-board-layout">Crossplay board</a>.</p>
+
+            <h2>The order</h2>
+            <ol>
+                <li>Each tile you place this turn scores its letter value. A blank scores 0. A tile already on the board scores its letter value too, with no bonus, even if it is sitting on a colored square. Bonuses apply once, on the turn the tile is placed.</li>
+                <li>A new tile on a double-letter square has its letter value doubled. A new tile on a triple-letter square has its letter value tripled. A blank stays 0 on either square.</li>
+                <li>Add those letter scores.</li>
+                <li>If a new tile sits on a double-word square, double the sum. If a new tile sits on a triple-word square, triple the sum. Two word bonuses on the same play multiply. A double word and a triple word on the tiles you just placed make ×6.</li>
+                <li>Score each cross-word the same way. The new tile's letter bonus and word bonus count again for that cross-word. Tiles that were already there still get no bonus.</li>
+                <li>If all seven tiles left your rack, add 40. That 40 is not doubled or tripled.</li>
+            </ol>
+            <p>The center star is not a bonus square in Crossplay. A new tile on the star scores its face value, and the star does not double the word. In Scrabble that same square is a double word. See <a href="/guides/how-to-play-crossplay">how a turn works</a> for what makes the play legal before any of this arithmetic runs.</p>
+
+            <h2>The opening this solver lists first</h2>
+            <p>Put QUIXOTE on an empty Crossplay board and Show Me Best Move lists it at 110. The results line is Across at 8,6. Down at 6,8 is the same play turned sideways, also 110. Q is 10, U is 2, I is 1, X is 8, O is 1, T is 1, and E is 1. There is no cross-word on an empty board, and all seven tiles leave the rack, so the sweep is added.</p>
+            <p>Across at 8,6 runs from column 6 through column 12. Q sits on the double letter in column 6, so the 10 becomes 20. O sits on the double letter in column 10, so the 1 becomes 2. E sits on the double word in column 12, which doubles the sum after those letter bonuses. I is on the star and is not doubled. The 40 is added after the ×2.</p>
+            <table class="score-table">
+                <caption>QUIXOTE across row 8, columns 6–12, on an empty Crossplay board. Show Me Best Move lists this at 110.</caption>
+                <thead>
+                    <tr><th>Letter</th><th>Square</th><th class="num">Points</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Q</td><td>Double letter, 10 × 2</td><td class="num">20</td></tr>
+                    <tr><td>U</td><td>Plain</td><td class="num">2</td></tr>
+                    <tr><td>I</td><td>Center star, no bonus</td><td class="num">1</td></tr>
+                    <tr><td>X</td><td>Plain</td><td class="num">8</td></tr>
+                    <tr><td>O</td><td>Double letter, 1 × 2</td><td class="num">2</td></tr>
+                    <tr><td>T</td><td>Plain</td><td class="num">1</td></tr>
+                    <tr><td>E</td><td>Double word</td><td class="num">1</td></tr>
+                    <tr><td colspan="2">Letter total, before the word bonus</td><td class="num">35</td></tr>
+                    <tr><td colspan="2">After the double word, 35 × 2</td><td class="num">70</td></tr>
+                    <tr><td colspan="2">Sweep, all 7 tiles</td><td class="num">40</td></tr>
+                    <tr><td colspan="2">Total</td><td class="num">110</td></tr>
+                </tbody>
+            </table>
+            <p>The sweep stays outside the ×2. If it were inside, the bonus would be 80, and that is not how this solver scores it.</p>
+
+            <h2>The same word on the other openings</h2>
+            <p>Across at 8,5 is the centered line, columns 5 through 11. It still covers the star and still uses all seven tiles, and it misses both double-word squares. U is on the double letter in column 6. T is on the double letter in column 10. X is on the star. The total is 67. One column the other way, Across at 8,4, puts Q itself on the double word in column 4. That scores 92. Both are legal. Neither is the one the solver lists first.</p>
+            <p>110 beats 92 because the 10-point Q is doubled as a letter and the word is still doubled. Parking Q on the double word, without a double letter under it, starts from a smaller letter total.</p>
+            <table class="score-table">
+                <caption>QUIXOTE across row 8, columns 4–10, on an empty Crossplay board.</caption>
+                <thead>
+                    <tr><th>Letter</th><th>Square</th><th class="num">Points</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Q</td><td>Double word</td><td class="num">10</td></tr>
+                    <tr><td>U</td><td>Plain</td><td class="num">2</td></tr>
+                    <tr><td>I</td><td>Double letter, 1 × 2</td><td class="num">2</td></tr>
+                    <tr><td>X</td><td>Plain</td><td class="num">8</td></tr>
+                    <tr><td>O</td><td>Center star, no bonus</td><td class="num">1</td></tr>
+                    <tr><td>T</td><td>Plain</td><td class="num">1</td></tr>
+                    <tr><td>E</td><td>Double letter, 1 × 2</td><td class="num">2</td></tr>
+                    <tr><td colspan="2">Letter total, before the word bonus</td><td class="num">26</td></tr>
+                    <tr><td colspan="2">After the double word, 26 × 2</td><td class="num">52</td></tr>
+                    <tr><td colspan="2">Sweep, all 7 tiles</td><td class="num">40</td></tr>
+                    <tr><td colspan="2">Total</td><td class="num">92</td></tr>
+                </tbody>
+            </table>
+
+            <h2>A letter bonus and a word bonus on the same play</h2>
+            <p>JAZZ along the top row shows a triple letter and a triple word together. Row 1, column 1 is a triple-letter corner. Row 1, column 4 is a triple word. JAZZ placed across columns 1–4 puts J on the triple letter and the last Z on the triple word.</p>
+            <p>This cannot be the opening. The top row does not contain the star, and the first word has to cover row 8, column 8. It is a later play, and it has to hook to a tile already on the board. The 153 below is the main word only. A hook is extra.</p>
+            <p>J is 10 × 3 = 30 before the word is tripled. The word triple then applies to that 30, so J alone becomes 90. The other letters are tripled too. People often triple the word and forget that the letter bonus is inside the sum.</p>
+            <table class="score-table">
+                <caption>JAZZ across row 1, columns 1–4. All four tiles are new. No sweep, because three tiles stay on the rack.</caption>
+                <thead>
+                    <tr><th>Letter</th><th>After the letter bonus</th><th class="num">After ×3</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>J on a triple letter</td><td>10 × 3 = 30</td><td class="num">90</td></tr>
+                    <tr><td>A</td><td>1</td><td class="num">3</td></tr>
+                    <tr><td>Z</td><td>10</td><td class="num">30</td></tr>
+                    <tr><td>Z on a triple word</td><td>10</td><td class="num">30</td></tr>
+                    <tr><td colspan="2">Total</td><td class="num">153</td></tr>
+                </tbody>
+            </table>
+
+            <h2>A blank</h2>
+            <p>QUIZ with the U played as a blank scores the blank at 0. Q is 10, I is 1, Z is 10. The letter total is 21 whether or not the blank sits on a colored square.</p>
+            <p>If the blank is on a triple-letter square, it is still 0, and the word is still 21. The letter bonus has nothing to multiply.</p>
+            <p>If the blank is on a double-word square, the blank is still 0, and the whole sum is doubled: 21 × 2 = 42. The blank does not score, and it still collects the word bonus for the other letters. Four tiles is not a sweep, so nothing further is added.</p>
+
+            <h2>The same tile counted in two words</h2>
+            <p>A bonus on a new tile is counted once for every word that new tile completes.</p>
+            <p>Suppose TA is already on the board, and the next square to the right is a triple letter. The square under that triple letter already holds I. You place X on the triple letter. Across, the word is TAX. Down, the word is XI. IX is not in the <a href="/guides/two-letter-words">two-letter list</a>, so the I has to be under the X, not over it. XI is in the list.</p>
+            <p>X is 8, tripled to 24, in both words. T, A, and I were already on the board, so they score 1 each and take no bonus of their own.</p>
+            <table class="score-table">
+                <caption>One new X on a triple-letter square, hooking TAX across and XI down.</caption>
+                <thead>
+                    <tr><th>Word</th><th>Letters</th><th class="num">Points</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>TAX</td><td>T 1 + A 1 + X 24</td><td class="num">26</td></tr>
+                    <tr><td>XI</td><td>X 24 + I 1</td><td class="num">25</td></tr>
+                    <tr><td colspan="2">Total. One tile played, so no sweep.</td><td class="num">51</td></tr>
+                </tbody>
+            </table>
+            <p>The 24 is not a miscount. The triple letter belongs to both words because both words were formed by the tile you just placed.</p>
+
+            <h2>Check a result on the board</h2>
+            <p>Type the rack, run Show Me Best Move, and click the row. The breakdown lists each letter, whether it was new, the bonus abbreviation, the main-word total, each cross-word, and the all-tiles bonus. For QUIXOTE across at 8,6 that panel reads 35 × 2 = 70, then 40, then 110. The panel calls the 40 a bingo bonus. In Crossplay that 40 is the sweep, and it is not multiplied.</p>
+            <p>If the game itself shows a different total, compare the game setting first. Crossplay, Scrabble, and Words with Friends do not share letter values or the all-tiles bonus. The <a href="/guides/crossplay-scrabble-and-words-with-friends">comparison</a> is the side-by-side table.</p>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div>
+                <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
+                <p><a href="/">Board solver</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
+                <p class="footer-meta">Build: 2026-03-07-52</p>
+                <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
+            </div>
+            <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
+        </div>
+    </footer>
+</body>
+</html>
