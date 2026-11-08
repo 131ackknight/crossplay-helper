@@ -800,8 +800,18 @@ a:hover { color: var(--accent-hover); }
     background: var(--card);
 }
 
-.how-grid {
+.how-intro {
     padding-top: 56px;
+}
+
+.how-intro h2 {
+    margin: 0;
+    font: 800 clamp(28px, 3.4vw, 40px) / 1.05 'Bitter', serif;
+    letter-spacing: -0.025em;
+}
+
+.how-grid {
+    padding-top: 28px;
     padding-bottom: 56px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -833,6 +843,7 @@ a:hover { color: var(--accent-hover); }
     line-height: 1.6;
 }
 
+.prose h1,
 .prose h2 {
     margin: 28px 0 12px;
     font: 800 clamp(28px, 3.4vw, 40px) / 1.05 'Bitter', serif;
@@ -840,7 +851,19 @@ a:hover { color: var(--accent-hover); }
     color: var(--ink);
 }
 
+.prose h1:first-child,
 .prose h2:first-child { margin-top: 0; }
+
+.rules-scroll {
+    overflow-x: auto;
+    margin: 8px 0 16px;
+}
+
+.prose table.rules-table {
+    max-width: 720px;
+    min-width: 520px;
+    margin: 0;
+}
 
 .prose h3 {
     margin: 22px 0 8px;
@@ -1385,11 +1408,8 @@ a:hover { color: var(--accent-hover); }
 .ref-sheet .layout-board {
     width: 100%;
     max-width: none;
+    aspect-ratio: 1;
 }
-
-.ref-section:has(+ .tile-body) { padding-bottom: 12px; }
-
-.ref-section + .prose.tile-body { padding-top: 28px; }
 
 .ref-sheet {
     max-width: 760px;
@@ -1494,6 +1514,18 @@ a:hover { color: var(--accent-hover); }
     border-radius: 3px;
     background: var(--accent);
     vertical-align: -1px;
+}
+
+.ref-figure {
+    max-width: 760px;
+    margin: 14px 0 0;
+}
+
+.ref-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
 }
 
 .ref-actions {

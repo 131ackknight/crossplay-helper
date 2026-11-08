@@ -6,6 +6,24 @@
         window.BOARD_SIZE = BOARD_SIZE;
         window.CENTER = CENTER;
 
+        let dictionaryPromise = null;
+        function loadDictionary() {
+            if (typeof findAllMoves === 'function') return Promise.resolve();
+            if (!dictionaryPromise) {
+                dictionaryPromise = new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = '/dictionary.20261024.js';
+                    script.onload = () => resolve();
+                    script.onerror = () => {
+                        dictionaryPromise = null;
+                        reject();
+                    };
+                    document.body.appendChild(script);
+                });
+            }
+            return dictionaryPromise;
+        }
+
         function bonusLabel(kind) {
             return { tw: '3W', dw: '2W', tl: '3L', dl: '2L' }[kind] || '';
         }
@@ -1053,7 +1071,17 @@
             }
 
             if (typeof findAllMoves !== 'function') {
-                showResults({ error: 'The word list is still loading. Try again in a moment.' });
+                const resultsDiv = document.getElementById('results');
+                if (resultsDiv) resultsDiv.innerHTML = '<div class="loading">Loading the word list...</div>';
+                loadDictionary().then(() => {
+                    if (typeof findAllMoves !== 'function') {
+                        showResults({ error: 'The word list did not load. Check your connection and try again.' });
+                        return;
+                    }
+                    findWords();
+                }).catch(() => {
+                    showResults({ error: 'The word list did not load. Check your connection and try again.' });
+                });
                 return;
             }
 
@@ -1099,7 +1127,17 @@
             }
 
             if (typeof findAllMoves !== 'function') {
-                showResults({ error: 'The word list is still loading. Try again in a moment.' });
+                const resultsDiv = document.getElementById('results');
+                if (resultsDiv) resultsDiv.innerHTML = '<div class="loading">Loading the word list...</div>';
+                loadDictionary().then(() => {
+                    if (typeof findAllMoves !== 'function') {
+                        showResults({ error: 'The word list did not load. Check your connection and try again.' });
+                        return;
+                    }
+                    getHint();
+                }).catch(() => {
+                    showResults({ error: 'The word list did not load. Check your connection and try again.' });
+                });
                 return;
             }
 
@@ -1547,3 +1585,9 @@
 
             updateBoardSelect();
         }
+
+        window.addEventListener('load', function () {
+            const start = () => loadDictionary().catch(() => {});
+            if (window.requestIdleCallback) window.requestIdleCallback(start, { timeout: 3000 });
+            else setTimeout(start, 1500);
+        });

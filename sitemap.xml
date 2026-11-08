@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://wordgamehelp.com/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-07</lastmod>
   </url>
   <url>
     <loc>https://wordgamehelp.com/scrabble-word-finder</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-07</lastmod>
   </url>
   <url>
     <loc>https://wordgamehelp.com/words-with-friends-word-finder</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-07</lastmod>
   </url>
   <url>
     <loc>https://wordgamehelp.com/crossplay-tile-values</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-07</lastmod>
+    <image:image>
+      <image:loc>https://wordgamehelp.com/crossplay-tile-values/reference-chart.png</image:loc>
+      <image:title>NYT Crossplay tile values and counts</image:title>
+      <image:caption>Letters grouped by points, with the bag count on each tile. 100 tiles, 40 vowels, face value 210.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://wordgamehelp.com/crossplay-board-layout</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-07</lastmod>
+    <image:image>
+      <image:loc>https://wordgamehelp.com/crossplay-board-layout/reference-chart.png</image:loc>
+      <image:title>NYT Crossplay board layout</image:title>
+      <image:caption>15 by 15 bonus squares: 8 triple word, 8 double word, 20 triple letter, 20 double letter. The center star does not score.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://wordgamehelp.com/privacy</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-07</lastmod>
   </url>
   <url>
     <loc>https://wordgamehelp.com/about</loc>
