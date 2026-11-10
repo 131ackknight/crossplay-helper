@@ -53,44 +53,74 @@
         "mainEntity": [
                 {
                         "@type": "Question",
-                        "name": "What is the Scrabble bingo bonus?",
+                        "name": "Does the Scrabble center star double JACKPOT?",
                         "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "Using all 7 tiles in one turn adds 50 points in Scrabble. The same play is a 40-point sweep in Crossplay and a 35-point bingo in Words with Friends."
+                                "text": "The center star is a double-word score, and the opening word has to sit on it. In JACKPOT across at 8,4, P is the tile on the star. The letter total of 30 becomes 60, and the bingo then adds 50, for 110. Down at 4,8 is the same 110."
                         }
                 },
                 {
                         "@type": "Question",
-                        "name": "How many blank tiles are in Scrabble?",
+                        "name": "Why is a centered JACKPOT 94?",
                         "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "Scrabble has 2 blank tiles. Enter each one as ? on your rack. The rack will not accept a third blank. Crossplay has 3."
+                                "text": "Across at 8,5 puts K on the star and leaves J off the double letter in column 4. The face value is 22, the star doubles it to 44, and the bingo adds 50. Show Me Best Move lists the shifted line, 110, ahead of that 94."
                         }
                 },
                 {
                         "@type": "Question",
-                        "name": "Is the Scrabble center square a double word?",
+                        "name": "What is JACKPOT worth along the top row?",
                         "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "Yes. Scrabble's center star is a double-word score, and the first word must cover it. Crossplay's center star does not multiply the score."
+                                "text": "Across row 1, columns 1 through 7, J is on the corner triple word and K is on the double letter. The letters total 27, the triple word makes 81, and the bingo adds 50. The main word is 131. That row leaves the star empty, so the play needs a hook already on the board. The hook scores on top of the 131."
                         }
                 },
                 {
                         "@type": "Question",
-                        "name": "Does this Scrabble word finder use Scrabble letter values?",
+                        "name": "How many blanks does this Scrabble rack accept?",
                         "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "Yes. This page opens the solver on Scrabble's letter values. Nine letters differ from Crossplay: B is 3 in Scrabble and 4 in Crossplay; G is 2 in Scrabble and 4 in Crossplay; H is 4 in Scrabble and 3 in Crossplay; J is 8 in Scrabble and 10 in Crossplay; K is 5 in Scrabble and 6 in Crossplay; L is 1 in Scrabble and 2 in Crossplay; U is 1 in Scrabble and 2 in Crossplay; V is 4 in Scrabble and 6 in Crossplay; W is 4 in Scrabble and 5 in Crossplay."
+                                "text": "Scrabble's bag has two blanks. This rack accepts two question marks and refuses a third. A blank played as the P on the star in JACKPOT still doubles the other letters. That opening is 104: 27 doubled to 54, then the 50."
                         }
                 },
                 {
                         "@type": "Question",
-                        "name": "What word list does this Scrabble solver use?",
+                        "name": "How do I enter a Scrabble board on this page?",
                         "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "This helper uses one shared list for Scrabble, Crossplay, and Words with Friends: the older TWL, plus the two-letter words DA, GI, PO, TE, EW, and OK. The official NASPA list is NWL2023. Longer words added since 2006 are not in this list."
+                                "text": "Click a square and type the tiles already in play. This page opens with Scrabble letter values, the 50-point bingo, two blanks, and the double-word star. Screenshot reading lives on the Crossplay solver."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "Which dictionary does this Scrabble solver check?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "This page checks the solver's 178,562-word file. Club Scrabble now uses NWL2023, which has 17,991 longer words this file lacks. With Scrabble selected, a trademark the Times removed from Crossplay can still be played when the file has it. The word checker shows one spelling."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "Where does the 50 sit in the score breakdown?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "The breakdown adds 50 after the main word and any cross-word. The star's double is already inside the main-word figure. JACKPOT's panel is 30 times 2, which is 60, then 50, then 110."
                         }
                 }
+        ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to score a Scrabble board",
+        "description": "Type a Scrabble position, cover the double-word star on the opening, and read the 50-point bingo after the word is doubled.",
+        "step": [
+            { "@type": "HowToStep", "name": "Cover the double-word star", "text": "Click the center star and type the tiles already in play. The first word has to cover that star. On this board the star is a double-word score." },
+            { "@type": "HowToStep", "name": "Stop at two blanks", "text": "Type the seven letters in the rack. Use ? for a blank. A third question mark is refused. Scrabble's bag has two blanks." },
+            { "@type": "HowToStep", "name": "Rank with a 50-point bingo", "text": "Show Me Best Move scores Scrabble letter values and Scrabble bonus squares. Using all seven tiles adds 50 after the word multiplier." },
+            { "@type": "HowToStep", "name": "Open the breakdown", "text": "Click a result to see each new tile, the main word, and the bingo on its own line. Place writes the word onto the grid and takes those tiles off the rack." }
         ]
 }
     </script>
@@ -114,6 +144,7 @@
         ]
 }
     </script>
+    <script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" src="//scripts.scriptwrapper.com/tags/562bb98a-eea1-4de6-b65a-60c5bfd2c580.js"></script>
 </head>
 <body data-game="scrabble">
     <header class="site-header">
@@ -146,6 +177,7 @@
                         <a href="/guides/two-letter-words">Two-letter words</a>
                     </div>
                 </div>
+                <a class="nav-heading nav-about" href="/word-checker">Word check</a>
                 <a class="nav-heading nav-about" href="/about">About</a>
             </nav>
         </div>
@@ -230,33 +262,81 @@
             </aside>
         </section>
         <section class="how">
+            <div class="wrap how-intro">
+                <h2>Setting up a Scrabble position</h2>
+            </div>
             <div class="wrap how-grid">
                 <div>
                     <span class="step-num">01</span>
-                    <h3>Set up the board</h3>
-                    <p>Click or tap a square and type letters already on the board (use <strong>?</strong> for a blank). Arrow keys move between squares. Backspace clears.</p>
+                    <h3>Cover the double-word star</h3>
+                    <p>Click the center star and type the tiles already in play. The first word has to cover that star. On this board the star is a double-word score.</p>
                 </div>
                 <div>
                     <span class="step-num">02</span>
-                    <h3>Enter your rack</h3>
-                    <p>Type your 7 letters in the tile rack.</p>
+                    <h3>Stop at two blanks</h3>
+                    <p>Type the seven letters in the rack. Use <strong>?</strong> for a blank. A third question mark is refused. Scrabble's bag has two blanks.</p>
                 </div>
                 <div>
                     <span class="step-num">03</span>
-                    <h3>Get the best words</h3>
-                    <p>Choose the game, then click or tap "Show Me Best Move". Scores use that game's letter values, bonus squares, and all-tiles bonus (Crossplay 40, Scrabble 50, Words with Friends 35).</p>
+                    <h3>Rank with a 50-point bingo</h3>
+                    <p>Show Me Best Move scores Scrabble letter values and Scrabble bonus squares. Using all seven tiles adds 50 after the word multiplier.</p>
                 </div>
                 <div>
                     <span class="step-num">04</span>
-                    <h3>Get a Hint</h3>
-                    <p>Use "Get a Hint" for step-by-step help, or "Clear Board" to start over.</p>
+                    <h3>Open the breakdown</h3>
+                    <p>Click a result to see each new tile, the main word, and the bingo on its own line. Place writes the word onto the grid and takes those tiles off the rack.</p>
                 </div>
             </div>
         </section>
         <section class="prose wrap">
-                <h2>Scrabble scoring on this board</h2>
-                <p>Show Me Best Move uses Scrabble's letter values, Scrabble's bonus squares, and a 50-point bingo when you play all 7 tiles. For NYT Crossplay, use the <a href="/">Crossplay word finder</a> on the homepage. That game has a 40-point sweep, 3 blanks, and no score bonus on the center star.</p>
-                <p>On this board the center star doubles the opening word, and the 50-point bingo is added after that double. Eight of the nine letters that differ are worth less here than in Crossplay. H is the exception: 4 in Scrabble and 3 in Crossplay. G is 2 instead of 4, and U is 1 instead of 2. The same seven-letter opening can score 96 here and 67 in Crossplay. The side-by-side table is the <a href="/guides/crossplay-scrabble-and-words-with-friends">comparison of the three games</a>. How the bonuses stack is <a href="/guides/how-crossplay-scoring-works">how a score is calculated</a>.</p>
+                <h2>Scrabble strategy</h2>
+                <p>The center star doubles the opening word, and a seven-tile play then adds 50. That 50 is its own line, after the double. H is 4. G is 2 and U is 1, so those tiles build shape and the high tiles carry the score. J is 8. Each corner is a triple word. On the center row, column 4 and column 12 are double letters. The opening shift puts a high letter on one of those and keeps the star inside the word.</p>
+                <p>A blank on the star scores 0 and still doubles the rest of the word. The letter chart for every game is the <a href="/guides/crossplay-scrabble-and-words-with-friends">comparison</a>. The order of bonuses is <a href="/guides/how-crossplay-scoring-works">how a score is calculated</a>.</p>
+
+                <h2>JACKPOT on an empty Scrabble board</h2>
+                <p>With the board empty, enter JACKPOT and press Show Me Best Move. The first lines are Across at 8,4 and Down at 4,8. Both score 110. J is on the double letter in column 4, so the 8 becomes 16. P is on the center star, which doubles the word.</p>
+                <table class="score-table">
+                    <caption>JACKPOT across row 8, columns 4–10, on an empty Scrabble board. The solver returns 110 for this line.</caption>
+                    <thead>
+                        <tr><th>Letter</th><th>Square</th><th class="num">Points</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>J</td><td>Double letter, 8 × 2</td><td class="num">16</td></tr>
+                        <tr><td>A</td><td>Plain</td><td class="num">1</td></tr>
+                        <tr><td>C</td><td>Plain</td><td class="num">3</td></tr>
+                        <tr><td>K</td><td>Plain</td><td class="num">5</td></tr>
+                        <tr><td>P</td><td>Center star, double word</td><td class="num">3</td></tr>
+                        <tr><td>O</td><td>Plain</td><td class="num">1</td></tr>
+                        <tr><td>T</td><td>Plain</td><td class="num">1</td></tr>
+                        <tr><td colspan="2">Tiles, before the star doubles them</td><td class="num">30</td></tr>
+                        <tr><td colspan="2">Star doubles the word, 30 × 2</td><td class="num">60</td></tr>
+                        <tr><td colspan="2">Bingo added after the double</td><td class="num">50</td></tr>
+                        <tr><td colspan="2">Total</td><td class="num">110</td></tr>
+                    </tbody>
+                </table>
+                <p>Across at 8,5 centers the word, columns 5 through 11. K sits on the star and J misses the double letter, so J stays at 8. The face value is 22, the star makes 44, and the bingo makes 94. The solver lists 110 first.</p>
+
+                <h2>JACKPOT along the top row</h2>
+                <p>The same seven tiles across row 1, columns 1–7, put J on the corner triple word and K on the double letter in column 4. Row 1 leaves the star empty, so this is a later turn and needs a hook. The hook is added on top of the 131.</p>
+                <table class="score-table">
+                    <caption>JACKPOT across row 1, columns 1–7, once the board already has a hook. The 131 is the main word.</caption>
+                    <thead>
+                        <tr><th>Letter</th><th>Square</th><th class="num">Points</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>J</td><td>Triple word</td><td class="num">8</td></tr>
+                        <tr><td>A</td><td>Plain</td><td class="num">1</td></tr>
+                        <tr><td>C</td><td>Plain</td><td class="num">3</td></tr>
+                        <tr><td>K</td><td>Double letter, 5 × 2</td><td class="num">10</td></tr>
+                        <tr><td>P</td><td>Plain</td><td class="num">3</td></tr>
+                        <tr><td>O</td><td>Plain</td><td class="num">1</td></tr>
+                        <tr><td>T</td><td>Plain</td><td class="num">1</td></tr>
+                        <tr><td colspan="2">Tiles, before the triple word</td><td class="num">27</td></tr>
+                        <tr><td colspan="2">Triple word, 27 × 3</td><td class="num">81</td></tr>
+                        <tr><td colspan="2">Bingo added after the triple</td><td class="num">50</td></tr>
+                        <tr><td colspan="2">Total</td><td class="num">131</td></tr>
+                    </tbody>
+                </table>
                 <h3>Scrabble tile values</h3>
                 <table>
                     <caption>Letter points from the Scrabble scoring table.</caption>
@@ -292,28 +372,19 @@
                         <tr><td>Blank (?)</td><td>0</td></tr>
                     </tbody>
                 </table>
-                <h3>Letters that differ from Crossplay</h3>
-                <ul class="diff-list">
-                    <li>B is 3 in Scrabble and 4 in Crossplay.</li>
-                    <li>G is 2 in Scrabble and 4 in Crossplay.</li>
-                    <li>H is 4 in Scrabble and 3 in Crossplay.</li>
-                    <li>J is 8 in Scrabble and 10 in Crossplay.</li>
-                    <li>K is 5 in Scrabble and 6 in Crossplay.</li>
-                    <li>L is 1 in Scrabble and 2 in Crossplay.</li>
-                    <li>U is 1 in Scrabble and 2 in Crossplay.</li>
-                    <li>V is 4 in Scrabble and 6 in Crossplay.</li>
-                    <li>W is 4 in Scrabble and 5 in Crossplay.</li>
-                </ul>
+                <p>H is 4 on this chart. J is 8. The side-by-side prices for every letter are on the <a href="/guides/crossplay-scrabble-and-words-with-friends">three-game comparison</a>.</p>
             </section>
         <section class="faq-band">
             <div class="faq-inner">
                 <h2>Frequently asked questions</h2>
                 <div class="faq-list">
-                    <details><summary>What is the Scrabble bingo bonus?<span class="faq-plus">+</span></summary><p>Using all 7 tiles in one turn adds 50 points in Scrabble. The same play is a 40-point sweep in Crossplay and a 35-point bingo in Words with Friends.</p></details>
-                    <details><summary>How many blank tiles are in Scrabble?<span class="faq-plus">+</span></summary><p>Scrabble has 2 blank tiles. Enter each one as ? on your rack. The rack will not accept a third blank. Crossplay has 3.</p></details>
-                    <details><summary>Is the Scrabble center square a double word?<span class="faq-plus">+</span></summary><p>Yes. Scrabble's center star is a double-word score, and the first word must cover it. Crossplay's center star does not multiply the score.</p></details>
-                    <details><summary>Does this Scrabble word finder use Scrabble letter values?<span class="faq-plus">+</span></summary><p>Yes. This page opens the solver on Scrabble's letter values. Nine letters differ from Crossplay: B is 3 in Scrabble and 4 in Crossplay; G is 2 in Scrabble and 4 in Crossplay; H is 4 in Scrabble and 3 in Crossplay; J is 8 in Scrabble and 10 in Crossplay; K is 5 in Scrabble and 6 in Crossplay; L is 1 in Scrabble and 2 in Crossplay; U is 1 in Scrabble and 2 in Crossplay; V is 4 in Scrabble and 6 in Crossplay; W is 4 in Scrabble and 5 in Crossplay.</p></details>
-                    <details><summary>What word list does this Scrabble solver use?<span class="faq-plus">+</span></summary><p>This helper uses one shared list for Scrabble, Crossplay, and Words with Friends: the older TWL, plus the two-letter words DA, GI, PO, TE, EW, and OK. The official NASPA list is NWL2023. Longer words added since 2006 are not in this list.</p></details>
+                    <details><summary>Does the Scrabble center star double JACKPOT?<span class="faq-plus">+</span></summary><p>The center star is a double-word score, and the opening word has to sit on it. In JACKPOT across at 8,4, P is the tile on the star. The letter total of 30 becomes 60, and the bingo then adds 50, for 110. Down at 4,8 is the same 110.</p></details>
+                    <details><summary>Why is a centered JACKPOT 94?<span class="faq-plus">+</span></summary><p>Across at 8,5 puts K on the star and leaves J off the double letter in column 4. The face value is 22, the star doubles it to 44, and the bingo adds 50. Show Me Best Move lists the shifted line, 110, ahead of that 94.</p></details>
+                    <details><summary>What is JACKPOT worth along the top row?<span class="faq-plus">+</span></summary><p>Across row 1, columns 1 through 7, J is on the corner triple word and K is on the double letter. The letters total 27, the triple word makes 81, and the bingo adds 50. The main word is 131. That row leaves the star empty, so the play needs a hook already on the board. The hook scores on top of the 131.</p></details>
+                    <details><summary>How many blanks does this Scrabble rack accept?<span class="faq-plus">+</span></summary><p>Scrabble's bag has two blanks. This rack accepts two question marks and refuses a third. A blank played as the P on the star in JACKPOT still doubles the other letters. That opening is 104: 27 doubled to 54, then the 50.</p></details>
+                    <details><summary>How do I enter a Scrabble board on this page?<span class="faq-plus">+</span></summary><p>Click a square and type the tiles already in play. This page opens with Scrabble letter values, the 50-point bingo, two blanks, and the double-word star. Screenshot reading lives on the <a href="/">Crossplay solver</a>.</p></details>
+                    <details><summary>Which dictionary does this Scrabble solver check?<span class="faq-plus">+</span></summary><p>This page checks the solver's 178,562-word file. Club Scrabble now uses NWL2023, which has 17,991 longer words this file lacks. With Scrabble selected, a trademark the Times removed from Crossplay can still be played when the file has it. The <a href="/word-checker">word checker</a> shows one spelling.</p></details>
+                    <details><summary>Where does the 50 sit in the score breakdown?<span class="faq-plus">+</span></summary><p>The breakdown adds 50 after the main word and any cross-word. The star's double is already inside the main-word figure. JACKPOT's panel is 30 times 2, which is 60, then 50, then 110.</p></details>
                 </div>
             </div>
         </section>
@@ -323,8 +394,9 @@
             <div>
                 <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
                 <p>Solvers: <a href="/">Crossplay</a> · <a href="/scrabble-word-finder">Scrabble</a> · <a href="/words-with-friends-word-finder">Words with Friends</a></p>
-                <p>Guides: <a href="/crossplay-board-layout">Board layout</a> · <a href="/crossplay-tile-values">Tile values</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
-                <p class="footer-meta">Build: 2026-03-07-44</p>
+                <p>Guides: <a href="/crossplay-board-layout">Board layout</a> · <a href="/crossplay-tile-values">Tile values</a> · <a href="/guides">Guides</a></p>
+                <p><a href="/word-checker">Word check</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
+                <p class="footer-meta">Build: 2026-03-07-57</p>
                 <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
             </div>
             <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
