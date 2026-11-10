@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crossplay Guides | Word Game Helper</title>
-    <meta name="description" content="How a Crossplay turn works, how this solver scores a word, how the three games differ, and the two-letter hooks it allows.">
+    <meta name="description" content="Board layout, tile values, how a Crossplay turn works, how this solver scores a word, how the three games differ, and the two-letter hooks it allows.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://wordgamehelp.com/guides">
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -13,12 +13,12 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wordgamehelp.com/guides">
     <meta property="og:title" content="Crossplay Guides | Word Game Helper">
-    <meta property="og:description" content="How a Crossplay turn works, how this solver scores a word, how the three games differ, and the two-letter hooks it allows.">
+    <meta property="og:description" content="Board layout, tile values, how a Crossplay turn works, how this solver scores a word, how the three games differ, and the two-letter hooks it allows.">
     <meta property="og:image" content="https://wordgamehelp.com/og-image.png?v=2">
     <meta property="og:site_name" content="Word Game Helper">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Crossplay Guides | Word Game Helper">
-    <meta name="twitter:description" content="How a Crossplay turn works, how this solver scores a word, how the three games differ, and the two-letter hooks it allows.">
+    <meta name="twitter:description" content="Board layout, tile values, how a Crossplay turn works, how this solver scores a word, how the three games differ, and the two-letter hooks it allows.">
     <meta name="twitter:image" content="https://wordgamehelp.com/og-image.png?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
         "@type": "CollectionPage",
         "name": "Crossplay Guides",
         "url": "https://wordgamehelp.com/guides",
-        "description": "How a Crossplay turn works, how this solver scores a word, how the three games differ, and the two-letter hooks it allows.",
+        "description": "Board layout, tile values, how a Crossplay turn works, how this solver scores a word, how the three games differ, and the two-letter hooks it allows.",
         "isPartOf": { "@type": "WebSite", "name": "Word Game Helper", "url": "https://wordgamehelp.com/" },
         "publisher": { "@type": "Organization", "name": "Word Game Helper", "url": "https://wordgamehelp.com/" }
     }
@@ -57,13 +57,27 @@
                 </span>
                 <span class="logo-name">Word Game Helper</span>
             </a>
-            <nav class="site-nav">
-                <a href="/guides" aria-current="page">Guides</a>
-                <a href="/scrabble-word-finder">Scrabble finder</a>
-                <a href="/words-with-friends-word-finder">WWF finder</a>
-                <a href="/crossplay-tile-values">Crossplay values</a>
-                <a href="/crossplay-board-layout">Board layout</a>
-                <a href="/about">About</a>
+            <nav class="site-nav" aria-label="Site">
+                <div class="nav-group nav-solvers">
+                    <p class="nav-heading" id="nav-solvers-label">Solvers</p>
+                    <div class="nav-menu" aria-labelledby="nav-solvers-label">
+                        <a href="/">NYT Crossplay</a>
+                        <a href="/scrabble-word-finder">Scrabble</a>
+                        <a href="/words-with-friends-word-finder">Words with Friends</a>
+                    </div>
+                </div>
+                <div class="nav-group nav-guides">
+                    <a class="nav-heading" href="/guides" aria-current="page">Guides</a>
+                    <div class="nav-menu" aria-label="Guides">
+                        <a href="/crossplay-board-layout">Board layout</a>
+                        <a href="/crossplay-tile-values">Tile values</a>
+                        <a href="/guides/how-to-play-crossplay">How a turn works</a>
+                        <a href="/guides/how-crossplay-scoring-works">How scoring works</a>
+                        <a href="/guides/crossplay-scrabble-and-words-with-friends">How the games differ</a>
+                        <a href="/guides/two-letter-words">Two-letter words</a>
+                    </div>
+                </div>
+                <a class="nav-heading nav-about" href="/about">About</a>
             </nav>
         </div>
     </header>
@@ -72,15 +86,15 @@
             <p class="guide-kicker">Word Game Helper</p>
             <h1>Guides</h1>
             <p>These pages explain the rules the <a href="/">board solver</a> is using when it ranks a move. They are written from the scoring tables, the board layouts, and the word list in this site, not from a separate rulebook.</p>
-            <p>Start with a turn if the board is new. Read the scoring page when a total looks wrong. Use the comparison when you switch games and the points change underneath you. Use the two-letter list when a one-tile hook is rejected.</p>
+            <p>The board layout and the tile values are the charts. Start with a turn if the board is new. Read the scoring page when a total looks wrong. Use the comparison when you switch games and the points change underneath you. Use the two-letter list when a one-tile hook is rejected.</p>
             <ul class="guide-list">
+                <li><a href="/crossplay-board-layout"><strong>Board layout</strong><span>The 15 by 15 bonus map, including the center star that does not multiply the score.</span></a></li>
+                <li><a href="/crossplay-tile-values"><strong>Tile values</strong><span>Every letter's points and how many copies are in the 100-tile bag.</span></a></li>
                 <li><a href="/guides/how-to-play-crossplay"><strong>How a Crossplay turn works</strong><span>The rack, the center star, hooks, and what has to be true before a play is legal.</span></a></li>
                 <li><a href="/guides/how-crossplay-scoring-works"><strong>How a score is calculated</strong><span>Letter bonus, then word bonus, then the 40-point sweep. The QUIXOTE opening this solver lists first is 110.</span></a></li>
                 <li><a href="/guides/crossplay-scrabble-and-words-with-friends"><strong>Crossplay, Scrabble, and Words with Friends</strong><span>Letter values side by side, the bingo, the blanks, and the bonus squares on each board.</span></a></li>
                 <li><a href="/guides/two-letter-words"><strong>Two-letter words</strong><span>The 107 hooks this solver allows, including DA, GI, PO, TE, EW, and OK.</span></a></li>
             </ul>
-            <h2>Reference charts</h2>
-            <p>The guides send you to two charts when you want the full grid instead of an explanation. <a href="/crossplay-tile-values">Crossplay tile values</a> lists every letter's points and how many copies are in the 100-tile bag. The <a href="/crossplay-board-layout">board layout</a> is the 15 by 15 bonus map, including the center star that does not multiply the score.</p>
             <h2>What the solver is for</h2>
             <p>Open the <a href="/">Crossplay board</a>, upload a screenshot or type the letters already played, and enter the seven tiles on your rack. Show Me Best Move lists legal plays by score. Click a result to see the breakdown: each new letter, the bonus on that square, any cross-word, and the sweep.</p>
             <p>The same board opens as a <a href="/scrabble-word-finder">Scrabble word finder</a> or a <a href="/words-with-friends-word-finder">Words with Friends word finder</a>. Change the game before you read the number. A play that scores 67 in Crossplay can score 96 in Scrabble and 61 in Words with Friends, for the same letters on the same squares. That example is <a href="/guides/crossplay-scrabble-and-words-with-friends">QUIXOTE through the center</a>.</p>
@@ -91,8 +105,9 @@
         <div class="site-footer-inner">
             <div>
                 <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
-                <p><a href="/">Board solver</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
-                <p class="footer-meta">Build: 2026-03-07-52</p>
+                <p>Solvers: <a href="/">Crossplay</a> · <a href="/scrabble-word-finder">Scrabble</a> · <a href="/words-with-friends-word-finder">Words with Friends</a></p>
+                <p>Guides: <a href="/crossplay-board-layout">Board layout</a> · <a href="/crossplay-tile-values">Tile values</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
+                <p class="footer-meta">Build: 2026-03-07-53</p>
                 <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
             </div>
             <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
