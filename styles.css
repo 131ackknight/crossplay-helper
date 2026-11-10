@@ -76,6 +76,8 @@ a:hover { color: var(--accent-hover); }
 }
 
 .site-header {
+    position: relative;
+    z-index: 5;
     border-bottom: 1px solid var(--ink);
     background: var(--paper);
 }
@@ -83,11 +85,11 @@ a:hover { color: var(--accent-hover); }
 .site-header-inner {
     max-width: 1240px;
     margin: 0 auto;
-    padding: 14px 24px;
+    padding: 14px 24px 16px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 16px;
+    gap: 16px 28px;
     flex-wrap: wrap;
 }
 
@@ -126,12 +128,47 @@ a:hover { color: var(--accent-hover); }
 
 .site-nav {
     display: flex;
-    gap: 20px;
+    flex: 1;
     flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 14px 28px;
+    min-width: 0;
     font-size: 14px;
 }
 
+.nav-group { min-width: 0; }
+
+.nav-solvers { flex: 0 1 auto; }
+
+.nav-guides {
+    flex: 1 1 280px;
+    max-width: 440px;
+}
+
+.nav-heading {
+    margin: 0 0 6px;
+    font: 500 11px/1.2 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+a.nav-heading { color: var(--muted); }
+
+.nav-about { align-self: flex-start; }
+
+.nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+}
+
+.nav-menu a { white-space: nowrap; }
+
 .site-nav a { text-decoration: none; }
+
+.nav-group:has(a[aria-current="page"]) > .nav-heading { color: var(--ink); }
 
 .hero {
     padding-top: 40px;
@@ -1031,6 +1068,7 @@ a:hover { color: var(--accent-hover); }
 
 .site-nav a[aria-current="page"] {
     font-weight: 700;
+    color: var(--ink);
     text-decoration: underline;
     text-decoration-color: var(--accent);
     text-underline-offset: 3px;
@@ -1328,6 +1366,27 @@ a:hover { color: var(--accent-hover); }
     background: var(--card);
     color: var(--ink);
     font: 700 14px 'Bitter', serif;
+}
+
+@media (max-width: 880px) {
+    .site-header-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+    .site-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 14px;
+    }
+    .nav-solvers,
+    .nav-guides {
+        flex: none;
+        width: 100%;
+        max-width: none;
+    }
 }
 
 @media (max-width: 720px) {

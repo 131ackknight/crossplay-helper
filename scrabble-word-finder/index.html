@@ -157,13 +157,28 @@
                 </span>
                 <span class="logo-name">Word Game Helper</span>
             </a>
-            <nav class="site-nav">
-                <a href="/guides">Guides</a>
-                <a href="/scrabble-word-finder" aria-current="page">Scrabble finder</a>
-                <a href="/words-with-friends-word-finder">WWF finder</a>
-                <a href="/crossplay-tile-values">Crossplay values</a>
-                <a href="/crossplay-board-layout">Board layout</a>
-                <a href="/about">About</a>
+            <nav class="site-nav" aria-label="Site">
+                <div class="nav-group nav-solvers">
+                    <p class="nav-heading" id="nav-solvers-label">Solvers</p>
+                    <div class="nav-menu" aria-labelledby="nav-solvers-label">
+                        <a href="/">NYT Crossplay</a>
+                        <a href="/scrabble-word-finder" aria-current="page">Scrabble</a>
+                        <a href="/words-with-friends-word-finder">Words with Friends</a>
+                    </div>
+                </div>
+                <div class="nav-group nav-guides">
+                    <a class="nav-heading" href="/guides">Guides</a>
+                    <div class="nav-menu" aria-label="Guides">
+                        <a href="/crossplay-board-layout">Board layout</a>
+                        <a href="/crossplay-tile-values">Tile values</a>
+                        <a href="/guides/how-to-play-crossplay">How a turn works</a>
+                        <a href="/guides/how-crossplay-scoring-works">How scoring works</a>
+                        <a href="/guides/crossplay-scrabble-and-words-with-friends">How the games differ</a>
+                        <a href="/guides/two-letter-words">Two-letter words</a>
+                    </div>
+                </div>
+                <a class="nav-heading nav-about" href="/word-checker">Word check</a>
+                <a class="nav-heading nav-about" href="/about">About</a>
             </nav>
         </div>
     </header>
@@ -378,8 +393,10 @@
         <div class="site-footer-inner">
             <div>
                 <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
-                <p><a href="/">Crossplay word finder</a> · <a href="/words-with-friends-word-finder">Words with Friends board solver</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
-                <p class="footer-meta">Build: 2026-03-07-56</p>
+                <p>Solvers: <a href="/">Crossplay</a> · <a href="/scrabble-word-finder">Scrabble</a> · <a href="/words-with-friends-word-finder">Words with Friends</a></p>
+                <p>Guides: <a href="/crossplay-board-layout">Board layout</a> · <a href="/crossplay-tile-values">Tile values</a> · <a href="/guides">Guides</a></p>
+                <p><a href="/word-checker">Word check</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
+                <p class="footer-meta">Build: 2026-03-07-57</p>
                 <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
             </div>
             <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
