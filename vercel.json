@@ -3,7 +3,7 @@
   "redirects": [
     {
       "source": "/ads.txt",
-      "destination": "https://adstxt.journeymv.com/sites/JOURNEY_SITE_ID/ads.txt",
+      "destination": "https://adstxt.journeymv.com/sites/562bb98a-eea1-4de6-b65a-60c5bfd2c580/ads.txt",
       "statusCode": 301
     }
   ],
