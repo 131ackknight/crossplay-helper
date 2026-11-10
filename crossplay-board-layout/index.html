@@ -109,27 +109,28 @@
                 <span class="logo-name">Word Game Helper</span>
             </a>
             <nav class="site-nav" aria-label="Site">
-                <div class="nav-group nav-solvers">
-                    <p class="nav-heading" id="nav-solvers-label">Solvers</p>
-                    <div class="nav-menu" aria-labelledby="nav-solvers-label">
+                <details class="nav-dropdown">
+                    <summary>Solvers</summary>
+                    <div class="nav-panel">
                         <a href="/">NYT Crossplay</a>
                         <a href="/scrabble-word-finder">Scrabble</a>
                         <a href="/words-with-friends-word-finder">Words with Friends</a>
                     </div>
-                </div>
-                <div class="nav-group nav-guides">
-                    <a class="nav-heading" href="/guides">Guides</a>
-                    <div class="nav-menu" aria-label="Guides">
+                </details>
+                <details class="nav-dropdown">
+                    <summary>Guides</summary>
+                    <div class="nav-panel">
                         <a href="/crossplay-board-layout" aria-current="page">Board layout</a>
                         <a href="/crossplay-tile-values">Tile values</a>
                         <a href="/guides/how-to-play-crossplay">How a turn works</a>
                         <a href="/guides/how-crossplay-scoring-works">How scoring works</a>
                         <a href="/guides/crossplay-scrabble-and-words-with-friends">How the games differ</a>
                         <a href="/guides/two-letter-words">Two-letter words</a>
+                        <a class="nav-panel-all" href="/guides">All guides</a>
                     </div>
-                </div>
-                <a class="nav-heading nav-about" href="/word-checker">Word check</a>
-                <a class="nav-heading nav-about" href="/about">About</a>
+                </details>
+                <a class="nav-item" href="/word-checker">Word check</a>
+                <a class="nav-item" href="/about">About</a>
             </nav>
         </div>
     </header>
@@ -222,7 +223,7 @@
                 <p>Solvers: <a href="/">Crossplay</a> · <a href="/scrabble-word-finder">Scrabble</a> · <a href="/words-with-friends-word-finder">Words with Friends</a></p>
                 <p>Guides: <a href="/crossplay-board-layout">Board layout</a> · <a href="/crossplay-tile-values">Tile values</a> · <a href="/guides">Guides</a></p>
                 <p><a href="/word-checker">Word check</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
-                <p class="footer-meta">Build: 2026-03-07-56</p>
+                <p class="footer-meta">Build: 2026-03-07-57</p>
                 <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
             </div>
             <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
@@ -237,5 +238,6 @@
             document.body.classList.remove('print-chart');
         });
     </script>
+    <script defer src="/nav.js"></script>
 </body>
 </html>
