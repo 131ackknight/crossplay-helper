@@ -1,5 +1,12 @@
 {
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/ads.txt",
+      "destination": "https://adstxt.journeymv.com/sites/JOURNEY_SITE_ID/ads.txt",
+      "statusCode": 301
+    }
+  ],
   "headers": [
     {
       "source": "/dictionary.20261024.js",

@@ -43,8 +43,8 @@ Crossplay, Scrabble, and Words with Friends all use the same list in this helper
 - https://wordgamehelp.com/guides/crossplay-scrabble-and-words-with-friends — Letter values, bingos, blanks, and bonus-square counts for all three games.
 - https://wordgamehelp.com/guides/two-letter-words — The 107 two-letter words this solver allows, including DA, GI, PO, TE, EW, and OK.
 - https://wordgamehelp.com/about — What the solver scores, which word list it uses, and what stays on the device.
-- https://wordgamehelp.com/privacy — Privacy policy. Game data stays on the device. Google may serve ads and may use cookies.
+- https://wordgamehelp.com/privacy — Privacy policy. Game data stays on the device. Ads are served by Journey by Mediavine and may use cookies.
 
 ## Privacy
 
-Your game data stays on your device. The board, tiles, and screenshots are not sent to a server. Game state is saved in the browser's local storage. Ads on the homepage are served by Google and may use cookies. https://wordgamehelp.com/privacy
+Your game data stays on your device. The board, tiles, and screenshots are not sent to a server. Game state is saved in the browser's local storage. Ads are served by Journey by Mediavine and may use cookies. https://wordgamehelp.com/privacy
