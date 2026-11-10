@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word checker | Word Game Helper</title>
+    <meta name="description" content="Check a word against this solver's list, and see whether Crossplay is known to reject it. This is not the full NWL2023 list.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wordgamehelp.com/word-checker">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wordgamehelp.com/word-checker">
+    <meta property="og:title" content="Word checker | Word Game Helper">
+    <meta property="og:description" content="Check a word against this solver's list, and see whether Crossplay is known to reject it. This is not the full NWL2023 list.">
+    <meta property="og:image" content="https://wordgamehelp.com/og-image.png?v=2">
+    <meta property="og:site_name" content="Word Game Helper">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Word checker | Word Game Helper">
+    <meta name="twitter:description" content="Check a word against this solver's list, and see whether Crossplay is known to reject it. This is not the full NWL2023 list.">
+    <meta name="twitter:image" content="https://wordgamehelp.com/og-image.png?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=JetBrains+Mono:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Word Game Helper word checker",
+        "url": "https://wordgamehelp.com/word-checker",
+        "description": "Check a word against this solver's list, and see whether Crossplay is known to reject it. This is not the full NWL2023 list.",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Word Game Helper", "item": "https://wordgamehelp.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Word checker", "item": "https://wordgamehelp.com/word-checker" }
+        ]
+    }
+    </script>
+    <script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" src="//scripts.scriptwrapper.com/tags/562bb98a-eea1-4de6-b65a-60c5bfd2c580.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="logo" href="/">
+                <span class="logo-tiles" aria-hidden="true">
+                    <span class="logo-tile">W</span>
+                    <span class="logo-tile logo-tile-accent">G</span>
+                    <span class="logo-tile">H</span>
+                </span>
+                <span class="logo-name">Word Game Helper</span>
+            </a>
+            <nav class="site-nav">
+                <a href="/guides">Guides</a>
+                <a href="/word-checker" aria-current="page">Word check</a>
+                <a href="/scrabble-word-finder">Scrabble finder</a>
+                <a href="/words-with-friends-word-finder">WWF finder</a>
+                <a href="/crossplay-tile-values">Crossplay values</a>
+                <a href="/crossplay-board-layout">Board layout</a>
+                <a href="/about">About</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <article class="prose wrap guide">
+            <p class="guide-kicker">Word Game Helper</p>
+            <h1>Check a word</h1>
+            <p>This checks the list the <a href="/">board solver</a> uses. It is not the full Crossplay dictionary. Crossplay uses NWL2023, 196,601 words, minus 182 trademark and proper-noun cuts, which leaves 196,419. This file has 178,562. The 107 two-letter words match. 17,991 longer Crossplay words are missing. The <a href="/about">about page</a> explains that gap.</p>
+            <div class="game-field">
+                <span class="game-label">Game</span>
+                <div class="game-pills" role="group" aria-label="Game">
+                    <button type="button" class="game-pill active" data-game="crossplay" aria-pressed="true">NYT Crossplay</button>
+                    <button type="button" class="game-pill" data-game="scrabble" aria-pressed="false">Scrabble</button>
+                    <button type="button" class="game-pill" data-game="wwf" aria-pressed="false">Words with Friends</button>
+                </div>
+            </div>
+            <form id="checkForm" class="check-form">
+                <label class="visually-hidden" for="checkWord">Word</label>
+                <input id="checkWord" type="text" name="word" inputmode="latin" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" maxlength="15" placeholder="WORD" required>
+                <button class="btn btn-primary" type="submit">Check word</button>
+            </form>
+            <div id="verdict" class="verdict" hidden></div>
+            <h2>How to read the answer</h2>
+            <ul>
+                <li><b>In this solver's list.</b> The solver can play it. For Crossplay, it is also not one of the 182 words the Times cut.</li>
+                <li><b>Not playable in Crossplay.</b> The Times removed it from NWL2023. Switch the game to Scrabble if you want to know whether this file still has it.</li>
+                <li><b>Not in this solver's list.</b> Crossplay may still accept it. The miss means the word is one of the 17,991 this file does not have, or it is not a word at all.</li>
+            </ul>
+            <p>Hooks under a yes are other words in this same list, one letter longer. They follow the game you picked, so a Crossplay cut will not show up as a hook.</p>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div>
+                <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
+                <p><a href="/">Board solver</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
+                <p class="footer-meta">Build: 2026-03-07-55</p>
+                <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
+            </div>
+            <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
+        </div>
+    </footer>
+    <script defer src="/word-checker.js"></script>
+</body>
+</html>

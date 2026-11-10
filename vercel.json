@@ -1,8 +1,15 @@
 {
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/ads.txt",
+      "destination": "https://adstxt.journeymv.com/sites/562bb98a-eea1-4de6-b65a-60c5bfd2c580/ads.txt",
+      "statusCode": 301
+    }
+  ],
   "headers": [
     {
-      "source": "/dictionary.20261024.js",
+      "source": "/dictionary.20261109.js",
       "headers": [
         {
           "key": "Cache-Control",

@@ -53,44 +53,74 @@
         "mainEntity": [
                 {
                         "@type": "Question",
-                        "name": "What is the Words with Friends bingo bonus?",
+                        "name": "What does the Words with Friends center square score?",
                         "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "Using all 7 tiles in one turn adds 35 points in Words with Friends. Scrabble's bingo is 50 points. Crossplay's sweep is 40."
+                                "text": "This board draws no star. The first word still has to cover row 8, column 8, and that square scores the letter's face value. In EXCLAIM across at 8,6, C is the center tile and it scores 4."
                         }
                 },
                 {
                         "@type": "Question",
-                        "name": "How many blank tiles are in Words with Friends?",
+                        "name": "Why is the best EXCLAIM played across for 97?",
                         "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "Words with Friends has 2 blank tiles. Enter each one as ? on your rack. Crossplay has 3."
+                                "text": "Show Me Best Move lists Across at 8,6 at 97. X on the double letter in column 7 is 16, L on the double letter in column 9 is 4, and M on the double word in column 12 doubles the 31-point letter total to 62. The bingo adds 35. Starting in column 5, Across at 8,5 scores 61."
                         }
                 },
                 {
                         "@type": "Question",
-                        "name": "Does Words with Friends have a center star?",
+                        "name": "Why is EXCLAIM lower down the center column?",
                         "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "No. The center square has no score bonus, and the board does not show a star. The first word still has to cover the center. Scrabble's center star is a double word. Crossplay shows a star that does not multiply the score."
+                                "text": "The center column holds triple letters. The double words on an opening sit on the center row, in columns 4 and 12. The best EXCLAIM down the center column is Down at 3,8 for 76, so the across line stays first."
                         }
                 },
                 {
                         "@type": "Question",
-                        "name": "Does this word finder use Words with Friends letter values?",
+                        "name": "How can QUIZ score 129 with four tiles?",
                         "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "Yes. This page opens the solver on Words with Friends letter values, not Scrabble's or Crossplay's. Letters that differ from Scrabble: B is 4 in Words with Friends and 3 in Scrabble; C is 4 in Words with Friends and 3 in Scrabble; G is 3 in Words with Friends and 2 in Scrabble; H is 3 in Words with Friends and 4 in Scrabble; J is 10 in Words with Friends and 8 in Scrabble; L is 2 in Words with Friends and 1 in Scrabble; M is 4 in Words with Friends and 3 in Scrabble; N is 2 in Words with Friends and 1 in Scrabble; P is 4 in Words with Friends and 3 in Scrabble; U is 2 in Words with Friends and 1 in Scrabble; V is 5 in Words with Friends and 4 in Scrabble; Y is 3 in Words with Friends and 4 in Scrabble."
+                                "text": "QUIZ across row 1, columns 4 through 7, puts Q on a triple word and Z on a triple letter. Z is tripled to 30 before the word is tripled, and Z's share of the total is 90. The main word is 129, with no bingo. The play has to hook, and any cross-word is added after the 129. That 129 is higher than the seven-tile EXCLAIM opening."
                         }
                 },
                 {
                         "@type": "Question",
-                        "name": "What word list does this Words with Friends solver use?",
+                        "name": "Why is N worth 2 on this board?",
                         "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "This helper uses one shared list for Words with Friends, Scrabble, and Crossplay: the older TWL, plus the two-letter words DA, GI, PO, TE, EW, and OK. Words with Friends has its own official list, which this helper does not load separately."
+                                "text": "On this board N scores 2. A hook that adds only N is worth two before any bonus square under the new letter. B, C, M, and P score 4. Y scores 3. The bingo on a seven-tile play is 35, added after those bonuses."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "How many blanks does this Words with Friends rack accept?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "The Words with Friends bag has two blanks. The rack keeps two question marks. Two blanks make the search try every letter in both spots. A line that starts several empty squares before a tile already on the board can be left out. Type the word you expected and compare it with the scores that came back."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "Does this page use the Words with Friends word list?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Words with Friends ships its own word list. This page scores a different file. A spelling that exists only on the Words with Friends list will be missing here. The word checker tests one word against the file this solver does load."
                         }
                 }
+        ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to score a Words with Friends board",
+        "description": "Type a Words with Friends position. The center square scores face value, and a seven-tile play adds 35 after the bonuses.",
+        "step": [
+            { "@type": "HowToStep", "name": "Cover the center square", "text": "This board draws no star. Click row 8, column 8 and type what is already on the grid. The opening play has to occupy that square, and the square scores the letter's face value." },
+            { "@type": "HowToStep", "name": "Type the rack", "text": "Enter the seven tiles. A blank is ?. The rack accepts two question marks, which is the Words with Friends bag." },
+            { "@type": "HowToStep", "name": "Rank with a 35-point bingo", "text": "Show Me Best Move uses Words with Friends letter values and this board's bonus squares. A play that empties the rack adds 35 once the word multiplier is finished." },
+            { "@type": "HowToStep", "name": "Read the cross-words", "text": "Click a result. The breakdown lists the main word, then each cross-word, then 35 when all seven tiles left the rack." }
         ]
 }
     </script>
@@ -114,6 +144,7 @@
         ]
 }
     </script>
+    <script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" src="//scripts.scriptwrapper.com/tags/562bb98a-eea1-4de6-b65a-60c5bfd2c580.js"></script>
 </head>
 <body data-game="wwf">
     <header class="site-header">
@@ -216,33 +247,75 @@
             </aside>
         </section>
         <section class="how">
+            <div class="wrap how-intro">
+                <h2>Setting up a Words with Friends position</h2>
+            </div>
             <div class="wrap how-grid">
                 <div>
                     <span class="step-num">01</span>
-                    <h3>Set up the board</h3>
-                    <p>Click or tap a square and type letters already on the board (use <strong>?</strong> for a blank). Arrow keys move between squares. Backspace clears.</p>
+                    <h3>Cover the center square</h3>
+                    <p>This board draws no star. Click row 8, column 8 and type what is already on the grid. The opening play has to occupy that square, and the square scores the letter's face value.</p>
                 </div>
                 <div>
                     <span class="step-num">02</span>
-                    <h3>Enter your rack</h3>
-                    <p>Type your 7 letters in the tile rack.</p>
+                    <h3>Type the rack</h3>
+                    <p>Enter the seven tiles. A blank is <strong>?</strong>. The rack accepts two question marks, which is the Words with Friends bag.</p>
                 </div>
                 <div>
                     <span class="step-num">03</span>
-                    <h3>Get the best words</h3>
-                    <p>Choose the game, then click or tap "Show Me Best Move". Scores use that game's letter values, bonus squares, and all-tiles bonus (Crossplay 40, Scrabble 50, Words with Friends 35).</p>
+                    <h3>Rank with a 35-point bingo</h3>
+                    <p>Show Me Best Move uses Words with Friends letter values and this board's bonus squares. A play that empties the rack adds 35 once the word multiplier is finished.</p>
                 </div>
                 <div>
                     <span class="step-num">04</span>
-                    <h3>Get a Hint</h3>
-                    <p>Use "Get a Hint" for step-by-step help, or "Clear Board" to start over.</p>
+                    <h3>Read the cross-words</h3>
+                    <p>Click a result. The breakdown lists the main word, then each cross-word, then 35 when all seven tiles left the rack.</p>
                 </div>
             </div>
         </section>
         <section class="prose wrap">
-                <h2>Words with Friends scoring on this board</h2>
-                <p>Show Me Best Move uses Words with Friends letter values, that game's bonus squares, and a 35-point bingo when you play all 7 tiles. The center square is not a bonus. For NYT Crossplay, use the <a href="/">Crossplay word finder</a>.</p>
-                <p>The board used here has 12 triple-word squares, 10 double-word squares, 12 triple-letter squares, and 38 double-letter squares. A seven-tile play adds 35 after those bonuses, and the 35 is not doubled. Twelve letters differ from Scrabble. N is 2 here and 1 in Scrabble, while the bingo pays less than Scrabble's 50. The full table is the <a href="/guides/crossplay-scrabble-and-words-with-friends">comparison of the three games</a>.</p>
+                <h2>Words with Friends strategy</h2>
+                <p>The first word has to cover row 8, column 8, and that square adds the letter's face value. The opening points are on the center row: double letters in columns 7 and 9, double words in columns 4 and 12. The center column is a different lane. It holds triple letters, so a word played down it misses those double words. This layout has 12 triple-word squares, 10 double-word squares, 12 triple-letter squares, and 38 double-letter squares.</p>
+                <p>The bingo is 35, added after the multipliers. N is 2. B, C, M, and P are 4. Y is 3. With that many double letters and triple words, a short word on a triple word is often the higher line. The full chart is the <a href="/guides/crossplay-scrabble-and-words-with-friends">comparison of the three games</a>.</p>
+
+                <h2>EXCLAIM on an empty Words with Friends board</h2>
+                <p>Clear the grid, type EXCLAIM, and press Show Me Best Move. The first line is Across at 8,6 for 97. X is on the double letter in column 7, so the 8 becomes 16. L is on the double letter in column 9, so the 2 becomes 4. M, which is 4 here, sits on the double word in column 12. C is on the center square at face value, 4.</p>
+                <table class="score-table">
+                    <caption>EXCLAIM across row 8, columns 6–12, on an empty Words with Friends board. The solver returns 97 for this line.</caption>
+                    <thead>
+                        <tr><th>Letter</th><th>Square</th><th class="num">Points</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>E</td><td>Plain</td><td class="num">1</td></tr>
+                        <tr><td>X</td><td>Double letter, 8 × 2</td><td class="num">16</td></tr>
+                        <tr><td>C</td><td>Center square, face value</td><td class="num">4</td></tr>
+                        <tr><td>L</td><td>Double letter, 2 × 2</td><td class="num">4</td></tr>
+                        <tr><td>A</td><td>Plain</td><td class="num">1</td></tr>
+                        <tr><td>I</td><td>Plain</td><td class="num">1</td></tr>
+                        <tr><td>M</td><td>Double word</td><td class="num">4</td></tr>
+                        <tr><td colspan="2">Face value after the letter bonuses</td><td class="num">31</td></tr>
+                        <tr><td colspan="2">Double word on M, 31 × 2</td><td class="num">62</td></tr>
+                        <tr><td colspan="2">Bingo added after that double</td><td class="num">35</td></tr>
+                        <tr><td colspan="2">Total</td><td class="num">97</td></tr>
+                    </tbody>
+                </table>
+                <p>Across at 8,5, the centered line, scores 61. It picks up the two double letters and misses both double words. Down the center column, the best EXCLAIM is Down at 3,8 for 76. That column's bonuses are triple letters, so the solver keeps the across line.</p>
+
+                <h2>QUIZ on a triple word</h2>
+                <p>QUIZ across row 1, columns 4–7, puts Q on a triple word and Z on a triple letter. Z is 10 × 3 = 30 before the word is tripled, so the tripled word turns that 30 into 90. Four tiles means there is no bingo. The line leaves the center empty, so it needs a hook. A hook's points are counted after that 129, which is already higher than the seven-tile EXCLAIM opening.</p>
+                <table class="score-table">
+                    <caption>QUIZ across row 1, columns 4–7, scored before any hook.</caption>
+                    <thead>
+                        <tr><th>Letter</th><th>Letter bonus applied</th><th class="num">Inside the ×3</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Q on a triple word</td><td>10</td><td class="num">30</td></tr>
+                        <tr><td>U</td><td>2</td><td class="num">6</td></tr>
+                        <tr><td>I</td><td>1</td><td class="num">3</td></tr>
+                        <tr><td>Z on a triple letter</td><td>10 × 3 = 30</td><td class="num">90</td></tr>
+                        <tr><td colspan="2">Total</td><td class="num">129</td></tr>
+                    </tbody>
+                </table>
                 <h3>Words with Friends tile values</h3>
                 <table>
                     <caption>Letter points from the Words with Friends scoring table.</caption>
@@ -278,31 +351,19 @@
                         <tr><td>Blank (?)</td><td>0</td></tr>
                     </tbody>
                 </table>
-                <h3>Letters that differ from Scrabble</h3>
-                <ul class="diff-list">
-                    <li>B is 4 in Words with Friends and 3 in Scrabble.</li>
-                    <li>C is 4 in Words with Friends and 3 in Scrabble.</li>
-                    <li>G is 3 in Words with Friends and 2 in Scrabble.</li>
-                    <li>H is 3 in Words with Friends and 4 in Scrabble.</li>
-                    <li>J is 10 in Words with Friends and 8 in Scrabble.</li>
-                    <li>L is 2 in Words with Friends and 1 in Scrabble.</li>
-                    <li>M is 4 in Words with Friends and 3 in Scrabble.</li>
-                    <li>N is 2 in Words with Friends and 1 in Scrabble.</li>
-                    <li>P is 4 in Words with Friends and 3 in Scrabble.</li>
-                    <li>U is 2 in Words with Friends and 1 in Scrabble.</li>
-                    <li>V is 5 in Words with Friends and 4 in Scrabble.</li>
-                    <li>Y is 3 in Words with Friends and 4 in Scrabble.</li>
-                </ul>
+                <p>N is 2 on this chart. B, C, M, and P are 4. Y is 3. The other two boards are the <a href="/">Crossplay solver</a> and the <a href="/scrabble-word-finder">Scrabble solver</a>.</p>
             </section>
         <section class="faq-band">
             <div class="faq-inner">
                 <h2>Frequently asked questions</h2>
                 <div class="faq-list">
-                    <details><summary>What is the Words with Friends bingo bonus?<span class="faq-plus">+</span></summary><p>Using all 7 tiles in one turn adds 35 points in Words with Friends. Scrabble's bingo is 50 points. Crossplay's sweep is 40.</p></details>
-                    <details><summary>How many blank tiles are in Words with Friends?<span class="faq-plus">+</span></summary><p>Words with Friends has 2 blank tiles. Enter each one as ? on your rack. Crossplay has 3.</p></details>
-                    <details><summary>Does Words with Friends have a center star?<span class="faq-plus">+</span></summary><p>No. The center square has no score bonus, and the board does not show a star. The first word still has to cover the center. Scrabble's center star is a double word. Crossplay shows a star that does not multiply the score.</p></details>
-                    <details><summary>Does this word finder use Words with Friends letter values?<span class="faq-plus">+</span></summary><p>Yes. This page opens the solver on Words with Friends letter values, not Scrabble's or Crossplay's. Letters that differ from Scrabble: B is 4 in Words with Friends and 3 in Scrabble; C is 4 in Words with Friends and 3 in Scrabble; G is 3 in Words with Friends and 2 in Scrabble; H is 3 in Words with Friends and 4 in Scrabble; J is 10 in Words with Friends and 8 in Scrabble; L is 2 in Words with Friends and 1 in Scrabble; M is 4 in Words with Friends and 3 in Scrabble; N is 2 in Words with Friends and 1 in Scrabble; P is 4 in Words with Friends and 3 in Scrabble; U is 2 in Words with Friends and 1 in Scrabble; V is 5 in Words with Friends and 4 in Scrabble; Y is 3 in Words with Friends and 4 in Scrabble.</p></details>
-                    <details><summary>What word list does this Words with Friends solver use?<span class="faq-plus">+</span></summary><p>This helper uses one shared list for Words with Friends, Scrabble, and Crossplay: the older TWL, plus the two-letter words DA, GI, PO, TE, EW, and OK. Words with Friends has its own official list, which this helper does not load separately.</p></details>
+                    <details><summary>What does the Words with Friends center square score?<span class="faq-plus">+</span></summary><p>This board draws no star. The first word still has to cover row 8, column 8, and that square scores the letter's face value. In EXCLAIM across at 8,6, C is the center tile and it scores 4.</p></details>
+                    <details><summary>Why is the best EXCLAIM played across for 97?<span class="faq-plus">+</span></summary><p>Show Me Best Move lists Across at 8,6 at 97. X on the double letter in column 7 is 16, L on the double letter in column 9 is 4, and M on the double word in column 12 doubles the 31-point letter total to 62. The bingo adds 35. Starting in column 5, Across at 8,5 scores 61.</p></details>
+                    <details><summary>Why is EXCLAIM lower down the center column?<span class="faq-plus">+</span></summary><p>The center column holds triple letters. The double words on an opening sit on the center row, in columns 4 and 12. The best EXCLAIM down the center column is Down at 3,8 for 76, so the across line stays first.</p></details>
+                    <details><summary>How can QUIZ score 129 with four tiles?<span class="faq-plus">+</span></summary><p>QUIZ across row 1, columns 4 through 7, puts Q on a triple word and Z on a triple letter. Z is tripled to 30 before the word is tripled, and Z's share of the total is 90. The main word is 129, with no bingo. The play has to hook, and any cross-word is added after the 129. That 129 is higher than the seven-tile EXCLAIM opening.</p></details>
+                    <details><summary>Why is N worth 2 on this board?<span class="faq-plus">+</span></summary><p>On this board N scores 2. A hook that adds only N is worth two before any bonus square under the new letter. B, C, M, and P score 4. Y scores 3. The bingo on a seven-tile play is 35, added after those bonuses.</p></details>
+                    <details><summary>How many blanks does this Words with Friends rack accept?<span class="faq-plus">+</span></summary><p>The Words with Friends bag has two blanks. The rack keeps two question marks. Two blanks make the search try every letter in both spots. A line that starts several empty squares before a tile already on the board can be left out. Type the word you expected and compare it with the scores that came back.</p></details>
+                    <details><summary>Does this page use the Words with Friends word list?<span class="faq-plus">+</span></summary><p>Words with Friends ships its own word list. This page scores a different file. A spelling that exists only on the Words with Friends list will be missing here. The <a href="/word-checker">word checker</a> tests one word against the file this solver does load.</p></details>
                 </div>
             </div>
         </section>
@@ -311,8 +372,8 @@
         <div class="site-footer-inner">
             <div>
                 <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
-                <p><a href="/">Crossplay word finder</a> · <a href="/scrabble-word-finder">Scrabble board solver</a> · <a href="/guides">Guides</a> · <a href="/about">About</a></p>
-                <p class="footer-meta">Build: 2026-03-07-43</p>
+                <p><a href="/">Crossplay word finder</a> · <a href="/scrabble-word-finder">Scrabble board solver</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
+                <p class="footer-meta">Build: 2026-03-07-56</p>
                 <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
             </div>
             <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ is a trademark of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
