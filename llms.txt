@@ -28,7 +28,7 @@ The tool calculates scores based on:
 
 ## Word list
 
-Crossplay, Scrabble, and Words with Friends all use the same list in this helper: the older North American TWL, plus the two-letter words DA, GI, PO, TE, EW, and OK (178,697 words). NYT Crossplay's official list is NWL2023 with New York Times edits, so longer words added since 2006 can still be missing. Words with Friends has its own official list, which this helper does not load separately.
+Crossplay, Scrabble, and Words with Friends all use the same file in this helper: TWL06, plus DA, GI, PO, TE, EW, and OK, minus 135 words NASPA has since dropped (178,562 words). NWL2023 has 196,601 words. Crossplay uses NWL2023 minus 182 trademark and proper-noun cuts (196,419). The 107 two-letter words match. 17,991 longer Crossplay words are missing. With Crossplay selected, the solver also skips the Times' cuts that remain in the file. Words with Friends has its own official list, which this helper does not load separately. The word checker reports whether one word is in the file, cut by the Times, or not in the file.
 
 ## Pages
 
@@ -42,6 +42,7 @@ Crossplay, Scrabble, and Words with Friends all use the same list in this helper
 - https://wordgamehelp.com/guides/how-crossplay-scoring-works — Scoring order: letter bonus, word bonus, cross-words, then the sweep. On an empty Crossplay board, QUIXOTE across at 8,6 scores 110.
 - https://wordgamehelp.com/guides/crossplay-scrabble-and-words-with-friends — Letter values, bingos, blanks, and bonus-square counts for all three games.
 - https://wordgamehelp.com/guides/two-letter-words — The 107 two-letter words this solver allows, including DA, GI, PO, TE, EW, and OK.
+- https://wordgamehelp.com/word-checker — Check one word against this solver's list, and whether Crossplay is known to reject it.
 - https://wordgamehelp.com/about — What the solver scores, which word list it uses, and what stays on the device.
 - https://wordgamehelp.com/privacy — Privacy policy. Game data stays on the device. Google may serve ads and may use cookies.
 

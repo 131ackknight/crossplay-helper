@@ -7,19 +7,24 @@
         window.CENTER = CENTER;
 
         let dictionaryPromise = null;
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = () => resolve();
+                script.onerror = () => reject(new Error(src));
+                document.body.appendChild(script);
+            });
+        }
         function loadDictionary() {
             if (typeof findAllMoves === 'function') return Promise.resolve();
             if (!dictionaryPromise) {
-                dictionaryPromise = new Promise((resolve, reject) => {
-                    const script = document.createElement('script');
-                    script.src = '/dictionary.20261024.js';
-                    script.onload = () => resolve();
-                    script.onerror = () => {
+                dictionaryPromise = loadScript('/crossplay-cuts.js')
+                    .then(() => loadScript('/dictionary.20261109.js'))
+                    .catch((error) => {
                         dictionaryPromise = null;
-                        reject();
-                    };
-                    document.body.appendChild(script);
-                });
+                        throw error;
+                    });
             }
             return dictionaryPromise;
         }
@@ -122,6 +127,7 @@
             window.maxBlanks = MAX_BLANKS_BY_GAME[key];
             window.centerScoresDoubleWord = CENTER_DOUBLE_WORD[key];
             window.showCenterStar = SHOW_CENTER_STAR[key];
+            window.lexiconGame = key;
         }
 
         applyGameScoring('crossplay');

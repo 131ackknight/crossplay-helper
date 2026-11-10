@@ -895,6 +895,53 @@ a:hover { color: var(--accent-hover); }
     color: var(--ink);
 }
 
+.check-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin: 8px 0 18px;
+}
+
+.check-form input[type="text"] {
+    width: 14rem;
+    max-width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--ink);
+    font: 700 22px 'Bitter', serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.check-form .btn-primary { flex: 0 0 auto; }
+
+.verdict {
+    margin: 0 0 18px;
+    padding: 14px 16px;
+    background: var(--card);
+    border: 1px solid var(--line-2);
+    border-left: 4px solid var(--muted);
+    border-radius: 12px;
+}
+
+.verdict--yes { border-left-color: var(--accent); }
+.verdict--cut { border-left-color: var(--tw); }
+.verdict--no { border-left-color: var(--ink); }
+
+.verdict strong {
+    font: 700 20px 'Bitter', serif;
+    color: var(--ink);
+}
+
+.hook-row {
+    margin: 8px 0 0;
+    font: 600 14px 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+}
+
 .guide-kicker {
     margin: 0 0 8px;
     font: 500 12px 'JetBrains Mono', monospace;
