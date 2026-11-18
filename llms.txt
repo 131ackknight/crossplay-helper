@@ -40,6 +40,12 @@ The homepage is the Crossplay solver. The other two games are the same board wit
 - https://wordgamehelp.com/scrabble-word-finder — Scrabble board solver. 50-point bingo, 2 blanks, double-word center star.
 - https://wordgamehelp.com/words-with-friends-word-finder — Words with Friends board solver. 35-point bingo, 2 blanks, no center star.
 
+### Spelling Bee
+
+- https://wordgamehelp.com/spelling-bee-solver — NYT Spelling Bee solver and hints. Enter the seven letters, center first. Hint grid, two-letter starts, pangram clues, and answers hidden until tapped. Today's puzzle uses the Times' official list. Other letters use a guess from the 178,562-word file: 22,327 words also in SCOWL size 60 are likely, corrected by each day's official list.
+- https://wordgamehelp.com/spelling-bee-answers — Today's NYT Spelling Bee answers, updated a little after the 3 a.m. Eastern reset. Letters, word count, points, Genius threshold, hints, answers by length, and the Scrabble words the Times left out.
+- https://wordgamehelp.com/spelling-bee-answers/archive — Every saved day, newest first. Each day has its own page at /spelling-bee-answers/YYYY-MM-DD.
+
 ### Guides
 
 - https://wordgamehelp.com/guides — Guide index: board layout, tile values, a turn, scoring order, the three games, and two-letter hooks.
@@ -61,4 +67,4 @@ The homepage is the Crossplay solver. The other two games are the same board wit
 
 ## Privacy
 
-Your game data stays on your device. The board, tiles, and screenshots are not sent to a server. Game state is saved in the browser's local storage. Ads are served by Journey by Mediavine and may use cookies. https://wordgamehelp.com/privacy
+Your game data stays on your device. The board, tiles, and screenshots are not sent to a server. Spelling Bee letters and found words are not sent either. Game state is saved in the browser's local storage. Ads are served by Journey by Mediavine and may use cookies. https://wordgamehelp.com/privacy

@@ -18,6 +18,15 @@
       ]
     },
     {
+      "source": "/spelling-bee-words.20261118.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
       "source": "/(og-image.png|favicon.ico|favicon-48.png|apple-touch-icon.png|icon-192.png|icon-512.png)",
       "headers": [
         {

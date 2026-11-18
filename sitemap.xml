@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://wordgamehelp.com/</loc>
-    <lastmod>2026-11-07</lastmod>
+    <lastmod>2026-11-18</lastmod>
   </url>
   <url>
     <loc>https://wordgamehelp.com/scrabble-word-finder</loc>
@@ -12,6 +12,10 @@
   <url>
     <loc>https://wordgamehelp.com/words-with-friends-word-finder</loc>
     <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://wordgamehelp.com/spelling-bee-solver</loc>
+    <lastmod>2026-11-18</lastmod>
   </url>
   <url>
     <loc>https://wordgamehelp.com/crossplay-tile-values</loc>
@@ -33,7 +37,7 @@
   </url>
   <url>
     <loc>https://wordgamehelp.com/about</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-18</lastmod>
   </url>
   <url>
     <loc>https://wordgamehelp.com/word-checker</loc>
@@ -59,4 +63,22 @@
     <loc>https://wordgamehelp.com/guides/two-letter-words</loc>
     <lastmod>2026-11-02</lastmod>
   </url>
+  <!-- spelling-bee:start -->
+  <url>
+    <loc>https://wordgamehelp.com/spelling-bee-answers</loc>
+    <lastmod>2026-11-18</lastmod>
+  </url>
+  <url>
+    <loc>https://wordgamehelp.com/spelling-bee-answers/archive</loc>
+    <lastmod>2026-11-18</lastmod>
+  </url>
+  <url>
+    <loc>https://wordgamehelp.com/spelling-bee-answers/2026-11-18</loc>
+    <lastmod>2026-11-18</lastmod>
+  </url>
+  <url>
+    <loc>https://wordgamehelp.com/spelling-bee-answers/2026-11-17</loc>
+    <lastmod>2026-11-17</lastmod>
+  </url>
+  <!-- spelling-bee:end -->
 </urlset>

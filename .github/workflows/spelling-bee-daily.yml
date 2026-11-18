@@ -1,0 +1,50 @@
+name: Spelling Bee answers
+
+on:
+  schedule:
+    # The puzzle resets at 3 a.m. Eastern: 07:00 UTC in summer, 08:00 UTC in winter.
+    # The 11:17 run retries if the earlier ones failed.
+    - cron: "17 7 * * *"
+    - cron: "17 8 * * *"
+    - cron: "17 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: spelling-bee-daily
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.repository == '131ackknight/crossplay-helper'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Save the puzzle and rebuild the answer pages
+        run: node tools/spelling-bee-daily.mjs
+
+      - name: Commit and push
+        env:
+          # Vercel's Hobby plan only deploys commits whose author is the account owner.
+          GIT_AUTHOR_NAME: Peterk
+          GIT_AUTHOR_EMAIL: thisispeterk@gmail.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          git add data/spelling-bee spelling-bee-answers spelling-bee-today.json spelling-bee-learned.json sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit."
+            exit 0
+          fi
+          date=$(node -p "require('./spelling-bee-today.json').date")
+          git commit -m "Spelling Bee answers for $date"
+          git pull --rebase
+          git push
