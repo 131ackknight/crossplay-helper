@@ -82,9 +82,9 @@ Works on all modern browsers:
 
 ## NYT Spelling Bee
 
-Pages: `/spelling-bee-solver` (the solver), `/spelling-bee-answers` (today), `/spelling-bee-answers/yesterday` (the answer list for the day before), `/spelling-bee-answers/YYYY-MM-DD` (one page per past day), and `/spelling-bee-answers/archive`.
+Pages: `/spelling-bee-solver` (the solver), `/spelling-bee-answers` (today), `/spelling-bee-answers/yesterday` (the answer list for the day before), `/spelling-bee-answers/YYYY-MM-DD` (one page per day, today included), and `/spelling-bee-answers/archive`.
 
-Today's puzzle is only on `/spelling-bee-answers`. Its dated page appears when the next puzzle is saved, so two pages never carry the same puzzle's hints and answers on the same day. `/spelling-bee-hints` redirects to the today page.
+A puzzle gets its pages once its date's 3 a.m. Eastern rollover has passed when the pages are built. A saved puzzle for a later date stays out of the pages, the sitemap, and `spelling-bee-today.json` until a build after its rollover. `/spelling-bee-hints` redirects to the today page.
 
 ### Daily answers
 
@@ -102,6 +102,10 @@ The workflow commits only when something changed, with the message `Spelling Bee
 The generated pages copy their header and footer from `spelling-bee-solver/index.html`, so nav and build number changes there reach them on the next run. To rebuild them now:
 
     node tools/build-spelling-bee-pages.mjs
+
+Tests for the rollover gate and the built pages:
+
+    node --test 'tools/test/*.test.mjs'
 
 If the Times blocks the fetch, save the puzzle page from a browser and run:
 
