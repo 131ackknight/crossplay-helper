@@ -2,11 +2,12 @@
 // Rebuilds everything made from the saved puzzles in data/spelling-bee:
 //   spelling-bee-today.json     newest puzzle, for the solver's Today's puzzle button
 //   spelling-bee-learned.json   words the Times accepted or turned down, for the solver's guesses
-//   spelling-bee-answers/       the today page, the yesterday page, one page per past date, and the archive
+//   spelling-bee-answers/       the today page, the yesterday page, one page per date, and the archive
 //   sitemap.xml                 only the lines between the spelling-bee markers
 // The header and footer are copied from spelling-bee-solver/index.html on every run.
-// Today's puzzle is only on the today page. Its dated page appears when the next puzzle is saved,
-// so no two pages carry the same puzzle's hints and answers on the same day.
+// A puzzle only gets pages once its date's 3 a.m. Eastern rollover has passed at build time, so a
+// saved puzzle for a later date stays hidden until a build after its rollover.
+// SPELLING_BEE_NOW (any Date string) stands in for the build time in tests.
 // Dated pages more than INDEX_DAYS older than the newest puzzle get noindex and leave the sitemap,
 // so the daily pages don't swamp what Google indexes. They stay on the site and in the archive.
 import fs from 'node:fs';
@@ -26,10 +27,30 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const SITEMAP_START = '<!-- spelling-bee:start -->';
 const SITEMAP_END = '<!-- spelling-bee:end -->';
 
-export function buildPages() {
-    const puzzles = savedPuzzles();
+const ROLLOVER_HOUR = 3;
+
+// The date of the puzzle that is live at `now`: the New York date, or the day before it until 3 a.m.
+export function currentPuzzleDate(now) {
+    const part = Object.fromEntries(EASTERN.formatToParts(now).map(({ type, value }) => [type, value]));
+    const date = `${part.year}-${part.month}-${part.day}`;
+    if (Number(part.hour) >= ROLLOVER_HOUR) return date;
+    return new Date(parseDate(date) - DAY_MS).toISOString().slice(0, 10);
+}
+
+export function isPublished(date, now) {
+    return date <= currentPuzzleDate(now);
+}
+
+function buildTime() {
+    const now = process.env.SPELLING_BEE_NOW ? new Date(process.env.SPELLING_BEE_NOW) : new Date();
+    if (Number.isNaN(now.getTime())) throw new Error(`SPELLING_BEE_NOW is not a date: ${process.env.SPELLING_BEE_NOW}`);
+    return now;
+}
+
+export function buildPages(now = buildTime()) {
+    const puzzles = savedPuzzles().filter((p) => isPublished(p.date, now));
     if (!puzzles.length) {
-        console.log('No puzzles in data/spelling-bee yet. Run tools/spelling-bee-daily.mjs first.');
+        console.log('No published puzzles in data/spelling-bee yet. Run tools/spelling-bee-daily.mjs first.');
         return [];
     }
     const words = currentWordsFile();
@@ -40,26 +61,24 @@ export function buildPages() {
     const today = days[days.length - 1];
     const past = days.slice(0, -1);
     const newest = parseDate(today.date);
-    for (const day of past) day.indexed = (newest - parseDate(day.date)) / DAY_MS < INDEX_DAYS;
+    for (const day of days) day.indexed = (newest - parseDate(day.date)) / DAY_MS < INDEX_DAYS;
     const render = pageRenderer();
     const changed = [];
     const write = (rel, contents) => {
         if (writeIfChanged(path.join(ROOT, rel), contents)) changed.push(rel);
     };
 
-    const learnedFrom = allPuzzles();
+    const learnedFrom = allPuzzles().filter((p) => isPublished(p.date, now));
     write('spelling-bee-learned.json', learnedJson(learnRulings(learnedFrom, everyWord), likely, learnedFrom));
     write('spelling-bee-today.json', todayJson(puzzles[puzzles.length - 1]));
-    past.forEach((day, i) => {
-        write(`${ANSWERS}/${day.date}/index.html`, render(dayPage(day, past[i - 1], past[i + 1])));
+    days.forEach((day, i) => {
+        write(`${ANSWERS}/${day.date}/index.html`, render(dayPage(day, days[i - 1], days[i + 1])));
     });
     write(`${ANSWERS}/index.html`, render(todayPage(today, past)));
-    if (past.length) {
-        write(`${ANSWERS}/yesterday/index.html`, render(yesterdayPage(past[past.length - 1], today)));
-        write(`${ANSWERS}/archive/index.html`, render(archivePage(past, today)));
-    }
+    if (past.length) write(`${ANSWERS}/yesterday/index.html`, render(yesterdayPage(past[past.length - 1], today)));
+    write(`${ANSWERS}/archive/index.html`, render(archivePage(days, today)));
     write('sitemap.xml', sitemap(today, past));
-    removeOrphans(new Set(past.map((day) => day.date)), changed);
+    removeOrphans(new Set(days.map((day) => day.date)), changed);
     return changed;
 }
 
@@ -353,9 +372,9 @@ function todayPage(day, past) {
         hiveHtml(day),
         ...puzzleSections(day),
     ];
+    lines.push(`<p>This puzzle keeps its own page: <a href="${dayUrl(day.date)}">${date}</a>.</p>`);
     if (past.length) {
         lines.push(
-            `<p>After today, this puzzle keeps its own page in the <a href="/${ANSWERS}/archive">archive</a>.</p>`,
             '<h2>Recent Spelling Bee answers</h2>',
             recentHtml(recent),
             `<p><a href="/${ANSWERS}/archive">Every puzzle since ${longDate(past[0].date)}</a></p>`,
@@ -409,19 +428,19 @@ function yesterdayPage(day, today) {
     };
 }
 
-function archivePage(past, today) {
+function archivePage(days, today) {
     const title = 'NYT Spelling Bee Answers Archive | Word Game Helper';
     const url = `${SITE}/${ANSWERS}/archive`;
-    const first = longDate(past[0].date);
+    const first = longDate(days[0].date);
     const description = `Hints and answers for every NYT Spelling Bee since ${first}, newest first. Letters, word counts, pangrams, and the words the Times left out.`;
     const lines = [
         `<p class="guide-kicker"><a href="/${ANSWERS}">Spelling Bee answers</a></p>`,
         '<h1>NYT Spelling Bee Answers Archive</h1>',
         `<p>Every puzzle since ${first}, newest first. Each page has a hint grid, all the answers, and the words the Times left out. The center letter is in bold.</p>`,
-        `<p>Today's puzzle is on <a href="/${ANSWERS}">today's answers page</a>. It joins this list when the next puzzle comes out.</p>`,
+        `<p>Today's puzzle is also on <a href="/${ANSWERS}">today's answers page</a>.</p>`,
     ];
     const months = new Map();
-    for (const day of [...past].reverse()) {
+    for (const day of [...days].reverse()) {
         const label = monthLabel(day.date);
         months.set(label, (months.get(label) || []).concat(day));
     }
@@ -486,8 +505,9 @@ function sitemap(today, past) {
     const block = [
         `  ${SITEMAP_START}`,
         entry(`/${ANSWERS}`, stamp(today.updated, today.date)),
-        ...(past.length ? [entry(`/${ANSWERS}/yesterday`, switched), entry(`/${ANSWERS}/archive`, switched)] : []),
-        ...past.filter((day) => day.indexed).reverse().map((day) => entry(dayUrl(day.date), stamp(day.updated, day.date))),
+        ...(past.length ? [entry(`/${ANSWERS}/yesterday`, switched)] : []),
+        entry(`/${ANSWERS}/archive`, switched),
+        ...[today, ...past.slice().reverse()].filter((day) => day.indexed).map((day) => entry(dayUrl(day.date), stamp(day.updated, day.date))),
         `  ${SITEMAP_END}`,
     ].join('\n');
     const start = xml.indexOf(SITEMAP_START);
