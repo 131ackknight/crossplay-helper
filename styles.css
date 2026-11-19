@@ -2082,6 +2082,8 @@ a:hover { color: var(--accent-hover); }
 
 .prose .bee-reveal ul.word-cols { padding: 10px 14px; }
 
+.bee-yesterday ul.word-cols { margin: 4px 0 20px; }
+
 .bee-daynav {
     display: flex;
     justify-content: space-between;

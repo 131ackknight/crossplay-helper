@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Saves today's and yesterday's NYT Spelling Bee to data/spelling-bee/DATE.json, then rebuilds
 // the answer pages. The GitHub workflow runs this a little after the 3 a.m. Eastern reset.
+// Each file records, in UTC, when this site first saved the puzzle (published) and when its
+// answer list last changed (updated). The pages show those times.
 //
 //   node tools/spelling-bee-daily.mjs              fetch the Times page
 //   node tools/spelling-bee-daily.mjs --file F     read a saved copy of the page, or a JSON file with
@@ -84,10 +86,13 @@ async function main() {
     for (const puzzle of puzzles) {
         const file = path.join(DATA_DIR, `${puzzle.date}.json`);
         const before = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
-        if (!writeIfChanged(file, JSON.stringify(puzzle, null, 1) + '\n')) {
+        if (before && JSON.stringify(normalizePuzzle(before)) === JSON.stringify(puzzle)) {
             console.log(`${puzzle.date}: already saved`);
             continue;
         }
+        const now = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+        const { date, ...rest } = puzzle;
+        writeIfChanged(file, JSON.stringify({ date, published: before?.published || now, updated: now, ...rest }, null, 1) + '\n');
         console.log(before ? `${puzzle.date}: updated (${describeChange(before, puzzle)})` : `${puzzle.date}: saved, ${puzzle.answers.length} answers`);
         if (!before) calibration(puzzle);
     }

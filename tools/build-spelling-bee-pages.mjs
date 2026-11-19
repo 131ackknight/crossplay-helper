@@ -2,9 +2,11 @@
 // Rebuilds everything made from the saved puzzles in data/spelling-bee:
 //   spelling-bee-today.json     newest puzzle, for the solver's Today's puzzle button
 //   spelling-bee-learned.json   words the Times accepted or turned down, for the solver's guesses
-//   spelling-bee-answers/       the today page, one page per date, and the archive
+//   spelling-bee-answers/       the today page, the yesterday page, one page per past date, and the archive
 //   sitemap.xml                 only the lines between the spelling-bee markers
 // The header and footer are copied from spelling-bee-solver/index.html on every run.
+// Today's puzzle is only on the today page. Its dated page appears when the next puzzle is saved,
+// so no two pages carry the same puzzle's hints and answers on the same day.
 // Dated pages more than INDEX_DAYS older than the newest puzzle get noindex and leave the sitemap,
 // so the daily pages don't swamp what Google indexes. They stay on the site and in the archive.
 import fs from 'node:fs';
@@ -35,8 +37,10 @@ export function buildPages() {
     const everyWord = words.likely.concat(words.other);
     const indexed = everyWord.map((word) => ({ word, mask: letterMask(word) }));
     const days = puzzles.map((p) => analyze(p, indexed, likely));
-    const newest = parseDate(days[days.length - 1].date);
-    for (const day of days) day.indexed = (newest - parseDate(day.date)) / DAY_MS < INDEX_DAYS;
+    const today = days[days.length - 1];
+    const past = days.slice(0, -1);
+    const newest = parseDate(today.date);
+    for (const day of past) day.indexed = (newest - parseDate(day.date)) / DAY_MS < INDEX_DAYS;
     const render = pageRenderer();
     const changed = [];
     const write = (rel, contents) => {
@@ -46,13 +50,16 @@ export function buildPages() {
     const learnedFrom = allPuzzles();
     write('spelling-bee-learned.json', learnedJson(learnRulings(learnedFrom, everyWord), likely, learnedFrom));
     write('spelling-bee-today.json', todayJson(puzzles[puzzles.length - 1]));
-    days.forEach((day, i) => {
-        write(`${ANSWERS}/${day.date}/index.html`, render(dayPage(day, days[i - 1], days[i + 1])));
+    past.forEach((day, i) => {
+        write(`${ANSWERS}/${day.date}/index.html`, render(dayPage(day, past[i - 1], past[i + 1])));
     });
-    write(`${ANSWERS}/index.html`, render(todayPage(days)));
-    write(`${ANSWERS}/archive/index.html`, render(archivePage(days)));
-    write('sitemap.xml', sitemap(days));
-    removeOrphans(new Set(days.map((day) => day.date)), changed);
+    write(`${ANSWERS}/index.html`, render(todayPage(today, past)));
+    if (past.length) {
+        write(`${ANSWERS}/yesterday/index.html`, render(yesterdayPage(past[past.length - 1], today)));
+        write(`${ANSWERS}/archive/index.html`, render(archivePage(past, today)));
+    }
+    write('sitemap.xml', sitemap(today, past));
+    removeOrphans(new Set(past.map((day) => day.date)), changed);
     return changed;
 }
 
@@ -64,6 +71,8 @@ function analyze(p, indexed, likely) {
     const points = maxScore(answers);
     return {
         date: p.date,
+        published: p.published,
+        updated: p.updated,
         center: p.center,
         outer: [...p.outer].sort(),
         answers,
@@ -97,7 +106,7 @@ function todayJson(p) {
         outer: [...p.outer].sort(),
         pangrams: p.pangrams,
         answers: p.answers,
-        url: dayUrl(p.date),
+        url: `/${ANSWERS}`,
     }) + '\n';
 }
 
@@ -105,6 +114,24 @@ const up = (word) => word.toUpperCase();
 const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 const dayUrl = (date) => `/${ANSWERS}/${date}`;
 const geniusPoints = (day) => day.ranks.find((rank) => rank.name === 'Genius').points;
+
+const EASTERN = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York', hourCycle: 'h23', timeZoneName: 'longOffset',
+    year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit',
+});
+
+// A UTC time from a data file as New York time: ISO 8601 with the offset, and a clock time for the page.
+function eastern(utc) {
+    const part = Object.fromEntries(EASTERN.formatToParts(new Date(utc)).map(({ type, value }) => [type, value]));
+    const hour = Number(part.hour);
+    return {
+        iso: `${part.year}-${part.month}-${part.day}T${part.hour}:${part.minute}:${part.second}${part.timeZoneName.replace('GMT', '') || '+00:00'}`,
+        clock: `${hour % 12 || 12}:${part.minute} ${hour < 12 ? 'a.m.' : 'p.m.'} ET`,
+    };
+}
+
+// Files saved before the daily job recorded times only have a date.
+const stamp = (utc, date) => (utc ? eastern(utc).iso : date);
 
 function listJoin(items) {
     if (items.length < 3) return items.join(' and ');
@@ -179,7 +206,7 @@ function leftOutHtml(day) {
 
 function dayNavHtml(prev, next) {
     const prevLink = prev ? `<a href="${dayUrl(prev.date)}" rel="prev">← ${longDate(prev.date)}</a>` : '<span></span>';
-    const nextLink = next ? `<a href="${dayUrl(next.date)}" rel="next">${longDate(next.date)} →</a>` : '<span></span>';
+    const nextLink = next ? `<a href="${dayUrl(next.date)}" rel="next">${longDate(next.date)} →</a>` : `<a href="/${ANSWERS}">Today's puzzle →</a>`;
     return `<nav class="bee-daynav" aria-label="Other days">${prevLink}<a href="/${ANSWERS}/archive">All days</a>${nextLink}</nav>`;
 }
 
@@ -226,15 +253,20 @@ function breadcrumbSchema(trail) {
     };
 }
 
-function webPageSchema(title, description, url, date) {
+function articleSchema(headline, description, url, published, modified) {
+    const site = { '@type': 'Organization', name: 'Word Game Helper', url: `${SITE}/` };
     return {
         '@context': 'https://schema.org',
-        '@type': 'WebPage',
-        name: title,
+        '@type': 'Article',
+        headline,
         description,
         url,
-        datePublished: date,
-        dateModified: date,
+        mainEntityOfPage: url,
+        image: `${SITE}/og-image.png?v=2`,
+        datePublished: published,
+        dateModified: modified,
+        author: site,
+        publisher: site,
         isPartOf: { '@type': 'WebSite', name: 'Word Game Helper', url: `${SITE}/` },
     };
 }
@@ -286,7 +318,7 @@ function dayPage(day, prev, next) {
         noindex: !day.indexed,
         main,
         schema: [
-            webPageSchema(title, description, url, day.date),
+            articleSchema(title, description, url, stamp(day.published, day.date), stamp(day.updated, day.date)),
             breadcrumbSchema([['Word Game Helper', `${SITE}/`], ['Spelling Bee answers', `${SITE}/${ANSWERS}`], [date, url]]),
             faqSchema(faq),
         ],
@@ -298,29 +330,38 @@ function recentHtml(days) {
     return `<ul class="bee-days">${items.join('')}</ul>`;
 }
 
-function todayPage(days) {
-    const day = days[days.length - 1];
+// No date in the title: Google can show a cached title for days, and a dated one would name the wrong
+// puzzle. The date goes in the H1.
+function todayPage(day, past) {
     const date = longDate(day.date);
-    const title = `NYT Spelling Bee Answers Today: ${date}`;
+    const title = 'Today\'s NYT Spelling Bee Answers, Hints and Pangrams';
+    const heading = `NYT Spelling Bee Answers Today: ${date}`;
     const url = `${SITE}/${ANSWERS}`;
     const description = `Today's NYT Spelling Bee hints and answers for ${weekday(day.date)}, ${date}. Center letter ${up(day.center)}, outer letters ${day.outer.map(up).join(' ')}. ${plural(day.answers.length, 'word')}, ${day.points} points, ${plural(day.pangrams.length, 'pangram')}.`;
-    const recent = days.slice(0, -1).slice(-RECENT_DAYS).reverse();
+    const recent = past.slice(-RECENT_DAYS).reverse();
     const faq = faqItems(day);
+    const updated = day.updated && eastern(day.updated);
+    const intro = [
+        updated && `Updated <time datetime="${updated.iso}">${updated.clock}</time>.`,
+        'The Times posts a new Spelling Bee at 3 a.m. Eastern, and this page switches to it soon after.',
+        past.length && `Still on the one before? See <a href="/${ANSWERS}/yesterday">yesterday's answers</a>.`,
+    ].filter(Boolean).join(' ');
     const lines = [
         `<p class="guide-kicker">Spelling Bee answers · ${weekday(day.date)}</p>`,
-        `<h1>${title}</h1>`,
-        '<p>The Times posts a new Spelling Bee at 3 a.m. Eastern. This page switches to the new puzzle soon after.</p>',
+        `<h1>${heading}</h1>`,
+        `<p>${intro}</p>`,
         hiveHtml(day),
         ...puzzleSections(day),
-        `<p>This puzzle keeps its own page after today: <a href="${dayUrl(day.date)}">${date}</a>.</p>`,
     ];
-    if (recent.length) {
-        lines.push('<h2>Recent Spelling Bee answers</h2>', recentHtml(recent));
+    if (past.length) {
+        lines.push(
+            `<p>After today, this puzzle keeps its own page in the <a href="/${ANSWERS}/archive">archive</a>.</p>`,
+            '<h2>Recent Spelling Bee answers</h2>',
+            recentHtml(recent),
+            `<p><a href="/${ANSWERS}/archive">Every puzzle since ${longDate(past[0].date)}</a></p>`,
+        );
     }
-    lines.push(
-        `<p><a href="/${ANSWERS}/archive">Every puzzle since ${longDate(days[0].date)}</a></p>`,
-        '<p>Working on a different puzzle? The <a href="/spelling-bee-solver">Spelling Bee solver</a> takes any seven letters and gives the same hints.</p>',
-    );
+    lines.push('<p>Working on a different puzzle? The <a href="/spelling-bee-solver">Spelling Bee solver</a> takes any seven letters and gives the same hints.</p>');
     return {
         title,
         description,
@@ -328,25 +369,59 @@ function todayPage(days) {
         current: `/${ANSWERS}`,
         main: article('bee-day', lines) + '\n' + faqHtml(faq),
         schema: [
-            webPageSchema(title, description, url, day.date),
+            articleSchema(heading, description, url, stamp(day.published, day.date), stamp(day.updated, day.date)),
             breadcrumbSchema([['Word Game Helper', `${SITE}/`], ['Spelling Bee answers', url]]),
             faqSchema(faq),
         ],
     };
 }
 
-function archivePage(days) {
+// Answers first, with no hints, ranks, or FAQ, so it doesn't copy the dated page it links to.
+function yesterdayPage(day, today) {
+    const date = longDate(day.date);
+    const title = 'Yesterday\'s NYT Spelling Bee Answers';
+    const heading = `Yesterday's NYT Spelling Bee Answers: ${date}`;
+    const url = `${SITE}/${ANSWERS}/yesterday`;
+    const pangrams = listJoin(day.pangrams.map(up));
+    const pangramLine = day.pangrams.length === 1 ? `The pangram was ${pangrams}.` : `The pangrams were ${pangrams}.`;
+    const description = `All ${day.answers.length} answers to yesterday's NYT Spelling Bee, ${weekday(day.date)}, ${date}. Center letter ${up(day.center)}, outer letters ${day.outer.map(up).join(' ')}. ${pangramLine}`;
+    const switched = stamp(today.published, today.date);
+    const lines = [
+        `<p class="guide-kicker"><a href="/${ANSWERS}">Spelling Bee answers</a> · ${weekday(day.date)}</p>`,
+        `<h1>${heading}</h1>`,
+        hiveHtml(day),
+        `<p>The center letter was ${up(day.center)}, and the other six were ${listJoin(day.outer.map(up))}. The Times accepted ${plural(day.answers.length, 'word')} worth ${day.points} points. ${pangramLine}</p>`,
+        `<h2>All ${day.answers.length} answers</h2>`,
+        '<p>Pangrams are in bold.</p>',
+        wordList(day.answers),
+        `<p>The hint grid, ranks, and words the Times left out are on the <a href="${dayUrl(day.date)}">${date} page</a>. This page moves to the next puzzle when the Times posts a new one at 3 a.m. Eastern.</p>`,
+        `<p>Today's puzzle is on <a href="/${ANSWERS}">today's Spelling Bee answers</a> page.</p>`,
+    ];
+    return {
+        title,
+        description,
+        url,
+        main: article('bee-day bee-yesterday', lines),
+        schema: [
+            articleSchema(heading, description, url, switched, switched),
+            breadcrumbSchema([['Word Game Helper', `${SITE}/`], ['Spelling Bee answers', `${SITE}/${ANSWERS}`], ['Yesterday', url]]),
+        ],
+    };
+}
+
+function archivePage(past, today) {
     const title = 'NYT Spelling Bee Answers Archive | Word Game Helper';
     const url = `${SITE}/${ANSWERS}/archive`;
-    const first = longDate(days[0].date);
+    const first = longDate(past[0].date);
     const description = `Hints and answers for every NYT Spelling Bee since ${first}, newest first. Letters, word counts, pangrams, and the words the Times left out.`;
     const lines = [
         `<p class="guide-kicker"><a href="/${ANSWERS}">Spelling Bee answers</a></p>`,
         '<h1>NYT Spelling Bee Answers Archive</h1>',
         `<p>Every puzzle since ${first}, newest first. Each page has a hint grid, all the answers, and the words the Times left out. The center letter is in bold.</p>`,
+        `<p>Today's puzzle is on <a href="/${ANSWERS}">today's answers page</a>. It joins this list when the next puzzle comes out.</p>`,
     ];
     const months = new Map();
-    for (const day of [...days].reverse()) {
+    for (const day of [...past].reverse()) {
         const label = monthLabel(day.date);
         months.set(label, (months.get(label) || []).concat(day));
     }
@@ -363,7 +438,7 @@ function archivePage(days) {
                 name: 'NYT Spelling Bee Answers Archive',
                 description,
                 url,
-                dateModified: days[days.length - 1].date,
+                dateModified: stamp(today.published, today.date),
                 isPartOf: { '@type': 'WebSite', name: 'Word Game Helper', url: `${SITE}/` },
             },
             breadcrumbSchema([['Word Game Helper', `${SITE}/`], ['Spelling Bee answers', `${SITE}/${ANSWERS}`], ['Archive', url]]),
@@ -403,15 +478,16 @@ function pageRenderer() {
     };
 }
 
-function sitemap(days) {
+// lastmod carries the same New York times as the pages' dateModified.
+function sitemap(today, past) {
     const xml = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
-    const latest = days[days.length - 1].date;
+    const switched = stamp(today.published, today.date);
     const entry = (loc, lastmod) => `  <url>\n    <loc>${SITE}${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
     const block = [
         `  ${SITEMAP_START}`,
-        entry(`/${ANSWERS}`, latest),
-        entry(`/${ANSWERS}/archive`, latest),
-        ...days.filter((day) => day.indexed).reverse().map((day) => entry(dayUrl(day.date), day.date)),
+        entry(`/${ANSWERS}`, stamp(today.updated, today.date)),
+        ...(past.length ? [entry(`/${ANSWERS}/yesterday`, switched), entry(`/${ANSWERS}/archive`, switched)] : []),
+        ...past.filter((day) => day.indexed).reverse().map((day) => entry(dayUrl(day.date), stamp(day.updated, day.date))),
         `  ${SITEMAP_END}`,
     ].join('\n');
     const start = xml.indexOf(SITEMAP_START);

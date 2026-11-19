@@ -82,7 +82,9 @@ Works on all modern browsers:
 
 ## NYT Spelling Bee
 
-Pages: `/spelling-bee-solver` (the solver), `/spelling-bee-answers` (today), `/spelling-bee-answers/YYYY-MM-DD` (one page per day), and `/spelling-bee-answers/archive`.
+Pages: `/spelling-bee-solver` (the solver), `/spelling-bee-answers` (today), `/spelling-bee-answers/yesterday` (the answer list for the day before), `/spelling-bee-answers/YYYY-MM-DD` (one page per past day), and `/spelling-bee-answers/archive`.
+
+Today's puzzle is only on `/spelling-bee-answers`. Its dated page appears when the next puzzle is saved, so two pages never carry the same puzzle's hints and answers on the same day. `/spelling-bee-hints` redirects to the today page.
 
 ### Daily answers
 
@@ -90,7 +92,7 @@ Pages: `/spelling-bee-solver` (the solver), `/spelling-bee-answers` (today), `/s
 
 1. Reads `window.gameData` (today and yesterday) from https://www.nytimes.com/puzzles/spelling-bee.
 2. Checks the letters, answers, and pangrams. If anything looks wrong it exits with an error and writes nothing.
-3. Saves each puzzle to `data/spelling-bee/YYYY-MM-DD.json`, dated by the Times' print date.
+3. Saves each puzzle to `data/spelling-bee/YYYY-MM-DD.json`, dated by the Times' print date. The file also keeps, in UTC, when it was first saved (`published`) and when its answer list last changed (`updated`). The today page shows the update time, and the structured data and sitemap carry both as New York times. Files from before November 19, 2026 only have a date.
 4. Runs `tools/build-spelling-bee-pages.mjs`. That writes `spelling-bee-today.json`, `spelling-bee-learned.json`, every page under `spelling-bee-answers/`, and the lines between the `spelling-bee` markers in `sitemap.xml`.
 
 Dated pages more than 30 days older than the newest puzzle get `noindex` and drop out of the sitemap, so the daily pages don't swamp what Google indexes. They stay on the site and in the archive. Change `INDEX_DAYS` in `tools/build-spelling-bee-pages.mjs` to move the window.

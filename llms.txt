@@ -44,7 +44,8 @@ The homepage is the Crossplay solver. The other two games are the same board wit
 
 - https://wordgamehelp.com/spelling-bee-solver — NYT Spelling Bee solver and hints. Enter the seven letters, center first. Hint grid, two-letter starts, pangram clues, and answers hidden until tapped. Today's puzzle uses the Times' official list. Other letters use a guess from the 178,562-word file: 22,327 words also in SCOWL size 60 are likely, corrected by each day's official list.
 - https://wordgamehelp.com/spelling-bee-answers — Today's NYT Spelling Bee answers, updated a little after the 3 a.m. Eastern reset. Letters, word count, points, Genius threshold, hints, answers by length, and the Scrabble words the Times left out.
-- https://wordgamehelp.com/spelling-bee-answers/archive — Every saved day, newest first. Each day has its own page at /spelling-bee-answers/YYYY-MM-DD.
+- https://wordgamehelp.com/spelling-bee-answers/yesterday — Yesterday's NYT Spelling Bee answers: the letters, the pangrams, and every accepted word, A to Z.
+- https://wordgamehelp.com/spelling-bee-answers/archive — Every past day, newest first. Each day has its own page at /spelling-bee-answers/YYYY-MM-DD.
 
 ### Guides
 
