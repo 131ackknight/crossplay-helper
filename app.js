@@ -1174,13 +1174,14 @@
             }
         }
 
-        // On a phone the results card sits below the board and rack, out of view.
+        // When the columns stack (phones, narrow tablets) the results card sits below the board and rack, out of view.
         function revealResults() {
-            if (!window.matchMedia || !window.matchMedia('(max-width: 900px)').matches) return;
             const card = document.querySelector('.results-card');
+            const boardColumn = document.querySelector('.board-column');
             const heading = document.getElementById('resultsTitle');
-            if (!card) return;
+            if (!card || !boardColumn) return;
             const top = card.getBoundingClientRect().top;
+            if (top < boardColumn.getBoundingClientRect().bottom) return;
             if (top < 0 || top > window.innerHeight * 0.6) {
                 const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 card.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
