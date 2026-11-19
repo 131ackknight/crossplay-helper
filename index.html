@@ -226,9 +226,20 @@
     }
     </script>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=JetBrains+Mono:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Self-hosted Latin subsets of the Google Fonts files, same faces and weights. Preloading them lets the text paint in its final font, so the solver does not move when the fonts arrive. -->
+    <link rel="preload" href="/fonts/bitter-v42-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/public-sans-v21-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/jetbrains-mono-v24-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <style>
+        @font-face { font-family: 'Bitter'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/bitter-v42-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'Bitter'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/bitter-v42-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'Bitter'; font-style: normal; font-weight: 800; font-display: swap; src: url(/fonts/bitter-v42-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/jetbrains-mono-v24-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/jetbrains-mono-v24-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/public-sans-v21-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/public-sans-v21-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/public-sans-v21-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    </style>
     <link rel="stylesheet" href="/styles.css">
     <script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" src="//scripts.scriptwrapper.com/tags/562bb98a-eea1-4de6-b65a-60c5bfd2c580.js"></script>
 </head>
@@ -300,13 +311,16 @@
                         <span class="upload-title">Upload a screenshot of your game</span>
                         <span class="upload-sub">We'll fill in the board and your rack. Drop an image here or choose one.</span>
                     </div>
-                    <button type="button" class="btn btn-primary" id="uploadShotBtn">Upload Screenshot</button>
+                    <div class="upload-actions">
+                        <button type="button" class="btn btn-primary" id="uploadShotBtn">Upload Screenshot</button>
+                        <button type="button" class="btn btn-hint" id="exampleBtn" onclick="loadExampleBoard()">Try an example board</button>
+                    </div>
                 </div>
                 <input id="shotFile" type="file" accept="image/*" hidden>
 
                 <div class="toolbar">
                     <div class="toolbar-group">
-                        <select id="boardSelect" onchange="loadSavedBoard()">
+                        <select id="boardSelect" onchange="loadSavedBoard()" aria-label="Saved boards">
                             <option value="" disabled>Saved boards…</option>
                         </select>
                         <button type="button" class="toolbar-btn" onclick="saveCurrentBoard()">Save</button>
@@ -325,15 +339,16 @@
                     </div>
                 </div>
 
-                <div class="board" id="board" tabindex="0"></div>
+                <div class="board" id="board" tabindex="0" role="group" aria-label="Game board" aria-describedby="keyboardHint"></div>
                 <input id="boardInput"
                        type="text"
+                       aria-label="Letter for the selected board square"
                        inputmode="latin"
                        autocomplete="off"
                        autocorrect="off"
                        autocapitalize="characters"
                        spellcheck="false" />
-                <p class="keyboard-hint">Click a cell, then type. Arrow keys to move. Backspace to clear. Esc to deselect. Space flips direction.</p>
+                <p class="keyboard-hint" id="keyboardHint">Click a cell, then type. Arrow keys to move. Backspace to clear. Esc to deselect. Space flips direction.</p>
             </div>
 
             <aside class="side-column">
@@ -354,8 +369,8 @@
 
                 <div class="results-card">
                     <div class="results-head">
-                        <h2>Results</h2>
-                        <span class="results-meta" id="resultsMeta"></span>
+                        <h2 id="resultsTitle" tabindex="-1">Results</h2>
+                        <span class="results-meta" id="resultsMeta" aria-live="polite"></span>
                     </div>
                     <p class="results-empty">Set up the board and your rack, then tap <b>Show Me Best Move</b>. Tap a result to preview it on the board.</p>
                     <div class="results" id="results"></div>
@@ -517,7 +532,7 @@
                 <p>Guides: <a href="/crossplay-board-layout">Crossplay board layout</a> · <a href="/crossplay-tile-values">Crossplay tile values</a> · <a href="/guides">Guides</a></p>
                 <p class="footer-meta">Short form: Word Game Helper (wordgamehelp.com)</p>
                 <p><a href="/word-checker">Word check</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
-                <p class="footer-meta">Build: 2026-03-07-66</p>
+                <p class="footer-meta">Build: 2026-03-07-67</p>
                 <p>Works entirely in your browser. No account required. Your game data stays on your device. Ads are served by Journey by Mediavine and may use cookies. <a href="/privacy">Privacy policy</a></p>
             </div>
             <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ and Spelling Bee™ are trademarks of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>

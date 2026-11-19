@@ -839,7 +839,7 @@
         const strip = document.getElementById('uploadStrip');
         if (strip) {
             strip.addEventListener('click', (event) => {
-                if (event.target.closest('#uploadShotBtn')) return;
+                if (event.target.closest('button')) return;
                 input.click();
             });
             strip.addEventListener('dragover', (event) => {

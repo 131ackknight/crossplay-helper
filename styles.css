@@ -31,6 +31,13 @@
     --tile-text: var(--ink);
 }
 
+/* Board solver pages: muted text at WCAG AA (4.5:1) on paper, card, white, and the dark footer.
+   Scoped so the Spelling Bee pages keep their current colors. */
+body:has(#board) { --muted: #76634e; }
+
+body:has(#board) .footer-meta,
+body:has(#board) .footer-legal { color: #a89379; }
+
 * { box-sizing: border-box; }
 
 html { scrollbar-gutter: stable; }
@@ -347,6 +354,12 @@ a:hover { color: var(--accent-hover); }
 
 .upload-sub { font-size: 13px; color: var(--text-2); }
 
+.upload-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
 .toolbar {
     display: flex;
     justify-content: space-between;
@@ -643,6 +656,7 @@ a:hover { color: var(--accent-hover); }
 }
 
 .upload-strip .btn-primary,
+.upload-strip .btn-hint,
 .shot-actions .btn,
 #shotReread {
     flex: 0 0 auto;
@@ -679,6 +693,10 @@ a:hover { color: var(--accent-hover); }
     align-items: baseline;
     gap: 12px;
 }
+
+#resultsTitle { scroll-margin-top: 12px; }
+
+#resultsTitle:focus:not(:focus-visible) { outline: none; }
 
 .results-meta {
     font: 500 11px 'JetBrains Mono', monospace;
@@ -1492,13 +1510,13 @@ a:hover { color: var(--accent-hover); }
     .hero h1 { letter-spacing: -0.03em; }
     .game-field { width: 100%; }
     .game-pills {
-        flex-direction: column;
-        align-items: stretch;
+        flex-wrap: nowrap;
         width: 100%;
-        border-radius: 18px;
     }
     .game-pill {
-        padding: 10px 14px;
+        flex: 1 1 auto;
+        padding: 8px 6px;
+        font-size: 13px;
         text-align: center;
     }
     .action-buttons { flex-direction: column; }
@@ -1509,6 +1527,35 @@ a:hover { color: var(--accent-hover); }
     }
     .values { gap: 28px; }
     .site-footer-inner { flex-direction: column; }
+}
+
+/* Phones: keep the title and intro, but bring the upload strip and board into the first screen. */
+@media (max-width: 640px) {
+    .hero {
+        padding-top: 18px;
+        padding-bottom: 14px;
+        gap: 12px;
+    }
+    .hero h1.hero-title { font-size: 27px; }
+    .hero p {
+        margin-top: 8px;
+        font-size: 15px;
+        line-height: 1.45;
+    }
+    .game-field { gap: 6px; }
+    .solver {
+        padding-top: 0;
+        gap: 20px;
+    }
+    .board-column { gap: 10px; }
+    .upload-strip {
+        padding: 12px;
+        gap: 10px;
+    }
+    .upload-actions { width: 100%; }
+    .upload-strip .btn-primary,
+    .upload-strip .btn-hint { flex: 1 1 0; }
+    .toolbar { gap: 8px; }
 }
 
 .prose ul.point-list {

@@ -6,7 +6,15 @@
         window.BOARD_SIZE = BOARD_SIZE;
         window.CENTER = CENTER;
 
+        const SOLVER_SCRIPTS = ['/crossplay-cuts.js', '/dictionary.20261109.js'];
         let dictionaryPromise = null;
+        let solverReady = false;
+        let solverWorker = null;
+        const solverJobs = new Map();
+        let nextSolverJob = 1;
+        // A newer search, an edit to the board, or cleared results make a pending answer stale.
+        let searchToken = 0;
+
         function loadScript(src) {
             return new Promise((resolve, reject) => {
                 const script = document.createElement('script');
@@ -16,17 +24,97 @@
                 document.body.appendChild(script);
             });
         }
-        function loadDictionary() {
+
+        function loadDictionaryInPage() {
             if (typeof findAllMoves === 'function') return Promise.resolve();
+            return SOLVER_SCRIPTS.reduce((chain, src) => chain.then(() => loadScript(src)), Promise.resolve());
+        }
+
+        function failSolverJobs(error) {
+            solverJobs.forEach((job) => job.reject(error));
+            solverJobs.clear();
+        }
+
+        // Building the word list takes about a second of CPU on a phone, so it runs in a worker.
+        function startSolverWorker() {
+            return new Promise((resolve, reject) => {
+                let worker;
+                try {
+                    worker = new Worker('/solver-worker.js');
+                } catch (error) {
+                    reject(error);
+                    return;
+                }
+                let ready = false;
+                worker.onmessage = (event) => {
+                    const msg = event.data || {};
+                    if (msg.type === 'ready') {
+                        ready = true;
+                        solverWorker = worker;
+                        resolve();
+                    } else if (msg.type === 'load-error') {
+                        worker.terminate();
+                        reject(new Error(msg.message));
+                    } else if (msg.type === 'moves' || msg.type === 'solve-error') {
+                        const job = solverJobs.get(msg.id);
+                        if (!job) return;
+                        solverJobs.delete(msg.id);
+                        if (msg.type === 'moves') job.resolve(msg.moves);
+                        else job.reject(new Error(msg.message));
+                    }
+                };
+                worker.onerror = (event) => {
+                    if (event && event.preventDefault) event.preventDefault();
+                    worker.terminate();
+                    if (solverWorker === worker) {
+                        solverWorker = null;
+                        solverReady = false;
+                        dictionaryPromise = null;
+                    }
+                    failSolverJobs(new Error('The solver stopped.'));
+                    if (!ready) reject(new Error('The solver did not start.'));
+                };
+                worker.postMessage({ type: 'load', scripts: SOLVER_SCRIPTS.map((src) => new URL(src, location.href).href) });
+            });
+        }
+
+        function loadDictionary() {
+            if (solverReady) return Promise.resolve();
             if (!dictionaryPromise) {
-                dictionaryPromise = loadScript('/crossplay-cuts.js')
-                    .then(() => loadScript('/dictionary.20261109.js'))
+                const start = typeof Worker === 'function'
+                    ? startSolverWorker().catch(() => loadDictionaryInPage())
+                    : loadDictionaryInPage();
+                dictionaryPromise = start
+                    .then(() => { solverReady = true; })
                     .catch((error) => {
                         dictionaryPromise = null;
                         throw error;
                     });
             }
             return dictionaryPromise;
+        }
+
+        function solverState() {
+            return {
+                boardState: window.boardState,
+                LETTER_POINTS: window.LETTER_POINTS,
+                BINGO_BONUS: window.BINGO_BONUS,
+                centerScoresDoubleWord: window.centerScoresDoubleWord,
+                bonusScoringEnabled: window.bonusScoringEnabled,
+                lexiconGame: window.lexiconGame
+            };
+        }
+
+        // Resolves with the same move list findAllMoves returns, from the worker when there is one.
+        function solveMoves(tiles) {
+            return loadDictionary().then(() => {
+                if (!solverWorker) return findAllMoves(tiles);
+                return new Promise((resolve, reject) => {
+                    const id = nextSolverJob++;
+                    solverJobs.set(id, { resolve, reject });
+                    solverWorker.postMessage({ type: 'solve', id, tiles, state: solverState(), specialSquares: SPECIAL_SQUARES });
+                });
+            });
         }
 
         function bonusLabel(kind) {
@@ -55,6 +143,7 @@
         }
 
         function clearResults() {
+            searchToken++;
             const results = document.getElementById('results');
             if (results) results.innerHTML = '';
             setResultsMeta('');
@@ -267,6 +356,7 @@
         // - When on unsaved board: write to crossplay_board (the one "unsaved" workspace).
         // - When on a saved board: only update that board in saved boards; do not touch crossplay_board.
         function saveBoardState() {
+            searchToken++;
             try {
                 if (currentSavedBoardName) {
                     const boards = getSavedBoards();
@@ -843,6 +933,7 @@
                 input.type = 'text';
                 input.maxLength = 1;
                 input.placeholder = ' ';
+                input.setAttribute('aria-label', `Rack tile ${i + 1} of 7`);
                 input.addEventListener('input', (e) => {
                     let value = e.target.value.toUpperCase();
                     const slots = container.querySelectorAll('input');
@@ -1011,6 +1102,28 @@
             }
         }
 
+        // Fill the board and rack with EXAMPLE_BOARD and solve it.
+        function loadExampleBoard() {
+            if ((boardHasTiles() || getPlayerTiles()) &&
+                !confirm('Replace the board and rack on screen with an example? Saved boards are kept.')) {
+                return;
+            }
+            // Stop autosaving into a named board so the example never overwrites it.
+            if (currentSavedBoardName) {
+                setCurrentBoardName('');
+                updateBoardSelect();
+            }
+            deselectCell();
+            clearHighlights();
+            clearResults();
+            window.boardState = exampleBoardState();
+            applySavedBoard();
+            saveBoardState();
+            setPlayerTiles(EXAMPLE_BOARD.rack.split(''));
+            savePlayerTiles();
+            findWords();
+        }
+
         // Clear highlighted cells
         function clearHighlights() {
             document.querySelectorAll('.cell.highlighted, .cell.new-tile').forEach(cell => {
@@ -1060,56 +1173,63 @@
             }
         }
 
+        // On a phone the results card sits below the board and rack, out of view.
+        function revealResults() {
+            if (!window.matchMedia || !window.matchMedia('(max-width: 900px)').matches) return;
+            const card = document.querySelector('.results-card');
+            const heading = document.getElementById('resultsTitle');
+            if (!card) return;
+            const top = card.getBoundingClientRect().top;
+            if (top < 0 || top > window.innerHeight * 0.6) {
+                const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                card.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+            }
+            if (heading) heading.focus({ preventScroll: true });
+        }
+
+        // Rack problems that stop a search before it starts.
+        function rackError(tiles) {
+            if (tiles.length === 0) return 'Please enter your available tiles first.';
+            const blanks = (tiles.match(/\?/g) || []).length;
+            if (blanks > window.maxBlanks) {
+                const gameName = GAME_PRESETS[currentGame]?.name || 'This game';
+                return `${gameName} has only ${window.maxBlanks} blank tiles.`;
+            }
+            return '';
+        }
+
+        const WORD_LIST_ERROR = 'The word list did not load. Check your connection and try again.';
+
         // Find words - main function
         function findWords() {
             const tiles = getPlayerTiles();
-            
-            if (tiles.length === 0) {
-                showResults({ error: 'Please enter your available tiles first.' });
-                return;
-            }
-
-            const tooManyBlanks = (tiles.match(/\?/g) || []).length;
-            if (tooManyBlanks > window.maxBlanks) {
-                const gameName = GAME_PRESETS[currentGame]?.name || 'This game';
-                showResults({ error: `${gameName} has only ${window.maxBlanks} blank tiles.` });
-                return;
-            }
-
-            if (typeof findAllMoves !== 'function') {
-                const resultsDiv = document.getElementById('results');
-                if (resultsDiv) resultsDiv.innerHTML = '<div class="loading">Loading the word list...</div>';
-                loadDictionary().then(() => {
-                    if (typeof findAllMoves !== 'function') {
-                        showResults({ error: 'The word list did not load. Check your connection and try again.' });
-                        return;
-                    }
-                    findWords();
-                }).catch(() => {
-                    showResults({ error: 'The word list did not load. Check your connection and try again.' });
-                });
+            const error = rackError(tiles);
+            const token = ++searchToken;
+            if (error) {
+                showResults({ error });
+                revealResults();
                 return;
             }
 
             const resultsDiv = document.getElementById('results');
             const blankCount = (tiles.match(/\?/g) || []).length;
-            const loadingMsg = blankCount >= 2 
-                ? 'Finding best words (this may take a moment with multiple blanks)...'
-                : 'Finding best words...';
+            const loadingMsg = !solverReady
+                ? 'Loading the word list...'
+                : blankCount >= 2
+                    ? 'Finding best words (this may take a moment with multiple blanks)...'
+                    : 'Finding best words...';
             resultsDiv.innerHTML = `<div class="loading">${loadingMsg}</div>`;
+            setResultsMeta('');
+            revealResults();
 
             // Reset hint state when finding words
             window.hintLevel = 0;
 
-            // Use setTimeout to allow UI to update
-            setTimeout(() => {
-                try {
-                    const moves = findAllMoves(tiles);
-                    showResults({ moves });
-                } catch (e) {
-                    showResults({ error: 'Search took too long. Try using fewer blank tiles.' });
-                }
-            }, 50);
+            solveMoves(tiles).then((moves) => {
+                if (token === searchToken) showResults({ moves });
+            }, () => {
+                if (token === searchToken) showResults({ error: solverReady ? 'Search took too long. Try using fewer blank tiles.' : WORD_LIST_ERROR });
+            });
         }
 
         // Hint state tracking
@@ -1119,31 +1239,11 @@
         // Get hint - progressive hints
         function getHint() {
             const tiles = getPlayerTiles();
-            
-            if (tiles.length === 0) {
-                showResults({ error: 'Please enter your available tiles first.' });
-                return;
-            }
-
-            const tooManyBlanks = (tiles.match(/\?/g) || []).length;
-            if (tooManyBlanks > window.maxBlanks) {
-                const gameName = GAME_PRESETS[currentGame]?.name || 'This game';
-                showResults({ error: `${gameName} has only ${window.maxBlanks} blank tiles.` });
-                return;
-            }
-
-            if (typeof findAllMoves !== 'function') {
-                const resultsDiv = document.getElementById('results');
-                if (resultsDiv) resultsDiv.innerHTML = '<div class="loading">Loading the word list...</div>';
-                loadDictionary().then(() => {
-                    if (typeof findAllMoves !== 'function') {
-                        showResults({ error: 'The word list did not load. Check your connection and try again.' });
-                        return;
-                    }
-                    getHint();
-                }).catch(() => {
-                    showResults({ error: 'The word list did not load. Check your connection and try again.' });
-                });
+            const error = rackError(tiles);
+            if (error) {
+                ++searchToken;
+                showResults({ error });
+                revealResults();
                 return;
             }
 
@@ -1151,19 +1251,27 @@
             
             // If we don't have cached moves or tiles changed, recalculate
             if (!window.cachedHintMoves || window.cachedHintTiles !== tiles) {
-                resultsDiv.innerHTML = '<div class="loading">Analyzing board</div>';
-                
-                setTimeout(() => {
-                    const moves = findAllMoves(tiles);
+                const token = ++searchToken;
+                resultsDiv.innerHTML = solverReady
+                    ? '<div class="loading">Analyzing board</div>'
+                    : '<div class="loading">Loading the word list...</div>';
+                revealResults();
+
+                solveMoves(tiles).then((moves) => {
+                    if (token !== searchToken) return;
                     window.cachedHintMoves = moves;
                     window.cachedHintTiles = tiles;
                     window.hintLevel = 1;
                     showHint(moves, 1);
-                }, 50);
+                }, () => {
+                    if (token === searchToken) showResults({ error: solverReady ? 'Search took too long. Try using fewer blank tiles.' : WORD_LIST_ERROR });
+                });
             } else {
                 // Progress to next hint level
+                ++searchToken;
                 window.hintLevel = Math.min(window.hintLevel + 1, 5);
                 showHint(window.cachedHintMoves, window.hintLevel);
+                revealResults();
             }
         }
 
