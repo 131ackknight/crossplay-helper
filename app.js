@@ -673,6 +673,7 @@
                 placeholder.value = '';
                 placeholder.textContent = 'No saved boards';
                 placeholder.disabled = true;
+                placeholder.selected = true;
                 select.appendChild(placeholder);
             } else {
                 // Always offer "Unsaved Board" so user can switch back to it from any saved board

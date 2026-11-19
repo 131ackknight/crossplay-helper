@@ -448,6 +448,9 @@ a:hover { color: var(--accent-hover); }
     box-shadow: 0 10px 24px rgba(60, 35, 15, .25);
 }
 
+/* Square before app.js adds the cells, so nothing below it moves. */
+#board { aspect-ratio: 1; }
+
 .cell {
     aspect-ratio: 1;
     min-width: 0;
@@ -581,6 +584,9 @@ a:hover { color: var(--accent-hover); }
 .tile-input { display: contents; }
 
 .rack-slot { position: relative; min-width: 0; }
+
+/* Placeholder slots in the HTML hold the rack's height until app.js builds the inputs. */
+.rack-slot:empty { aspect-ratio: 1; }
 
 .tile-input input {
     width: 100%;
@@ -1554,8 +1560,23 @@ a:hover { color: var(--accent-hover); }
     }
     .upload-actions { width: 100%; }
     .upload-strip .btn-primary,
-    .upload-strip .btn-hint { flex: 1 1 0; }
+    .upload-strip .btn-hint {
+        flex: 1 1 auto;
+        padding: 10px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
     .toolbar { gap: 8px; }
+    .toolbar-group:first-child {
+        flex-wrap: nowrap;
+        width: 100%;
+        gap: 6px;
+    }
+    #boardSelect {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    .toolbar-group:first-child .text-btn { padding: 8px 6px; }
 }
 
 .prose ul.point-list {
