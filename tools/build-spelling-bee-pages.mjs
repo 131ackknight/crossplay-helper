@@ -5,18 +5,22 @@
 //   spelling-bee-answers/       the today page, one page per date, and the archive
 //   sitemap.xml                 only the lines between the spelling-bee markers
 // The header and footer are copied from spelling-bee-solver/index.html on every run.
+// Dated pages more than INDEX_DAYS older than the newest puzzle get noindex and leave the sitemap,
+// so the daily pages don't swamp what Google indexes. They stay on the site and in the archive.
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import {
     ROOT, SITE, allPuzzles, currentWordsFile, escapeHtml, fits, isPangram, learnRulings, letterMask,
-    longDate, maxScore, monthLabel, puzzleMasks, rankTable, savedPuzzles, weekday, wordScore, writeIfChanged,
+    longDate, maxScore, monthLabel, parseDate, puzzleMasks, rankTable, savedPuzzles, weekday, wordScore, writeIfChanged,
 } from './lib/bee.mjs';
 
 const ANSWERS = 'spelling-bee-answers';
 const TEMPLATE = path.join(ROOT, 'tools', 'templates', 'spelling-bee-page.html');
 const CHROME_PAGE = path.join(ROOT, 'spelling-bee-solver', 'index.html');
 const RECENT_DAYS = 7;
+const INDEX_DAYS = 30;
+const DAY_MS = 24 * 60 * 60 * 1000;
 const SITEMAP_START = '<!-- spelling-bee:start -->';
 const SITEMAP_END = '<!-- spelling-bee:end -->';
 
@@ -31,6 +35,8 @@ export function buildPages() {
     const everyWord = words.likely.concat(words.other);
     const indexed = everyWord.map((word) => ({ word, mask: letterMask(word) }));
     const days = puzzles.map((p) => analyze(p, indexed, likely));
+    const newest = parseDate(days[days.length - 1].date);
+    for (const day of days) day.indexed = (newest - parseDate(day.date)) / DAY_MS < INDEX_DAYS;
     const render = pageRenderer();
     const changed = [];
     const write = (rel, contents) => {
@@ -277,6 +283,7 @@ function dayPage(day, prev, next) {
         title,
         description,
         url,
+        noindex: !day.indexed,
         main,
         schema: [
             webPageSchema(title, description, url, day.date),
@@ -382,6 +389,7 @@ function pageRenderer() {
         const values = {
             TITLE: escapeHtml(page.title),
             DESCRIPTION: escapeHtml(page.description),
+            ROBOTS: page.noindex ? 'noindex, follow' : 'index, follow',
             URL: page.url,
             JSON_LD: jsonLdHtml(page.schema),
             HEADER: page.current ? plainHeader.replace(`href="${page.current}"`, `href="${page.current}" aria-current="page"`) : plainHeader,
@@ -403,7 +411,7 @@ function sitemap(days) {
         `  ${SITEMAP_START}`,
         entry(`/${ANSWERS}`, latest),
         entry(`/${ANSWERS}/archive`, latest),
-        ...[...days].reverse().map((day) => entry(dayUrl(day.date), day.date)),
+        ...days.filter((day) => day.indexed).reverse().map((day) => entry(dayUrl(day.date), day.date)),
         `  ${SITEMAP_END}`,
     ].join('\n');
     const start = xml.indexOf(SITEMAP_START);

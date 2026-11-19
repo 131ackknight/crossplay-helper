@@ -86,12 +86,14 @@ Pages: `/spelling-bee-solver` (the solver), `/spelling-bee-answers` (today), `/s
 
 ### Daily answers
 
-`.github/workflows/spelling-bee-daily.yml` runs `tools/spelling-bee-daily.mjs` at 07:17, 08:17, and 11:17 UTC. The Times resets the puzzle at 3 a.m. Eastern, which is 07:00 UTC in summer and 08:00 UTC in winter. The script:
+`.github/workflows/spelling-bee-daily.yml` runs `tools/spelling-bee-daily.mjs` at 07:17, 07:47, 08:17, 08:47, 09:17, and 11:17 UTC. The Times resets the puzzle at 3 a.m. Eastern, which is 07:00 UTC in summer and 08:00 UTC in winter, so in either season there is a run at 3:17 a.m. Eastern and two retries within the hour after it. GitHub can delay or drop scheduled runs, and runs with nothing new do nothing. The script:
 
 1. Reads `window.gameData` (today and yesterday) from https://www.nytimes.com/puzzles/spelling-bee.
 2. Checks the letters, answers, and pangrams. If anything looks wrong it exits with an error and writes nothing.
 3. Saves each puzzle to `data/spelling-bee/YYYY-MM-DD.json`, dated by the Times' print date.
 4. Runs `tools/build-spelling-bee-pages.mjs`. That writes `spelling-bee-today.json`, `spelling-bee-learned.json`, every page under `spelling-bee-answers/`, and the lines between the `spelling-bee` markers in `sitemap.xml`.
+
+Dated pages more than 30 days older than the newest puzzle get `noindex` and drop out of the sitemap, so the daily pages don't swamp what Google indexes. They stay on the site and in the archive. Change `INDEX_DAYS` in `tools/build-spelling-bee-pages.mjs` to move the window.
 
 The workflow commits only when something changed, with the message `Spelling Bee answers for YYYY-MM-DD`. The commit author is the repo owner because Vercel's Hobby plan only deploys commits by the account owner. Run it by hand from the Actions tab with Run workflow.
 

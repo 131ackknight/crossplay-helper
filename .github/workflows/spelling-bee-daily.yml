@@ -3,9 +3,13 @@ name: Spelling Bee answers
 on:
   schedule:
     # The puzzle resets at 3 a.m. Eastern: 07:00 UTC in summer, 08:00 UTC in winter.
-    # The 11:17 run retries if the earlier ones failed.
+    # Either way there is a run at 3:17 a.m. Eastern and two retries within the hour after it,
+    # because GitHub can delay or drop scheduled runs. The 11:17 run is a last try.
     - cron: "17 7 * * *"
+    - cron: "47 7 * * *"
     - cron: "17 8 * * *"
+    - cron: "47 8 * * *"
+    - cron: "17 9 * * *"
     - cron: "17 11 * * *"
   workflow_dispatch:
 
