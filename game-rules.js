@@ -59,6 +59,28 @@ const GAME_PRESETS = {
     }
 };
 
+// "Try an example board": a mid-game board and a rack. Rows and columns count from 0.
+// tools/test/solver.test.mjs checks every word here is in the word list.
+const EXAMPLE_BOARD = {
+    words: [
+        { row: 7, col: 4, direction: 'H', word: 'PLAYED' },
+        { row: 7, col: 5, direction: 'V', word: 'LOVING' },
+        { row: 7, col: 9, direction: 'V', word: 'DOZE' },
+        { row: 12, col: 5, direction: 'H', word: 'GRIT' }
+    ],
+    rack: 'TEARSOM'
+};
+
+function exampleBoardState() {
+    const board = Array.from({ length: 15 }, () => Array(15).fill(null));
+    EXAMPLE_BOARD.words.forEach(({ row, col, direction, word }) => {
+        for (let i = 0; i < word.length; i++) {
+            board[direction === 'H' ? row : row + i][direction === 'H' ? col + i : col] = word[i];
+        }
+    });
+    return board;
+}
+
 function letterRowsHtml(game) {
     const points = LETTER_POINTS_BY_GAME[game];
     return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ?'.split('').map((letter) => {

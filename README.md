@@ -63,6 +63,8 @@ The bonus square positions in this app use a standard layout. NYT Crossplay may 
 - **No internet needed**: All processing happens locally
 - **No API keys**: The dictionary and solver run client-side
 - **Dictionary**: Contains thousands of valid Crossplay words
+- **Solver worker**: The board solvers load `crossplay-cuts.js` and the dictionary in `solver-worker.js`, a Web Worker, so building the word list and searching never block the page. Browsers without workers load the same scripts on the page. When the dictionary file is renamed, update `SOLVER_SCRIPTS` in `app.js`.
+- **Solver tests**: `node --test tools/test/solver.test.mjs` checks that the worker returns the same moves as the in-page solver, and checks both against `tools/test/fixtures/solver-golden.json`. Run it with `UPDATE_SOLVER_GOLDEN=1` only when a scoring change is intended.
 
 ## Tips
 
