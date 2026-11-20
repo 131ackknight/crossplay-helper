@@ -83,6 +83,10 @@ async function main() {
         if (problems.length) throw new Error(`Puzzle ${puzzle.date || '(no date)'} failed checks: ${problems.join('; ')}`);
     }
 
+    // One clock, to the second, for the saved times and the build, so the today page's sitemap lastmod
+    // equals its update time when a save is what changed it.
+    const runAt = new Date(Math.floor(Date.now() / 1000) * 1000);
+    const now = runAt.toISOString().replace(/\.\d+Z$/, 'Z');
     for (const puzzle of puzzles) {
         const file = path.join(DATA_DIR, `${puzzle.date}.json`);
         const before = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
@@ -90,14 +94,13 @@ async function main() {
             console.log(`${puzzle.date}: already saved`);
             continue;
         }
-        const now = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
         const { date, ...rest } = puzzle;
         writeIfChanged(file, JSON.stringify({ date, published: before?.published || now, updated: now, ...rest }, null, 1) + '\n');
         console.log(before ? `${puzzle.date}: updated (${describeChange(before, puzzle)})` : `${puzzle.date}: saved, ${puzzle.answers.length} answers`);
         if (!before) calibration(puzzle);
     }
 
-    const changed = buildPages();
+    const changed = buildPages(runAt);
     console.log(changed.length ? `Updated ${changed.length} file${changed.length === 1 ? '' : 's'}.` : 'Pages are up to date.');
 }
 
