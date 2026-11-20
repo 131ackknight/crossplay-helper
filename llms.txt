@@ -37,8 +37,8 @@ Crossplay, Scrabble, and Words with Friends all use the same file in this helper
 The homepage is the Crossplay solver. The other two games are the same board with that game's values.
 
 - https://wordgamehelp.com/ — NYT Crossplay board solver and cheat. Upload a screenshot or type the board. The homepage solver opens on Crossplay.
-- https://wordgamehelp.com/scrabble-word-finder — Scrabble board solver. 50-point bingo, 2 blanks, double-word center star.
-- https://wordgamehelp.com/words-with-friends-word-finder — Words with Friends board solver. 35-point bingo, 2 blanks, no center star.
+- https://wordgamehelp.com/scrabble-word-finder — Scrabble cheat and word finder. 50-point bingo, 2 blanks, double-word center star.
+- https://wordgamehelp.com/words-with-friends-word-finder — Words with Friends board solver and cheat. 35-point bingo, 2 blanks, no center star.
 
 ### Spelling Bee
 
