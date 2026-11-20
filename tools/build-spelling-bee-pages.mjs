@@ -10,11 +10,14 @@
 // SPELLING_BEE_NOW (any Date string) stands in for the build time in tests.
 // Dated pages more than INDEX_DAYS older than the newest puzzle get noindex and leave the sitemap,
 // so the daily pages don't swamp what Google indexes. They stay on the site and in the archive.
+// data/spelling-bee/last-changed.json keeps when the today page and the archive last changed, for
+// their sitemap lastmod. See changeTracker.
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import {
-    ROOT, SITE, allPuzzles, currentWordsFile, escapeHtml, fits, isPangram, learnRulings, letterMask,
+    DATA_DIR, ROOT, SITE, allPuzzles, currentWordsFile, escapeHtml, fits, isPangram, learnRulings, letterMask,
     longDate, maxScore, monthLabel, parseDate, puzzleMasks, rankTable, savedPuzzles, weekday, wordScore, writeIfChanged,
 } from './lib/bee.mjs';
 
@@ -26,6 +29,7 @@ const INDEX_DAYS = 30;
 const DAY_MS = 24 * 60 * 60 * 1000;
 const SITEMAP_START = '<!-- spelling-bee:start -->';
 const SITEMAP_END = '<!-- spelling-bee:end -->';
+const CHANGES_FILE = path.join(DATA_DIR, 'last-changed.json');
 
 const ROLLOVER_HOUR = 3;
 
@@ -63,6 +67,7 @@ export function buildPages(now = buildTime()) {
     const newest = parseDate(today.date);
     for (const day of days) day.indexed = (newest - parseDate(day.date)) / DAY_MS < INDEX_DAYS;
     const render = pageRenderer();
+    const tracker = changeTracker(now);
     const changed = [];
     const write = (rel, contents) => {
         if (writeIfChanged(path.join(ROOT, rel), contents)) changed.push(rel);
@@ -74,10 +79,14 @@ export function buildPages(now = buildTime()) {
     days.forEach((day, i) => {
         write(`${ANSWERS}/${day.date}/index.html`, render(dayPage(day, days[i - 1], days[i + 1])));
     });
-    write(`${ANSWERS}/index.html`, render(todayPage(today, past)));
+    const hub = todayPage(today, past);
+    const hubChanged = tracker.changed(`/${ANSWERS}`, hub);
+    write(`${ANSWERS}/index.html`, render(hub));
     if (past.length) write(`${ANSWERS}/yesterday/index.html`, render(yesterdayPage(past[past.length - 1], today)));
-    write(`${ANSWERS}/archive/index.html`, render(archivePage(days, today)));
-    write('sitemap.xml', sitemap(today, past));
+    const archiveChanged = tracker.changed(`/${ANSWERS}/archive`, archivePage(days));
+    write(`${ANSWERS}/archive/index.html`, render(archivePage(days, eastern(archiveChanged).iso)));
+    write(path.relative(ROOT, CHANGES_FILE), tracker.json());
+    write('sitemap.xml', sitemap(today, past, { hub: hubChanged, archive: archiveChanged }));
     removeOrphans(new Set(days.map((day) => day.date)), changed);
     return changed;
 }
@@ -428,7 +437,8 @@ function yesterdayPage(day, today) {
     };
 }
 
-function archivePage(days, today) {
+// `modified` is left out when the content is hashed, so the page's own time doesn't count as a change.
+function archivePage(days, modified) {
     const title = 'NYT Spelling Bee Answers Archive | Word Game Helper';
     const url = `${SITE}/${ANSWERS}/archive`;
     const first = longDate(days[0].date);
@@ -457,7 +467,7 @@ function archivePage(days, today) {
                 name: 'NYT Spelling Bee Answers Archive',
                 description,
                 url,
-                dateModified: stamp(today.published, today.date),
+                dateModified: modified,
                 isPartOf: { '@type': 'WebSite', name: 'Word Game Helper', url: `${SITE}/` },
             },
             breadcrumbSchema([['Word Game Helper', `${SITE}/`], ['Spelling Bee answers', `${SITE}/${ANSWERS}`], ['Archive', url]]),
@@ -497,16 +507,42 @@ function pageRenderer() {
     };
 }
 
-// lastmod carries the same New York times as the pages' dateModified.
-function sitemap(today, past) {
+// The today page and the archive change for more than their own puzzle: a new day's link, a corrected
+// word count on another day, new copy, or a puzzle that goes live at a build after its rollover. So
+// their lastmod is the build time when their content last changed, kept in CHANGES_FILE with a hash of
+// that content. The head, header, and footer are the same on every page and don't count, so a new
+// build number in the footer leaves lastmod alone. A missing or edited entry makes the next build
+// record its own time.
+function changeTracker(now) {
+    const before = fs.existsSync(CHANGES_FILE) ? JSON.parse(fs.readFileSync(CHANGES_FILE, 'utf8')) : {};
+    const after = {};
+    const at = now.toISOString().replace(/\.\d+Z$/, 'Z');
+    return {
+        // The UTC time this page's content last changed.
+        changed(loc, page) {
+            const content = [page.title, page.description, page.url, Boolean(page.noindex), jsonLdHtml(page.schema), page.main];
+            const hash = crypto.createHash('sha256').update(JSON.stringify(content)).digest('hex').slice(0, 16);
+            after[loc] = before[loc]?.hash === hash ? before[loc] : { changed: at, hash };
+            return after[loc].changed;
+        },
+        json: () => JSON.stringify(after, null, 1) + '\n',
+    };
+}
+
+// Dated pages use their answer list's update time and the yesterday page the time today's puzzle was
+// saved, the same New York times as their dateModified. The today page and the archive use the time
+// their content last changed. The archive's dateModified is that time too. The today page's
+// dateModified stays its answer list's update time, to match the Updated line readers see. The daily
+// job saves and builds on one clock, so on a normal day the two are the same.
+function sitemap(today, past, changed) {
     const xml = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
     const switched = stamp(today.published, today.date);
     const entry = (loc, lastmod) => `  <url>\n    <loc>${SITE}${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
     const block = [
         `  ${SITEMAP_START}`,
-        entry(`/${ANSWERS}`, stamp(today.updated, today.date)),
+        entry(`/${ANSWERS}`, eastern(changed.hub).iso),
         ...(past.length ? [entry(`/${ANSWERS}/yesterday`, switched)] : []),
-        entry(`/${ANSWERS}/archive`, switched),
+        entry(`/${ANSWERS}/archive`, eastern(changed.archive).iso),
         ...[today, ...past.slice().reverse()].filter((day) => day.indexed).map((day) => entry(dayUrl(day.date), stamp(day.updated, day.date))),
         `  ${SITEMAP_END}`,
     ].join('\n');

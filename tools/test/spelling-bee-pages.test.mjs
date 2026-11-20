@@ -55,6 +55,9 @@ describe('built pages', () => {
     const datedDirs = () => fs.readdirSync(answers()).filter((name) => /^\d{4}-\d{2}-\d{2}$/.test(name)).sort();
     const sitemapDates = () => [...read('sitemap.xml').matchAll(/spelling-bee-answers\/(\d{4}-\d{2}-\d{2})</g)].map((m) => m[1]).sort();
     const linkedDates = (rel) => [...new Set([...read(rel).matchAll(/href="\/spelling-bee-answers\/(\d{4}-\d{2}-\d{2})"/g)].map((m) => m[1]))].sort();
+    const lastmod = (loc) => read('sitemap.xml').match(new RegExp(`<loc>https://wordgamehelp\\.com${loc}</loc>\\s*<lastmod>([^<]+)</lastmod>`))[1];
+    const hubAndArchive = () => [lastmod('/spelling-bee-answers'), lastmod('/spelling-bee-answers/archive')];
+    const archiveModified = () => read('spelling-bee-answers/archive/index.html').match(/"dateModified": "([^"]+)"/)[1];
     const build = (now) => execFileSync(process.execPath, [path.join(site, 'tools', 'build-spelling-bee-pages.mjs')], {
         env: { ...process.env, SPELLING_BEE_NOW: now },
     });
@@ -65,9 +68,10 @@ describe('built pages', () => {
         ['tools', 'data', 'spelling-bee-answers', 'spelling-bee-solver', 'sitemap.xml'].forEach(copy);
         fs.readdirSync(ROOT).filter((f) => /^spelling-bee-words\.\d{8}\.js$/.test(f)).forEach(copy);
         const dataDir = path.join(site, 'data', 'spelling-bee');
-        for (const f of fs.readdirSync(dataDir)) if (f > '2026-11-19.json') fs.rmSync(path.join(dataDir, f));
+        for (const f of fs.readdirSync(dataDir)) if (/^\d{4}-\d{2}-\d{2}\.json$/.test(f) && f > '2026-11-19.json') fs.rmSync(path.join(dataDir, f));
         const nov19 = JSON.parse(fs.readFileSync(path.join(dataDir, '2026-11-19.json'), 'utf8'));
-        const nov20 = { ...nov19, date: '2026-11-20', published: '2026-11-20T08:20:00Z', updated: '2026-11-20T08:20:00Z' };
+        // Saved ten minutes before its rollover, so its pages wait for the first build after 3 a.m. ET.
+        const nov20 = { ...nov19, date: '2026-11-20', published: '2026-11-20T07:50:00Z', updated: '2026-11-20T07:50:00Z' };
         fs.writeFileSync(path.join(dataDir, '2026-11-20.json'), JSON.stringify(nov20, null, 1) + '\n');
     });
     after(() => fs.rmSync(site, { recursive: true, force: true }));
@@ -93,11 +97,40 @@ describe('built pages', () => {
         assert.equal(JSON.parse(read('spelling-bee-today.json')).date, '2026-11-19');
     });
 
+    test('the today page and the archive get the build time as lastmod when they change', () => {
+        assert.deepEqual(hubAndArchive(), ['2026-11-19T03:26:42-05:00', '2026-11-19T03:26:42-05:00']);
+        assert.equal(archiveModified(), '2026-11-19T03:26:42-05:00');
+        assert.equal(lastmod('/spelling-bee-answers/2026-11-19'), '2026-11-19T03:26:38-05:00', 'dated pages keep their update time');
+    });
+
+    test('a new build number in the footer leaves lastmod alone', () => {
+        const solver = path.join(site, 'spelling-bee-solver', 'index.html');
+        fs.writeFileSync(solver, fs.readFileSync(solver, 'utf8').replace(/Build: [^<]+/, 'Build: test-build'));
+        build('2026-11-19T12:00:00Z');
+        assert.match(read('spelling-bee-answers/archive/index.html'), /Build: test-build/);
+        assert.deepEqual(hubAndArchive(), ['2026-11-19T03:26:42-05:00', '2026-11-19T03:26:42-05:00']);
+        assert.equal(archiveModified(), '2026-11-19T03:26:42-05:00');
+    });
+
+    test('a corrected word count on another day moves the today page and the archive', () => {
+        const file = path.join(site, 'data', 'spelling-bee', '2026-11-18.json');
+        const nov18 = JSON.parse(fs.readFileSync(file, 'utf8'));
+        const answers = nov18.answers.filter((word) => word !== 'digging');
+        assert.equal(answers.length, nov18.answers.length - 1);
+        fs.writeFileSync(file, JSON.stringify({ ...nov18, answers, updated: '2026-11-19T15:00:00Z' }, null, 1) + '\n');
+        build('2026-11-19T15:00:00Z');
+        assert.match(read('spelling-bee-answers/archive/index.html'), new RegExp(`GINORU</span> <span class="bee-days-count">${answers.length} words`));
+        assert.deepEqual(hubAndArchive(), ['2026-11-19T10:00:00-05:00', '2026-11-19T10:00:00-05:00']);
+        assert.equal(archiveModified(), '2026-11-19T10:00:00-05:00');
+        assert.equal(lastmod('/spelling-bee-answers/2026-11-19'), '2026-11-19T03:26:38-05:00');
+    });
+
     test('in the evening of Nov 19 ET, after UTC has moved to Nov 20, Nov 20 stays hidden', () => {
         build('2026-11-20T04:30:00Z');
         assert.deepEqual(datedDirs(), ['2026-11-17', '2026-11-18', '2026-11-19']);
         assert.ok(!sitemapDates().includes('2026-11-20'));
         assert.equal(JSON.parse(read('spelling-bee-today.json')).date, '2026-11-19');
+        assert.deepEqual(hubAndArchive(), ['2026-11-19T10:00:00-05:00', '2026-11-19T10:00:00-05:00'], 'nothing changed');
     });
 
     test('just before 3 a.m. ET on Nov 20, Nov 20 stays hidden', () => {
@@ -114,5 +147,7 @@ describe('built pages', () => {
         assert.deepEqual(sitemapDates(), expected);
         assert.deepEqual(linkedDates('spelling-bee-answers/archive/index.html'), expected);
         assert.match(read('spelling-bee-answers/index.html'), /Answers Today: November 20, 2026/);
+        // The page changed at this build, not when the puzzle was saved at 2:50 a.m.
+        assert.deepEqual(hubAndArchive(), ['2026-11-20T03:00:00-05:00', '2026-11-20T03:00:00-05:00']);
     });
 });
