@@ -11,22 +11,22 @@
 // Dated pages more than INDEX_DAYS older than the newest puzzle get noindex and leave the sitemap,
 // so the daily pages don't swamp what Google indexes. They stay on the site and in the archive.
 // data/spelling-bee/last-changed.json keeps when the today page and the archive last changed, for
-// their sitemap lastmod. See changeTracker.
-import crypto from 'node:crypto';
+// their sitemap lastmod. See changeTracker in lib/site.mjs, which holds the helpers shared with Connections.
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 import {
-    DATA_DIR, ROOT, SITE, allPuzzles, currentWordsFile, escapeHtml, fits, isPangram, learnRulings, letterMask,
-    longDate, maxScore, monthLabel, parseDate, puzzleMasks, rankTable, savedPuzzles, weekday, wordScore, writeIfChanged,
+    DATA_DIR, allPuzzles, currentWordsFile, fits, isPangram, learnRulings, letterMask,
+    maxScore, puzzleMasks, rankTable, savedPuzzles, wordScore,
 } from './lib/bee.mjs';
+import {
+    DAY_MS, ROOT, SITE, article, articleSchema, breadcrumbSchema, buildTime, changeTracker, eastern, faqHtml,
+    faqSchema, isMain, listJoin, longDate, monthLabel, pageRenderer, parseDate, plural, puzzleDateAt, removeOrphans,
+    sitemapEntry, spliceSitemap, stamp, weekday, writeIfChanged,
+} from './lib/site.mjs';
 
 const ANSWERS = 'spelling-bee-answers';
-const TEMPLATE = path.join(ROOT, 'tools', 'templates', 'spelling-bee-page.html');
-const CHROME_PAGE = path.join(ROOT, 'spelling-bee-solver', 'index.html');
 const RECENT_DAYS = 7;
 const INDEX_DAYS = 30;
-const DAY_MS = 24 * 60 * 60 * 1000;
 const SITEMAP_START = '<!-- spelling-bee:start -->';
 const SITEMAP_END = '<!-- spelling-bee:end -->';
 const CHANGES_FILE = path.join(DATA_DIR, 'last-changed.json');
@@ -35,23 +35,14 @@ const ROLLOVER_HOUR = 3;
 
 // The date of the puzzle that is live at `now`: the New York date, or the day before it until 3 a.m.
 export function currentPuzzleDate(now) {
-    const part = Object.fromEntries(EASTERN.formatToParts(now).map(({ type, value }) => [type, value]));
-    const date = `${part.year}-${part.month}-${part.day}`;
-    if (Number(part.hour) >= ROLLOVER_HOUR) return date;
-    return new Date(parseDate(date) - DAY_MS).toISOString().slice(0, 10);
+    return puzzleDateAt(now, ROLLOVER_HOUR);
 }
 
 export function isPublished(date, now) {
     return date <= currentPuzzleDate(now);
 }
 
-function buildTime() {
-    const now = process.env.SPELLING_BEE_NOW ? new Date(process.env.SPELLING_BEE_NOW) : new Date();
-    if (Number.isNaN(now.getTime())) throw new Error(`SPELLING_BEE_NOW is not a date: ${process.env.SPELLING_BEE_NOW}`);
-    return now;
-}
-
-export function buildPages(now = buildTime()) {
+export function buildPages(now = buildTime('SPELLING_BEE_NOW')) {
     const puzzles = savedPuzzles().filter((p) => isPublished(p.date, now));
     if (!puzzles.length) {
         console.log('No published puzzles in data/spelling-bee yet. Run tools/spelling-bee-daily.mjs first.');
@@ -67,7 +58,7 @@ export function buildPages(now = buildTime()) {
     const newest = parseDate(today.date);
     for (const day of days) day.indexed = (newest - parseDate(day.date)) / DAY_MS < INDEX_DAYS;
     const render = pageRenderer();
-    const tracker = changeTracker(now);
+    const tracker = changeTracker(CHANGES_FILE, now);
     const changed = [];
     const write = (rel, contents) => {
         if (writeIfChanged(path.join(ROOT, rel), contents)) changed.push(rel);
@@ -87,7 +78,7 @@ export function buildPages(now = buildTime()) {
     write(`${ANSWERS}/archive/index.html`, render(archivePage(days, eastern(archiveChanged).iso)));
     write(path.relative(ROOT, CHANGES_FILE), tracker.json());
     write('sitemap.xml', sitemap(today, past, { hub: hubChanged, archive: archiveChanged }));
-    removeOrphans(new Set(days.map((day) => day.date)), changed);
+    removeOrphans(ANSWERS, new Set(days.map((day) => day.date)), changed);
     return changed;
 }
 
@@ -139,32 +130,8 @@ function todayJson(p) {
 }
 
 const up = (word) => word.toUpperCase();
-const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 const dayUrl = (date) => `/${ANSWERS}/${date}`;
 const geniusPoints = (day) => day.ranks.find((rank) => rank.name === 'Genius').points;
-
-const EASTERN = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/New_York', hourCycle: 'h23', timeZoneName: 'longOffset',
-    year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit',
-});
-
-// A UTC time from a data file as New York time: ISO 8601 with the offset, and a clock time for the page.
-function eastern(utc) {
-    const part = Object.fromEntries(EASTERN.formatToParts(new Date(utc)).map(({ type, value }) => [type, value]));
-    const hour = Number(part.hour);
-    return {
-        iso: `${part.year}-${part.month}-${part.day}T${part.hour}:${part.minute}:${part.second}${part.timeZoneName.replace('GMT', '') || '+00:00'}`,
-        clock: `${hour % 12 || 12}:${part.minute} ${hour < 12 ? 'a.m.' : 'p.m.'} ET`,
-    };
-}
-
-// Files saved before the daily job recorded times only have a date.
-const stamp = (utc, date) => (utc ? eastern(utc).iso : date);
-
-function listJoin(items) {
-    if (items.length < 3) return items.join(' and ');
-    return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
-}
 
 function hiveHtml(day) {
     const tiles = [`<li class="bee-tile bee-tile--center"><span class="visually-hidden">Center letter </span>${up(day.center)}</li>`]
@@ -251,54 +218,6 @@ function faqItems(day) {
     ];
 }
 
-function faqHtml(items) {
-    const rows = items.map(({ q, a }) => `                    <details><summary>${escapeHtml(q)}<span class="faq-plus">+</span></summary><p>${escapeHtml(a)}</p></details>`);
-    return [
-        '        <section class="faq-band">',
-        '            <div class="faq-inner">',
-        '                <h2>Questions about this puzzle</h2>',
-        '                <div class="faq-list">',
-        ...rows,
-        '                </div>',
-        '            </div>',
-        '        </section>',
-    ].join('\n');
-}
-
-function faqSchema(items) {
-    return {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: items.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
-    };
-}
-
-function breadcrumbSchema(trail) {
-    return {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: trail.map(([name, url], i) => ({ '@type': 'ListItem', position: i + 1, name, item: url })),
-    };
-}
-
-function articleSchema(headline, description, url, published, modified) {
-    const site = { '@type': 'Organization', name: 'Word Game Helper', url: `${SITE}/` };
-    return {
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline,
-        description,
-        url,
-        mainEntityOfPage: url,
-        image: `${SITE}/og-image.png?v=2`,
-        datePublished: published,
-        dateModified: modified,
-        author: site,
-        publisher: site,
-        isPartOf: { '@type': 'WebSite', name: 'Word Game Helper', url: `${SITE}/` },
-    };
-}
-
 function puzzleSections(day) {
     return [
         `<p>${summaryText(day)}</p>`,
@@ -319,10 +238,6 @@ function puzzleSections(day) {
         '<h2>Words the Times left out</h2>',
         leftOutHtml(day),
     ];
-}
-
-function article(className, lines) {
-    return [`        <article class="prose wrap guide ${className}">`, ...lines.map((line) => `            ${line}`), '        </article>'].join('\n');
 }
 
 function dayPage(day, prev, next) {
@@ -475,96 +390,23 @@ function archivePage(days, modified) {
     };
 }
 
-function jsonLdHtml(objects) {
-    return objects.map((o) => {
-        const json = JSON.stringify(o, null, 4).replace(/</g, '\\u003c').replace(/^/gm, '    ');
-        return `    <script type="application/ld+json">\n${json}\n    </script>`;
-    }).join('\n');
-}
-
-function pageRenderer() {
-    const template = fs.readFileSync(TEMPLATE, 'utf8');
-    const source = fs.readFileSync(CHROME_PAGE, 'utf8');
-    const header = source.match(/<header class="site-header">[\s\S]*?<\/header>/);
-    const footer = source.match(/<footer class="site-footer">[\s\S]*?<\/footer>/);
-    if (!header || !footer) throw new Error('No header or footer found in spelling-bee-solver/index.html');
-    const plainHeader = header[0].replace(/ aria-current="page"/g, '');
-    return (page) => {
-        const values = {
-            TITLE: escapeHtml(page.title),
-            DESCRIPTION: escapeHtml(page.description),
-            ROBOTS: page.noindex ? 'noindex, follow' : 'index, follow',
-            URL: page.url,
-            JSON_LD: jsonLdHtml(page.schema),
-            HEADER: page.current ? plainHeader.replace(`href="${page.current}"`, `href="${page.current}" aria-current="page"`) : plainHeader,
-            MAIN: page.main,
-            FOOTER: footer[0],
-        };
-        return template.replace(/{{(\w+)}}/g, (match, key) => {
-            if (!(key in values)) throw new Error(`Unknown template key ${key}`);
-            return values[key];
-        });
-    };
-}
-
-// The today page and the archive change for more than their own puzzle: a new day's link, a corrected
-// word count on another day, new copy, or a puzzle that goes live at a build after its rollover. So
-// their lastmod is the build time when their content last changed, kept in CHANGES_FILE with a hash of
-// that content. The head, header, and footer are the same on every page and don't count, so a new
-// build number in the footer leaves lastmod alone. A missing or edited entry makes the next build
-// record its own time.
-function changeTracker(now) {
-    const before = fs.existsSync(CHANGES_FILE) ? JSON.parse(fs.readFileSync(CHANGES_FILE, 'utf8')) : {};
-    const after = {};
-    const at = now.toISOString().replace(/\.\d+Z$/, 'Z');
-    return {
-        // The UTC time this page's content last changed.
-        changed(loc, page) {
-            const content = [page.title, page.description, page.url, Boolean(page.noindex), jsonLdHtml(page.schema), page.main];
-            const hash = crypto.createHash('sha256').update(JSON.stringify(content)).digest('hex').slice(0, 16);
-            after[loc] = before[loc]?.hash === hash ? before[loc] : { changed: at, hash };
-            return after[loc].changed;
-        },
-        json: () => JSON.stringify(after, null, 1) + '\n',
-    };
-}
-
 // Dated pages use their answer list's update time and the yesterday page the time today's puzzle was
 // saved, the same New York times as their dateModified. The today page and the archive use the time
-// their content last changed. The archive's dateModified is that time too. The today page's
-// dateModified stays its answer list's update time, to match the Updated line readers see. The daily
-// job saves and builds on one clock, so on a normal day the two are the same.
+// their content last changed (see changeTracker in lib/site.mjs). The archive's dateModified is that
+// time too. The today page's dateModified stays its answer list's update time, to match the Updated
+// line readers see. The daily job saves and builds on one clock, so on a normal day the two are the same.
 function sitemap(today, past, changed) {
     const xml = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
     const switched = stamp(today.published, today.date);
-    const entry = (loc, lastmod) => `  <url>\n    <loc>${SITE}${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
-    const block = [
-        `  ${SITEMAP_START}`,
-        entry(`/${ANSWERS}`, eastern(changed.hub).iso),
-        ...(past.length ? [entry(`/${ANSWERS}/yesterday`, switched)] : []),
-        entry(`/${ANSWERS}/archive`, eastern(changed.archive).iso),
-        ...[today, ...past.slice().reverse()].filter((day) => day.indexed).map((day) => entry(dayUrl(day.date), stamp(day.updated, day.date))),
-        `  ${SITEMAP_END}`,
-    ].join('\n');
-    const start = xml.indexOf(SITEMAP_START);
-    const end = xml.indexOf(SITEMAP_END);
-    if (start !== -1 && end !== -1) {
-        return xml.slice(0, xml.lastIndexOf('\n', start) + 1) + block + xml.slice(end + SITEMAP_END.length);
-    }
-    return xml.replace('</urlset>', `${block}\n</urlset>`);
+    return spliceSitemap(xml, SITEMAP_START, SITEMAP_END, [
+        sitemapEntry(`/${ANSWERS}`, eastern(changed.hub).iso),
+        ...(past.length ? [sitemapEntry(`/${ANSWERS}/yesterday`, switched)] : []),
+        sitemapEntry(`/${ANSWERS}/archive`, eastern(changed.archive).iso),
+        ...[today, ...past.slice().reverse()].filter((day) => day.indexed).map((day) => sitemapEntry(dayUrl(day.date), stamp(day.updated, day.date))),
+    ]);
 }
 
-function removeOrphans(dates, changed) {
-    const dir = path.join(ROOT, ANSWERS);
-    for (const name of fs.readdirSync(dir)) {
-        if (/^\d{4}-\d{2}-\d{2}$/.test(name) && !dates.has(name)) {
-            fs.rmSync(path.join(dir, name), { recursive: true });
-            changed.push(`${ANSWERS}/${name} (removed)`);
-        }
-    }
-}
-
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (isMain(import.meta.url)) {
     const changed = buildPages();
     console.log(changed.length ? `Updated ${plural(changed.length, 'file')}:\n  ${changed.join('\n  ')}` : 'Spelling Bee pages are up to date.');
 }
