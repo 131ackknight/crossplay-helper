@@ -1,10 +1,12 @@
 // Shared helpers for the Spelling Bee tools. Node 18 or newer, no packages.
+// The helpers every daily answers section uses live in site.mjs and are passed through here.
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { ROOT } from './site.mjs';
 
-export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-export const SITE = 'https://wordgamehelp.com';
+export {
+    ROOT, SITE, escapeHtml, longDate, monthLabel, parseDate, shortDate, weekday, writeIfChanged,
+} from './site.mjs';
 export const DATA_DIR = path.join(ROOT, 'data', 'spelling-bee');
 export const TOOLS_DATA = path.join(ROOT, 'tools', 'data');
 
@@ -24,9 +26,6 @@ export const RANKS = [
     ['Genius', 70],
     ['Queen Bee', 100],
 ];
-
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export function listLines(text) {
     return text.split('\n').map((line) => line.trim()).filter((line) => line && !line.startsWith('#'));
@@ -102,30 +101,6 @@ export function maxScore(words) {
 
 export function rankTable(max) {
     return RANKS.map(([name, pct]) => ({ name, pct, points: Math.round((max * pct) / 100) }));
-}
-
-export function parseDate(iso) {
-    const [y, m, d] = iso.split('-').map(Number);
-    return new Date(Date.UTC(y, m - 1, d));
-}
-
-export function longDate(iso) {
-    const date = parseDate(iso);
-    return `${MONTHS[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;
-}
-
-export function shortDate(iso) {
-    const date = parseDate(iso);
-    return `${MONTHS[date.getUTCMonth()].slice(0, 3)} ${date.getUTCDate()}`;
-}
-
-export function weekday(iso) {
-    return WEEKDAYS[parseDate(iso).getUTCDay()];
-}
-
-export function monthLabel(iso) {
-    const date = parseDate(iso);
-    return `${MONTHS[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
 }
 
 // The word file is rebuilt rarely; the daily job only reads it.
@@ -215,15 +190,4 @@ export function learnRulings(puzzles, words) {
         for (const word of answers) ruling.set(word, true);
     }
     return ruling;
-}
-
-export function escapeHtml(value) {
-    return String(value).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
-}
-
-export function writeIfChanged(file, contents) {
-    if (fs.existsSync(file) && fs.readFileSync(file, 'utf8') === contents) return false;
-    fs.mkdirSync(path.dirname(file), { recursive: true });
-    fs.writeFileSync(file, contents);
-    return true;
 }

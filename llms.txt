@@ -47,6 +47,12 @@ The homepage is the Crossplay solver. The other two games are the same board wit
 - https://wordgamehelp.com/spelling-bee-answers/yesterday — Yesterday's NYT Spelling Bee answers: the letters, the pangrams, and every accepted word, A to Z.
 - https://wordgamehelp.com/spelling-bee-answers/archive — Every past day, newest first. Each day has its own page at /spelling-bee-answers/YYYY-MM-DD.
 
+### Connections
+
+- https://wordgamehelp.com/connections-answers — Today's NYT Connections hints and answers. The 16 words, then one word from each group, the four category names, and all four groups, each hidden until opened. Moves to the new puzzle at midnight Eastern.
+- https://wordgamehelp.com/connections-answers/yesterday — Yesterday's NYT Connections answers: the four groups, yellow to purple.
+- https://wordgamehelp.com/connections-answers/archive — Every day since November 25, 2026, newest first, by date and puzzle number. Each day has its own page at /connections-answers/YYYY-MM-DD, which goes up at 5 or 6 a.m. Eastern the day before.
+
 ### Guides
 
 - https://wordgamehelp.com/guides — Guide index: board layout, tile values, a turn, scoring order, the three games, and two-letter hooks.

@@ -10,6 +10,11 @@
       "source": "/spelling-bee-hints",
       "destination": "/spelling-bee-answers",
       "statusCode": 301
+    },
+    {
+      "source": "/connections-hints",
+      "destination": "/connections-answers",
+      "statusCode": 301
     }
   ],
   "headers": [

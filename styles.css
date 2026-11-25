@@ -2132,27 +2132,31 @@ a:hover { color: var(--accent-hover); }
     box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .25);
 }
 
-.bee-reveal {
+.bee-reveal,
+.conn-reveal {
     margin: 0 0 8px;
     background: var(--card);
     border: 1px solid var(--line-2);
     border-radius: 10px;
 }
 
-.bee-reveal summary {
+.bee-reveal summary,
+.conn-reveal summary {
     padding: 10px 14px;
     cursor: pointer;
     font-weight: 600;
     color: var(--ink);
 }
 
-.bee-reveal[open] summary { border-bottom: 1px solid var(--line-3); }
+.bee-reveal[open] summary,
+.conn-reveal[open] summary { border-bottom: 1px solid var(--line-3); }
 
 .prose .bee-reveal ul.word-cols { padding: 10px 14px; }
 
 .bee-yesterday ul.word-cols { margin: 4px 0 20px; }
 
-.bee-daynav {
+.bee-daynav,
+.conn-daynav {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -2164,13 +2168,15 @@ a:hover { color: var(--accent-hover); }
     font-weight: 600;
 }
 
-.prose ul.bee-days {
+.prose ul.bee-days,
+.prose ul.conn-days {
     margin: 0 0 20px;
     padding: 0;
     list-style: none;
 }
 
-.prose .bee-days li {
+.prose .bee-days li,
+.prose .conn-days li {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
@@ -2180,7 +2186,8 @@ a:hover { color: var(--accent-hover); }
     border-bottom: 1px solid var(--line-2);
 }
 
-.bee-days a { font-weight: 600; }
+.bee-days a,
+.conn-days a { font-weight: 600; }
 
 .bee-days-letters {
     font: 600 14px 'JetBrains Mono', monospace;
@@ -2208,5 +2215,102 @@ a:hover { color: var(--accent-hover); }
         padding: 5px 6px;
     }
 
-    .prose .bee-days a { flex-basis: 100%; }
+    .prose .bee-days a,
+    .prose .conn-days a { flex-basis: 100%; }
+}
+
+/* Connections answer pages. The reveal, day nav, and day list share the Spelling Bee rules above. */
+:root {
+    --conn-yellow: #f9df6d;
+    --conn-green: #a0c35a;
+    --conn-blue: #b0c4ef;
+    --conn-purple: #ba81c5;
+}
+
+.conn-board,
+.prose ul.conn-board {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    margin: 4px 0 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.conn-board li,
+.prose .conn-board li {
+    min-height: 64px;
+    margin: 0;
+    padding: 8px 6px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    background: var(--tile);
+    color: var(--ink);
+    border-radius: 6px;
+    font: 700 14px/1.2 'Public Sans', system-ui, sans-serif;
+    letter-spacing: 0.02em;
+    overflow-wrap: anywhere;
+    box-shadow: inset 0 -2px 0 rgba(120, 85, 40, .35);
+}
+
+.conn-reveals { margin: 0 0 16px; }
+
+.conn-reveal { border-left: 6px solid var(--line); }
+.conn-reveal--yellow { border-left-color: var(--conn-yellow); }
+.conn-reveal--green { border-left-color: var(--conn-green); }
+.conn-reveal--blue { border-left-color: var(--conn-blue); }
+.conn-reveal--purple { border-left-color: var(--conn-purple); }
+
+.prose .conn-reveal > p {
+    margin: 0;
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.conn-group {
+    display: grid;
+    gap: 2px;
+    margin: 0 0 8px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    color: var(--ink);
+}
+
+.conn-reveal .conn-group { margin: 10px 14px; }
+.conn-yesterday .conn-group:last-of-type { margin-bottom: 20px; }
+
+.conn-group--yellow { background: var(--conn-yellow); }
+.conn-group--green { background: var(--conn-green); }
+.conn-group--blue { background: var(--conn-blue); }
+.conn-group--purple { background: var(--conn-purple); }
+
+.conn-group-color {
+    font: 500 12px 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.conn-group b { font: 700 17px/1.25 'Bitter', serif; }
+.conn-group-cards { font-weight: 500; }
+
+.conn-days-number {
+    font: 600 14px 'JetBrains Mono', monospace;
+    color: var(--muted);
+}
+
+.conn-local-note[hidden] { display: none; }
+
+@media (max-width: 480px) {
+    .conn-board li,
+    .prose .conn-board li {
+        min-height: 56px;
+        padding: 6px 2px;
+        font-size: 11.5px;
+        letter-spacing: 0;
+    }
+
+    .prose .conn-board li.conn-card--long { font-size: 9.5px; }
+    .prose .conn-board li.conn-card--xlong { font-size: 8px; }
 }
