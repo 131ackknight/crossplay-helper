@@ -85,6 +85,7 @@
                         <a href="/words-with-friends-word-finder">Words with Friends</a>
                         <a href="/spelling-bee-solver">NYT Spelling Bee</a>
                         <a href="/spelling-bee-answers">Spelling Bee answers</a>
+                        <a href="/connections-answers">Connections answers</a>
                     </div>
                 </details>
                 <details class="nav-dropdown">
@@ -110,7 +111,7 @@
             <h1>About this site</h1>
             <p>Word Game Helper is a free board solver for NYT Crossplay, Scrabble, and Words with Friends. You put the current board and your rack into the page. It lists legal places to play those tiles and scores them with that game's letter values, bonus squares, and all-tiles bonus.</p>
             <p>There is no account. The board, the rack, and a screenshot you upload are handled in the browser. Saved boards stay in this browser. The picture is not sent to a server. The <a href="/privacy">privacy page</a> covers ads and analytics.</p>
-            <p>A separate <a href="/spelling-bee-solver">Spelling Bee solver</a> covers the Times' daily seven-letter puzzle, with <a href="/spelling-bee-answers">answers for each day</a>.</p>
+            <p>A separate <a href="/spelling-bee-solver">Spelling Bee solver</a> covers the Times' daily seven-letter puzzle, with <a href="/spelling-bee-answers">answers for each day</a>. The <a href="/connections-answers">Connections answers</a> pages have hints and answers for the Times' daily grouping puzzle.</p>
 
             <h2>What a result means</h2>
             <p>Show Me Best Move tries straight lines that use the tiles you entered. A line is kept when every word it forms is in the word list, including words built at a right angle. The list is sorted by score. Click a result and the breakdown shows the main word, each cross-word, and the bonus for using all seven tiles.</p>
@@ -138,24 +139,28 @@
             <p>The Times does not publish its Bee word list. Each morning, a little after the 3 a.m. Eastern reset, a script reads the day's letters and official answers from the Times' Spelling Bee page and builds the <a href="/spelling-bee-answers">answers page</a>. Those lists also correct the solver. A word the Times accepted moves up to likely, and a likely word it turned down moves to the rarer list. For today's puzzle the solver shows the official list.</p>
             <p>SCOWL, the Spell Checker Oriented Word Lists, is Copyright 2000-2018 by Kevin Atkinson. Its notice reads: "Permission to use, copy, modify, distribute and sell these word lists, the associated scripts, the output created from the scripts, and its documentation for any purpose is hereby granted without fee, provided that the above copyright notice appears in all copies and that both that copyright notice and this permission notice appear in supporting documentation. Kevin Atkinson makes no representations about the suitability of this array for any purpose. It is provided "as is" without express or implied warranty." The <a href="/licenses/scowl.txt">full SCOWL notice</a> lists every source it draws on.</p>
 
+            <h2>Connections</h2>
+            <p>The <a href="/connections-answers">Connections answers</a> pages show what the Times publishes for each day's puzzle: the 16 words and the four groups, in the Times' order from yellow to purple. A script reads them from the Times' puzzle feed. The hints are made from that data by rule: one word from each group, then the category names, then the answers. No word is added or left out.</p>
+            <p>The Times unlocks each puzzle at midnight in the player's own time zone. A day's page goes up once that date has started somewhere in the world, which is 5 or 6 a.m. Eastern the day before. The today page moves to the new puzzle at midnight Eastern.</p>
+
             <h2>Ads</h2>
             <p>Ads on this site are served by Journey by Mediavine, which may use cookies to do it. Every page also counts visits with Google Analytics, and with Vercel Web Analytics, which does not use cookies. In the European Union and the United Kingdom, Mediavine's consent banner asks before those ad cookies are set. Details are on the <a href="/privacy">privacy page</a>.</p>
 
             <h2>Names</h2>
-            <p>Word Game Helper is not affiliated with The New York Times, Hasbro, or Zynga. Crossplay and Spelling Bee are trademarks of The New York Times. Scrabble is a trademark of Hasbro. Words with Friends is a trademark of Zynga.</p>
+            <p>Word Game Helper is not affiliated with The New York Times, Hasbro, or Zynga. Crossplay, Spelling Bee, and Connections are trademarks of The New York Times. Scrabble is a trademark of Hasbro. Words with Friends is a trademark of Zynga.</p>
         </article>
     </main>
     <footer class="site-footer">
         <div class="site-footer-inner">
             <div>
                 <p><b>Word Game Helper</b> – Free tool for finding the best words in NYT Crossplay, Scrabble, and Words with Friends.</p>
-                <p>Solvers: <a href="/">Crossplay</a> · <a href="/scrabble-word-finder">Scrabble</a> · <a href="/words-with-friends-word-finder">Words with Friends</a> · <a href="/spelling-bee-solver">Spelling Bee</a> · <a href="/spelling-bee-answers">Spelling Bee answers</a></p>
+                <p>Solvers: <a href="/">Crossplay</a> · <a href="/scrabble-word-finder">Scrabble</a> · <a href="/words-with-friends-word-finder">Words with Friends</a> · <a href="/spelling-bee-solver">Spelling Bee</a> · <a href="/spelling-bee-answers">Spelling Bee answers</a> · <a href="/connections-answers">Connections answers</a></p>
                 <p>Guides: <a href="/crossplay-board-layout">Board layout</a> · <a href="/crossplay-tile-values">Tile values</a> · <a href="/guides">Guides</a></p>
                 <p><a href="/word-checker">Word check</a> · <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
                 <p class="footer-meta">Build: 2026-03-07-66</p>
                 <p>Works entirely in your browser. No account required. Your game data stays on your device.</p>
             </div>
-            <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™ and Spelling Bee™ are trademarks of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
+            <p class="footer-legal">Not affiliated with The New York Times, Hasbro, or Zynga. Crossplay™, Spelling Bee™, and Connections™ are trademarks of The New York Times. Scrabble® is a trademark of Hasbro. Words with Friends™ is a trademark of Zynga.</p>
         </div>
     </footer>
     <script defer src="/nav.js"></script>

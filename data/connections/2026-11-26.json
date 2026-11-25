@@ -1,0 +1,64 @@
+{
+ "date": "2026-11-26",
+ "published": "2026-11-25T19:42:04Z",
+ "updated": "2026-11-25T19:42:04Z",
+ "number": 1264,
+ "id": 1382,
+ "editor": "Wyna Liu",
+ "groups": [
+  {
+   "title": "SHADES OF PINK",
+   "cards": [
+    "BLUSH",
+    "BUBBLEGUM",
+    "CARNATION",
+    "CORAL"
+   ]
+  },
+  {
+   "title": "KINDS OF CARS",
+   "cards": [
+    "COMPACT",
+    "CONVERTIBLE",
+    "HYBRID",
+    "MANUAL"
+   ]
+  },
+  {
+   "title": "THINGS HOMER SIMPSON LIKES",
+   "cards": [
+    "BEER",
+    "BOWLING",
+    "DONUTS",
+    "TELEVISION"
+   ]
+  },
+  {
+   "title": "THINGS THAT ARE POPPED",
+   "cards": [
+    "BOTTLE OF CHAMPAGNE",
+    "POPCORN",
+    "THE QUESTION",
+    "WHEELIE"
+   ]
+  }
+ ],
+ "board": [
+  "BEER",
+  "BOTTLE OF CHAMPAGNE",
+  "BUBBLEGUM",
+  "BOWLING",
+  "POPCORN",
+  "CARNATION",
+  "WHEELIE",
+  "DONUTS",
+  "BLUSH",
+  "COMPACT",
+  "TELEVISION",
+  "MANUAL",
+  "HYBRID",
+  "CORAL",
+  "THE QUESTION",
+  "CONVERTIBLE"
+ ]
+}

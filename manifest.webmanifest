@@ -1,7 +1,7 @@
 {
   "name": "Word Game Helper",
   "short_name": "Word Game",
-  "description": "Board solver for NYT Crossplay, Scrabble, and Words with Friends, plus NYT Spelling Bee hints.",
+  "description": "Board solver for NYT Crossplay, Scrabble, and Words with Friends, plus NYT Spelling Bee hints and Connections answers.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

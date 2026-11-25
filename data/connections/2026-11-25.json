@@ -1,0 +1,64 @@
+{
+ "date": "2026-11-25",
+ "published": "2026-11-25T19:42:04Z",
+ "updated": "2026-11-25T19:42:04Z",
+ "number": 1263,
+ "id": 1372,
+ "editor": "Wyna Liu",
+ "groups": [
+  {
+   "title": "PARTS OF A FREEWAY",
+   "cards": [
+    "LANE",
+    "MEDIAN",
+    "RAMP",
+    "SHOULDER"
+   ]
+  },
+  {
+   "title": "U-SHAPED THINGS",
+   "cards": [
+    "HALF-PIPE",
+    "HORSESHOE",
+    "NECK PILLOW",
+    "PARABOLA"
+   ]
+  },
+  {
+   "title": "RUG SPECIFICATIONS",
+   "cards": [
+    "DIMENSIONS",
+    "MATERIAL",
+    "PILE",
+    "WEAVE"
+   ]
+  },
+  {
+   "title": "DOGS BREEDS MINUS FIRST LETTER",
+   "cards": [
+    "EAGLE",
+    "OBERMAN",
+    "OLLIE",
+    "OODLE"
+   ]
+  }
+ ],
+ "board": [
+  "EAGLE",
+  "PILE",
+  "HALF-PIPE",
+  "DIMENSIONS",
+  "OLLIE",
+  "SHOULDER",
+  "WEAVE",
+  "NECK PILLOW",
+  "RAMP",
+  "PARABOLA",
+  "OODLE",
+  "MEDIAN",
+  "HORSESHOE",
+  "MATERIAL",
+  "LANE",
+  "OBERMAN"
+ ]
+}
