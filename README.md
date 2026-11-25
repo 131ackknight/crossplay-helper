@@ -157,7 +157,7 @@ The puzzle number counts days from June 12, 2023, which was #1. The feed's `id` 
 3. Saves each puzzle to `data/connections/YYYY-MM-DD.json`. The file keeps, in UTC, when it was first saved (`published`) and when its groups last changed (`updated`).
 4. Runs `tools/build-connections-pages.mjs`. That writes every page under `connections-answers/`, `data/connections/last-changed.json`, and the lines between the `connections` markers in `sitemap.xml`.
 
-The workflow commits only when something changed. The message is `Connections answers for YYYY-MM-DD` when a puzzle was saved, and `Connections today page for YYYY-MM-DD` when only the today page moved. The commit author is the repo owner, for the same Vercel reason as the Spelling Bee job. Both workflows share one concurrency group, `daily-answers`, because both edit `sitemap.xml`.
+The workflow commits only when something changed. The message is `Connections answers for YYYY-MM-DD` when a new puzzle was saved, `Connections correction for YYYY-MM-DD` when a saved puzzle changed, and `Connections today page for YYYY-MM-DD` when only the today page moved. The commit author is the repo owner, for the same Vercel reason as the Spelling Bee job. Both workflows share one concurrency group, `daily-answers`, because both edit `sitemap.xml`.
 
 After the push, `tools/indexnow.mjs` waits until the live site serves the new pages, then sends the pages whose title or body changed to IndexNow, so Bing and the engines that share it pick them up within minutes. The key is the 32-character `.txt` file in the site root. Google does not use IndexNow. If this step fails, the run still passes: the pages are already live.
 
