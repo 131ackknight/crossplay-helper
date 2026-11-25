@@ -133,6 +133,59 @@ SCOWL is Copyright 2000-2018 by Kevin Atkinson. The full notice is in `licenses/
 
     node tools/build-spelling-bee.mjs --scowl path/to/scowl/final
 
+## NYT Connections
+
+Pages: `/connections-answers` (today), `/connections-answers/yesterday`, `/connections-answers/YYYY-MM-DD` (one page per day), and `/connections-answers/archive`. `/connections-hints` redirects to the today page.
+
+The Times unlocks each Connections at midnight in the player's own time zone, so two clocks decide what is live when the pages are built:
+
+- **A dated page** goes up once its date has started somewhere in the world. A date starts first at UTC+14, which is 10:00 UTC the day before: 5 a.m. Eastern in winter, 6 a.m. in summer. By then someone is playing that puzzle.
+- **The today page** shows the puzzle for the New York date, so it moves on at midnight Eastern. The yesterday page moves with it. Until then the today page links to the next day's page for readers who are already on it.
+
+The Times posts puzzles in its feed weeks ahead. The daily script refuses a date that has not unlocked anywhere, and the builder hides a saved puzzle until it has, so nothing goes out early.
+
+Each page shows the 16 words in the order the game deals them, then three sets of hints, closed until opened: one word from each group, the category names, and the answers. The hints are made from the puzzle data by rule. The yesterday page shows the four groups open. The archive lists dates and puzzle numbers only.
+
+The puzzle number counts days from June 12, 2023, which was #1. The feed's `id` is a different number.
+
+### Daily job
+
+`.github/workflows/connections-daily.yml` runs `tools/connections-daily.mjs --wait` at 03:45, 04:10, 04:45, 05:10, 05:40, 10:05, 10:35, and 12:17 UTC. Midnight Eastern is 04:00 UTC in summer and 05:00 UTC in winter. In either season one run starts 15 minutes before it, and `--wait` makes a run that starts within 20 minutes before midnight Eastern sleep until just after it, so the today page moves on time. The 10:05 run puts up the next day's page. The rest are retries, and a run with nothing new does nothing. The script:
+
+1. Fetches `https://www.nytimes.com/svc/connections/v2/YYYY-MM-DD.json` for the New York date, for the next date once it has unlocked somewhere, and for yesterday again if it is already saved, to pick up a correction.
+2. Checks each response: the date asked for, four groups of four, a title on each group, text on each card, board positions 0 to 15 once each, and 16 different cards. If anything looks wrong it exits with an error and writes nothing.
+3. Saves each puzzle to `data/connections/YYYY-MM-DD.json`. The file keeps, in UTC, when it was first saved (`published`) and when its groups last changed (`updated`).
+4. Runs `tools/build-connections-pages.mjs`. That writes every page under `connections-answers/`, `data/connections/last-changed.json`, and the lines between the `connections` markers in `sitemap.xml`.
+
+The workflow commits only when something changed. The message is `Connections answers for YYYY-MM-DD` when a puzzle was saved, and `Connections today page for YYYY-MM-DD` when only the today page moved. The commit author is the repo owner, for the same Vercel reason as the Spelling Bee job. Both workflows share one concurrency group, `daily-answers`, because both edit `sitemap.xml`.
+
+After the push, `tools/indexnow.mjs` waits until the live site serves the new pages, then sends the pages whose title or body changed to IndexNow, so Bing and the engines that share it pick them up within minutes. The key is the 32-character `.txt` file in the site root. Google does not use IndexNow. If this step fails, the run still passes: the pages are already live.
+
+Sitemap `lastmod` works as it does for Spelling Bee. A dated page uses its `updated` time. The today page, the yesterday page, and the archive use the build time when their content last changed, kept in `data/connections/last-changed.json`. The today page shows that time as its Updated line. Dated pages more than 30 days older than the newest puzzle get `noindex` and drop out of the sitemap (`INDEX_DAYS` in `tools/build-connections-pages.mjs`).
+
+The pages copy their header and footer from `spelling-bee-solver/index.html`. To rebuild them now:
+
+    node tools/build-connections-pages.mjs
+
+To add or repair one day, or to read a saved copy of a feed response if the Times blocks the fetch:
+
+    node tools/connections-daily.mjs --date 2026-11-20
+    node tools/connections-daily.mjs --file path/to/saved-response.json
+
+To see what would be sent to IndexNow without sending it:
+
+    node tools/indexnow.mjs --dry-run /connections-answers
+
+The tests use the saved feed responses in `tools/test/fixtures/connections/`, not the live data:
+
+    node --test 'tools/test/*.test.mjs'
+
+To take the pages down: delete `.github/workflows/connections-daily.yml`, `data/connections/`, `connections-answers/`, and the `connections` block in `sitemap.xml`, then remove the "Connections answers" links from the nav and footer and the `/connections-hints` redirect in `vercel.json`.
+
+### Shared code
+
+`tools/lib/site.mjs` holds what both daily sections use: the page renderer, the `lastmod` tracker, the sitemap splice, the Eastern-time helpers, and the page template in `tools/templates/page.html`. `tools/lib/bee.mjs` and `tools/lib/connections.mjs` hold what is specific to each game.
+
 ## License
 
 Free to use for personal purposes.

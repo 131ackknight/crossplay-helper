@@ -16,8 +16,9 @@ on:
 permissions:
   contents: write
 
+# Shared with the Connections workflow. Both edit sitemap.xml, so they run one at a time.
 concurrency:
-  group: spelling-bee-daily
+  group: daily-answers
   cancel-in-progress: false
 
 jobs:

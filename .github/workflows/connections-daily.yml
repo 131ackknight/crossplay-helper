@@ -1,0 +1,87 @@
+name: Connections answers
+
+on:
+  schedule:
+    # Two things happen each day (times in UTC):
+    #   10:00           the next date starts at UTC+14, the first place it is that date, so its
+    #                   puzzle is unlocked for someone. Its dated page goes up.
+    #   04:00 or 05:00  midnight Eastern, in summer or winter. The today page moves to that puzzle.
+    # The 03:45 and 04:45 runs start before midnight Eastern, one in each season, and wait for it
+    # (--wait), so the today page switches on time. The rest are retries, because GitHub can delay
+    # or drop scheduled runs. A run with nothing new commits nothing.
+    - cron: "45 3 * * *"
+    - cron: "10 4 * * *"
+    - cron: "45 4 * * *"
+    - cron: "10 5 * * *"
+    - cron: "40 5 * * *"
+    - cron: "5 10 * * *"
+    - cron: "35 10 * * *"
+    - cron: "17 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Shared with the Spelling Bee workflow. Both edit sitemap.xml, so they run one at a time.
+concurrency:
+  group: daily-answers
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.repository == '131ackknight/crossplay-helper'
+    runs-on: ubuntu-latest
+    # A run can wait up to 20 minutes for midnight Eastern and 5 more for the deploy.
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Save the puzzles and rebuild the answer pages
+        run: node tools/connections-daily.mjs --wait --urls-file "$RUNNER_TEMP/connections-urls.txt"
+
+      - name: Commit and push
+        id: push
+        env:
+          # Vercel's Hobby plan only deploys commits whose author is the account owner.
+          GIT_AUTHOR_NAME: Peterk
+          GIT_AUTHOR_EMAIL: thisispeterk@gmail.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          git add data/connections connections-answers sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit."
+            exit 0
+          fi
+          # A run either saves a puzzle, whose dated page goes up, or only moves the today page.
+          if git diff --cached --quiet -- 'data/connections/2*.json'; then
+            message="Connections today page for $(TZ=America/New_York date +%F)"
+          else
+            newest=$(ls data/connections | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}\.json$' | sort | tail -1)
+            message="Connections answers for ${newest%.json}"
+          fi
+          git commit -m "$message"
+          pushed=""
+          for attempt in 1 2 3; do
+            if git pull --rebase && git push; then
+              pushed=true
+              break
+            fi
+            sleep 10
+          done
+          if [ -z "$pushed" ]; then
+            echo "Could not push after 3 tries."
+            exit 1
+          fi
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      # Bing and the other IndexNow engines pick the changed pages up within minutes. The step waits
+      # for the deploy first. A failure here does not fail the run: the pages are already live.
+      - name: Tell IndexNow which pages changed
+        if: steps.push.outputs.pushed == 'true'
+        continue-on-error: true
+        run: node tools/indexnow.mjs --from "$RUNNER_TEMP/connections-urls.txt" --wait-live

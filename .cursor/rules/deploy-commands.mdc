@@ -11,7 +11,7 @@ Whenever you make changes that will be shipped, **increment the build number** i
 
 When you make changes to this project, **always** provide the full deployment terminal commands the user can run to build and ship to GitHub. Use a **concrete commit message** that describes the change—never use placeholders like "Your commit message" or "Update".
 
-A GitHub Action commits the Spelling Bee answer pages every morning, so pull with rebase before pushing.
+GitHub Actions commit the Spelling Bee answer pages every morning and the Connections answer pages twice a day, so pull with rebase before pushing.
 
 Example:
 ```bash
@@ -22,4 +22,4 @@ git pull --rebase
 git push
 ```
 
-The generated Spelling Bee pages copy their header and footer from `spelling-bee-solver/index.html`. After a sitewide nav, footer, or build number change, run `node tools/build-spelling-bee-pages.mjs` so the answer pages match.
+The generated Spelling Bee and Connections pages copy their header and footer from `spelling-bee-solver/index.html`. After a sitewide nav, footer, or build number change, run `node tools/build-spelling-bee-pages.mjs` and `node tools/build-connections-pages.mjs` so the answer pages match.
