@@ -113,7 +113,8 @@ export function article(className, lines) {
 }
 
 export function faqHtml(items) {
-    const rows = items.map(({ q, a }) => `                    <details><summary>${escapeHtml(q)}<span class="faq-plus">+</span></summary><p>${escapeHtml(a)}</p></details>`);
+    // The plus sign beside each question comes from styles.css, so the summary holds the question only.
+    const rows = items.map(({ q, a }) => `                    <details><summary>${escapeHtml(q)}</summary><p>${escapeHtml(a)}</p></details>`);
     return [
         '        <section class="faq-band">',
         '            <div class="faq-inner">',

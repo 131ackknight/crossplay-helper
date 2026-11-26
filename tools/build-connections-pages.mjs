@@ -212,6 +212,14 @@ function recentHtml(days) {
     return `<ul class="conn-days">${items.join('')}</ul>`;
 }
 
+// The rules of the game, for a reader who is new to it. On the today page only: the same text on
+// every dated page would be filler.
+const HOW_TO_PLAY = [
+    '<h2 id="how-to-play">How to play Connections</h2>',
+    '<p>Connections deals 16 words in a four-by-four grid. The goal is to sort them into four groups of four words that share something. Pick four words and press Submit. If they belong together, the group locks in and shows its category. If they don\'t, you lose one of your four mistakes, and the game says so when you were one word away. You win by finding all four groups before the mistakes run out.</p>',
+    '<p>The grid is built to mislead. Several words usually fit more than one category, but each word belongs to exactly one group, so there is only one way to sort all 16. When you spot a category, look for a fifth word that fits it before you submit, then work out which of the five belongs somewhere else. Shuffle rearranges the grid, which helps when two words sitting side by side keep pulling your eye. The Times has published one puzzle a day since June 12, 2023.</p>',
+];
+
 // A reader whose own date is a day off from this page's puzzle gets pointed to the right page.
 // The note stays hidden when the dates match or the page it would link to is not up.
 const LOCAL_NOTE_SCRIPT = `<script>
@@ -281,7 +289,7 @@ function todayPage(day, past, next, changedAt) {
             `<p><a href="/${ANSWERS}/archive">Every puzzle since ${longDate(past[0].date)}</a></p>`,
         );
     }
-    lines.push('<p>Also on this site each day: <a href="/spelling-bee-answers">today\'s Spelling Bee answers</a>.</p>');
+    lines.push(...HOW_TO_PLAY, '<p>Also on this site each day: <a href="/spelling-bee-answers">today\'s Spelling Bee answers</a>.</p>');
     return {
         title,
         description,
