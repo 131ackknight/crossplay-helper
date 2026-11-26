@@ -1340,14 +1340,19 @@ a:hover { color: var(--accent-hover); }
 
 .faq-list summary::-webkit-details-marker { display: none; }
 
-.faq-plus {
+/* The plus sign is drawn here, not written in the page, so it is not part of the question's text.
+   The second `content` gives it empty alt text where the browser supports that. */
+.faq-list summary::after {
+    content: '+';
+    content: '+' / '';
+    flex: none;
     font: 500 22px 'JetBrains Mono', monospace;
     line-height: 1;
     transition: transform .2s;
     color: var(--ink);
 }
 
-.faq-list details[open] .faq-plus { transform: rotate(45deg); }
+.faq-list details[open] summary::after { transform: rotate(45deg); }
 
 .faq-list details p {
     margin: 0 0 18px;

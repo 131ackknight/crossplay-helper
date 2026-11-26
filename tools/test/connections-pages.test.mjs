@@ -272,6 +272,29 @@ describe('built pages', () => {
         assert.match(hub(), /<link rel="canonical" href="https:\/\/wordgamehelp\.com\/connections-answers">/);
     });
 
+    test('a dated page links to the day before and the day after', () => {
+        const middle = read('connections-answers/2026-11-25/index.html');
+        assert.match(middle, /<a href="\/connections-answers\/2026-11-24" rel="prev">← November 24, 2026<\/a>/);
+        assert.match(middle, /<a href="\/connections-answers\/2026-11-26" rel="next">November 26, 2026 →<\/a>/);
+        const newest = read('connections-answers/2026-11-26/index.html');
+        assert.match(newest, /<a href="\/connections-answers\/2026-11-25" rel="prev">/);
+        assert.match(newest, /<a href="\/connections-answers">Today's puzzle →<\/a>/, 'the newest day points on to the today page');
+    });
+
+    test('the today page explains how to play, and the dated pages do not repeat it', () => {
+        assert.equal((hub().match(/<h2 id="how-to-play">How to play Connections<\/h2>/g) || []).length, 1);
+        assert.ok(!read('connections-answers/2026-11-26/index.html').includes('How to play Connections'));
+        assert.ok(!read('connections-answers/yesterday/index.html').includes('How to play Connections'));
+    });
+
+    test('an FAQ question holds its text and nothing else', () => {
+        for (const rel of ['connections-answers/index.html', 'connections-answers/2026-11-26/index.html']) {
+            const page = read(rel);
+            assert.match(page, /<summary>What are the categories in Connections #1264\?<\/summary>/, rel);
+            assert.ok(!page.includes('faq-plus'), `${rel} writes the plus sign into the page`);
+        }
+    });
+
     test('nothing is open until the reader opens it', () => {
         for (const rel of ['connections-answers/index.html', 'connections-answers/2026-11-26/index.html']) {
             const page = read(rel);
