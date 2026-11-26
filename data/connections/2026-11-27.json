@@ -1,0 +1,64 @@
+{
+ "date": "2026-11-27",
+ "published": "2026-11-26T10:14:43Z",
+ "updated": "2026-11-26T10:14:43Z",
+ "number": 1265,
+ "id": 1383,
+ "editor": "Wyna Liu",
+ "groups": [
+  {
+   "title": "TOUCH LIGHTLY",
+   "cards": [
+    "BRUSH",
+    "GRAZE",
+    "KISS",
+    "SKIM"
+   ]
+  },
+  {
+   "title": "FEMALE ANIMALS",
+   "cards": [
+    "LEOPARDESS",
+    "PEAHEN",
+    "QUEEN",
+    "VIXEN"
+   ]
+  },
+  {
+   "title": "ENDING IN PARTS OF THE FOOT",
+   "cards": [
+    "CAMISOLE",
+    "MISTLETOE",
+    "MONARCH",
+    "PINWHEEL"
+   ]
+  },
+  {
+   "title": "ASSOCIATED WITH THE COLOR PURPLE",
+   "cards": [
+    "ALICE WALKER",
+    "FLOWERY LANGUAGE",
+    "PRINCE",
+    "ROYALTY"
+   ]
+  }
+ ],
+ "board": [
+  "ALICE WALKER",
+  "QUEEN",
+  "MISTLETOE",
+  "KISS",
+  "PRINCE",
+  "MONARCH",
+  "BRUSH",
+  "CAMISOLE",
+  "SKIM",
+  "ROYALTY",
+  "VIXEN",
+  "PINWHEEL",
+  "PEAHEN",
+  "GRAZE",
+  "LEOPARDESS",
+  "FLOWERY LANGUAGE"
+ ]
+}
