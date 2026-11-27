@@ -1,0 +1,64 @@
+{
+ "date": "2026-11-28",
+ "published": "2026-11-27T10:14:21Z",
+ "updated": "2026-11-27T10:14:21Z",
+ "number": 1266,
+ "id": 1379,
+ "editor": "Wyna Liu",
+ "groups": [
+  {
+   "title": "MILD OATHS",
+   "cards": [
+    "BLAST",
+    "DARN",
+    "FUDGE",
+    "NUTS"
+   ]
+  },
+  {
+   "title": "EDGE",
+   "cards": [
+    "BORDER",
+    "HEM",
+    "RIM",
+    "SKIRT"
+   ]
+  },
+  {
+   "title": "SYMBOLS ON A SLOT MACHINE",
+   "cards": [
+    "BAR",
+    "BELL",
+    "CHERRY",
+    "SEVEN"
+   ]
+  },
+  {
+   "title": "SOUL ___",
+   "cards": [
+    "FOOD",
+    "MATE",
+    "MUSIC",
+    "PATCH"
+   ]
+  }
+ ],
+ "board": [
+  "FOOD",
+  "FUDGE",
+  "CHERRY",
+  "HEM",
+  "DARN",
+  "SKIRT",
+  "NUTS",
+  "BAR",
+  "MUSIC",
+  "BELL",
+  "MATE",
+  "BORDER",
+  "BLAST",
+  "PATCH",
+  "RIM",
+  "SEVEN"
+ ]
+}
