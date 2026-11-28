@@ -1,0 +1,64 @@
+{
+ "date": "2026-11-29",
+ "published": "2026-11-28T10:13:20Z",
+ "updated": "2026-11-28T10:13:20Z",
+ "number": 1267,
+ "id": 1380,
+ "editor": "Wyna Liu",
+ "groups": [
+  {
+   "title": "BODYWEIGHT EXERCISES",
+   "cards": [
+    "BEAR CRAWL",
+    "BURPEE",
+    "CRUNCH",
+    "MOUNTAIN CLIMBER"
+   ]
+  },
+  {
+   "title": "WHIT",
+   "cards": [
+    "CENT",
+    "FARTHING",
+    "PITTANCE",
+    "SOU"
+   ]
+  },
+  {
+   "title": "CARTOON FAMILY SURNAMES",
+   "cards": [
+    "BELCHER",
+    "GRIFFIN",
+    "HILL",
+    "SIMPSON"
+   ]
+  },
+  {
+   "title": "ENDING IN WORDS FOR THE MAIN IDEA",
+   "cards": [
+    "DEMEANING",
+    "DISAPPOINT",
+    "MANTICORE",
+    "ZOOLOGIST"
+   ]
+  }
+ ],
+ "board": [
+  "MANTICORE",
+  "BURPEE",
+  "ZOOLOGIST",
+  "GRIFFIN",
+  "FARTHING",
+  "HILL",
+  "BELCHER",
+  "CRUNCH",
+  "MOUNTAIN CLIMBER",
+  "DISAPPOINT",
+  "CENT",
+  "BEAR CRAWL",
+  "SOU",
+  "DEMEANING",
+  "SIMPSON",
+  "PITTANCE"
+ ]
+}
